@@ -8,36 +8,59 @@ const FS = require('fs');
 let grpc = require("grpc");
 var protoLoader = require("@grpc/proto-loader");
 const server = new grpc.Server();
-let packageDefinition = grpc.loadPackageDefinition(
-    protoLoader.loadSync("./proto/iofile.proto", {
-        keepCase: true,
-        longs: String,
-        enums: String,
-        defaults: true,
-        oneofs: true
-    })
-);
+let packageDefinition = grpc.loadPackageDefinition(protoLoader.loadSync("./proto/iofile.proto", { keepCase: true, longs: String, enums: String, defaults: true, oneofs: true }));
 //------------------------------------------------------------------------
-let __id = 0;
-const __ids = [];
-const __caches = [];
+const __md_defines = {};
+const __mf_defines = {};
+const __mf_enums = {};
+
+const __ix_numbers = [];
+const __ix_asciis = [];
+const __ix_orginals = [];
+
+function _itemIndexing(it) {
+    const mf_defines = require('./data/mf_defines.json');
+
+}
+
+//------------------------------------------------------------------------
+let __id = 0;          // item.__id auto increment
+const __it_ids = [];   // [index] = item.__id
+const __it_base = [];  // [index] = item base field data
+const __it_extend = [];// [index] = item extend field by jobs,...
+
+function _itemAdd(it) {
+    if (it == null) return { __ok: false, __err: 'item is NULL' };
+
+    var model = it.__md;
+    if (model == null || model == '' || typeof model != 'string')
+        return { __err: 'missing field __m  or it is NULL, empty or type of __m must be string' };
+
+    const __ix = __it_ids.length;
+    __id++;
+    it.__md = model;
+    it.__id = __id;
+    it.__ix = __ix;
+
+    __it_ids.push(__id);
+    __it_base.push(it);
+
+    _itemIndexing(it);
+
+    return { __ok: true, __id = __id, __ix = __ix, __md = model };
+}
 
 function _cacheAdd(v) {
     if (v == null || typeof v != 'object') return;
     if (Array.isArray(v)) {
+        var rs = [];
         for (var i = 0; i < v.length; i++) {
-            __id++;
-            const it = v[i];
-            it.__id = __id;
-            it.__ix = __caches.length;
-            __caches.push(it);
+            var it = _itemAdd(v[i]);
+            rs.push(it);
         }
     } else {
-        __id++;
-        const it = v[i];
-        it.__id = __id;
-        it.__ix = __caches.length;
-        __caches.push(it);
+        var it1 = _itemAdd(v);
+        return it1;
     }
 }
 
@@ -45,38 +68,36 @@ function _cacheUpdate(v) {
     if (v == null || typeof v != 'object') return;
     if (Array.isArray(v)) {
         for (var i = 0; i < v.length; i++) {
-            __id++;
-            const it = v[i], ix = __caches.length;
-            it.__id = __id;
-            it.__ix = ix;
-            __caches.push(it);
-            __ids.push(ix);
         }
     } else {
-        __id++;
-        const it = v, ix = __caches.length;
-        it.__id = __id;
-        it.__ix = ix;
-        __caches.push(it);
-        __ids.push(ix);
     }
 }
+
 function _cacheRemove(v) {
     if (v == null || typeof v != 'number' || Array.isArray(v) == false) return;
     if (Array.isArray(v)) {
-        const ixs = _.filter(_.map(__ids, function (x, k) { return _.findIndex(v, function (o) { return o == x }) == -1 ? -1 : k; }), function (j) { return j != -1 });
+        const ixs = _.filter(_.map(__it_ids, function (x, k) {
+            return _.findIndex(v, function (o) { return o == x }) == -1 ? -1 : k;
+        }), function (j) { return j != -1 });
         if (ixs.length > 0) {
             for (var i = 0; i < ixs.length; i++) {
-                __caches[i] = null;
-                __ids[i] = -1;
+                __it_base[i] = null;
+                __it_ids[i] = -1;
             }
         }
     } else {
         __id++;
         v.__id = __id;
-        __caches.push(v);
+        __it_base.push(v);
     }
 }
+
+function _cacheInit() {
+
+}
+
+//------------------------------------------------------------------------
+
 
 
 //------------------------------------------------------------------------

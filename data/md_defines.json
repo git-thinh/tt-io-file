@@ -1,0 +1,62 @@
+{
+  "user": {
+    "title": "User",
+    "description": ""
+  },
+  "user_attr": {
+    "title": "User attribute",
+    "description": "Attributes of a user to allow access: menu, category, product, customer, ..."
+  },
+  "menu": {
+    "title": "Menu",
+    "description": ""
+  },
+  "category": {
+    "title": "Category",
+    "description": ""
+  },
+  "article": {
+    "title": "Article",
+    "description": ""
+  },
+  "product": {
+    "title": "Product",
+    "description": ""
+  },
+  "product_attr": {
+    "title": "Product attribute",
+    "description": ""
+  },
+  "datalist": {
+    "title": "Datalist",
+    "description": ""
+  },
+  "datalist_attr": {
+    "title": "Datalist attribute",
+    "description": ""
+  },
+  "customer": {
+    "title": "Customer",
+    "description": ""
+  },
+  "customer_attr": {
+    "title": "Customer attribute",
+    "description": ""
+  },
+  "order": {
+    "title": "Order",
+    "description": ""
+  },
+  "order_attr": {
+    "title": "Order attribute",
+    "description": ""
+  },
+  "curl_site": {
+    "title": "Crawle site",
+    "description": ""
+  },
+  "curl_link": {
+    "title": "Crawle links of site",
+    "description": ""
+  }
+}
