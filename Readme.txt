@@ -1,4 +1,7 @@
 ﻿
+https://adityasridhar.com/posts/how-to-easily-use-grpc-and-protocol-buffers-with-nodejs
+
+
 npm install node-windows express ioredis lodash grpc @grpc/proto-loader
 
 
