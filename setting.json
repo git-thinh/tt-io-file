@@ -1,0 +1,16 @@
+{
+  "SERVICE": {
+    "name": "TT_IO_FILE",
+    "description": "IO File write file data"
+  },
+  "DEV": {
+    "HTTP_PORT": 33000,
+    "REDIS_CONNECT": "redis://127.0.0.1:1000/15",
+    "GRPC": "127.0.0.1:33555"
+  },
+  "PROD": {
+    "HTTP_PORT": 55000,
+    "REDIS_CONNECT": "redis://127.0.0.1:1000/1",
+    "GRPC": "127.0.0.1:55333"
+  }
+}

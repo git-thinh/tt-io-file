@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcMessage";
+
+package message;
+
+service Messager {
+  rpc GetImageOrginal (MessageRequest) returns (MessageReply);
+  rpc GetImageSandbox (MessageRequest) returns (MessageReply);
+  rpc GetMixMatchTop (MessageRequest) returns (MessageReply);
+  rpc GetMixMatchByProductNumber (MessageRequest) returns (ProductsReply);
+  rpc GetMixMatchReload (MessageRequest) returns (MessageReply);
+  rpc GetMixMatchSize (MessageRequest) returns (MessageReply);
+  rpc GetMixMatchBuffer (MessageRequest) returns (MessageReply);
+}
+
+message MessageRequest {
+  string name = 1;
+  string command = 2;
+  map<string, string> inputs = 3;
+}
+
+message MessageReply {
+  bool ok = 1;
+  string message = 2;
+  string name = 3;
+  int32 width = 4;
+  int32 height = 5;
+  int32 total = 6;
+  BufferData data = 7;
+}
+
+message MessageProduct {
+  int32 id = 1;
+  string title = 2;
+  string link = 3;
+  string sku = 4;
+  string color = 5;
+  MessageImage image = 6;
+}
+
+message MessageImage {
+  string name = 1;
+  int32 width = 2;
+  int32 height = 3;
+  string link1 = 4;
+  string link2 = 5;
+}
+
+message ProductsReply {
+	bool ok = 1;
+	string message = 2;
+	repeated MessageProduct products = 3;
+}
+
+message BufferData {
+   bytes BufferValue = 1;
+}

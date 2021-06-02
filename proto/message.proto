@@ -1,0 +1,56 @@
+syntax = "proto3"; 
+
+package Mascot.LPA.ProxySearch.Grpc;
+
+service ProxyService {
+	rpc getFile(FileRequest) returns (stream FileData);
+    rpc update(UpdateMessage) returns (UpdateResult){}
+	rpc apiCall(ApiRequest) returns (ApiResult){}
+}
+
+message FileData {
+    string Id = 1;
+    string Name = 2;
+    string Type = 3;
+    int64  Size = 4;
+    bytes  Buffer = 5;
+}
+
+message FileRequest {
+    string  Id = 1;
+}
+
+message UpdateMessage {
+	string	AppId = 1;
+	int32	Id = 2;
+	string	Schema = 3;
+	enum DATA_ACTION {
+		NONE = 0;
+		INSERT = 1;
+		UPDATE = 2;
+		REMOVE = 3;
+	}
+	DATA_ACTION Action = 4;
+	string	ItemJson = 5;
+}
+
+message UpdateResult {
+	bool	Ok = 1;
+	int32	Id = 2;
+	string	Message = 3;
+	UpdateMessage Request = 4;
+}
+
+message ApiResult {
+	bool	Ok = 1;
+	int32	Id = 2;
+	string	Message = 3;
+	ApiRequest Request = 4;
+	string	TextJsonResult = 5;
+}
+
+message ApiRequest {
+	string	ApiName = 1;
+	map<string, string>	Input = 2;
+	FileData File = 3;
+}

@@ -1,0 +1,11 @@
+syntax = "proto3"; 
+
+package GrpcMessage;
+
+message RedisMessage {
+	string	RedisId = 1;
+	int32	Id = 2;
+	string	Schema = 3;
+	string	Item = 4;
+    bytes  Buffer = 5;
+}
