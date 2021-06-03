@@ -1,0 +1,20 @@
+[
+  {
+    "__md": "user",
+    "__id": 1,
+    "__st_": 2,
+    "user_name": "admin",
+    "password": "12345",
+    "full_name": "Administrator",
+    "status_": 2
+  },
+  {
+    "__md": "user",
+    "__id": 2,
+    "__st_": 2,
+    "user_name": "thinh",
+    "password": "12345",
+    "full_name": "Mr.Thinh",
+    "status_": 2
+  }
+]

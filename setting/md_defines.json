@@ -1,4 +1,42 @@
 {
+  "site": {
+    "title": "Site",
+    "description": ""
+  },
+  "theme": {
+    "title": "Theme",
+    "description": ""
+  },
+  "page": {
+    "title": "Page",
+    "description": ""
+  },
+  "page_attr": {
+    "title": "Page attribute",
+    "description": ""
+  },
+  "module": {
+    "title": "Module",
+    "description": ""
+  },
+  "module_attr": {
+    "title": "Module attribute",
+    "description": ""
+  },
+
+
+
+  "datalist": {
+    "title": "Datalist",
+    "description": ""
+  },
+  "datalist_attr": {
+    "title": "Datalist attribute",
+    "description": ""
+  },
+
+
+
   "user": {
     "title": "User",
     "description": ""
@@ -7,6 +45,8 @@
     "title": "User attribute",
     "description": "Attributes of a user to allow access: menu, category, product, customer, ..."
   },
+
+
   "menu": {
     "title": "Menu",
     "description": ""
@@ -15,24 +55,30 @@
     "title": "Category",
     "description": ""
   },
+
+  "adv": {
+    "title": "Advertisement",
+    "description": ""
+  },
+  "adv_attr": {
+    "title": "Advertisement attribute",
+    "description": ""
+  },
+
+
   "article": {
     "title": "Article",
     "description": ""
   },
+
+
+
   "product": {
     "title": "Product",
     "description": ""
   },
   "product_attr": {
     "title": "Product attribute",
-    "description": ""
-  },
-  "datalist": {
-    "title": "Datalist",
-    "description": ""
-  },
-  "datalist_attr": {
-    "title": "Datalist attribute",
     "description": ""
   },
   "customer": {
@@ -49,6 +95,14 @@
   },
   "order_attr": {
     "title": "Order attribute",
+    "description": ""
+  },
+  "promo": {
+    "title": "Promotion",
+    "description": ""
+  },
+  "promo_attr": {
+    "title": "Promotion attribute",
     "description": ""
   },
   "curl_site": {

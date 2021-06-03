@@ -1,13 +1,32 @@
 ﻿const __ENV = process.env.__ENV || 'DEV';
 const __SETTING = require('./setting.json')[__ENV];
+console.log('PATH = ' + __dirname);
 console.log(__SETTING);
 //------------------------------------------------------------------------
 const _ = require('lodash');
-const FS = require('fs');
+const _FS = require('fs');
+const _PATH = require('path');
+const _URL = require('url');
+//------------------------------------------------------------------------
+const PATH_WWW = _PATH.join(__dirname, 'www/');
+
+const express = require('express');
+const app = express();
+const http = require('http');
+const bodyParser = require('body-parser');
+const serverHttp = http.createServer(app);
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use('/', express.static('www'))
+serverHttp.listen(__SETTING.HTTP_PORT, () => {
+    console.log('HTTP_PORT = ' + __SETTING.HTTP_PORT);
+});
 //------------------------------------------------------------------------
 let grpc = require("grpc");
 var protoLoader = require("@grpc/proto-loader");
-const server = new grpc.Server();
+const serverGrpc = new grpc.Server();
 let packageDefinition = grpc.loadPackageDefinition(protoLoader.loadSync("./proto/iofile.proto", { keepCase: true, longs: String, enums: String, defaults: true, oneofs: true }));
 //------------------------------------------------------------------------
 const __md_defines = {};
@@ -19,7 +38,7 @@ const __ix_asciis = [];
 const __ix_orginals = [];
 
 function _itemIndexing(it) {
-    const mf_defines = require('./data/mf_defines.json');
+    const mf_defines = require('./setting/mf_defines.json');
 
 }
 
@@ -47,7 +66,7 @@ function _itemAdd(it) {
 
     _itemIndexing(it);
 
-    return { __ok: true, __id = __id, __ix = __ix, __md = model };
+    return { __ok: true, __id: __id, __ix: __ix, __md: model };
 }
 
 function _cacheAdd(v) {
@@ -164,13 +183,11 @@ function _apiCall(call, callback) {
 
 
 
-server.addService(packageDefinition.iofile.IoService.service, {
+serverGrpc.addService(packageDefinition.iofile.IoService.service, {
     ioLinkUpdate: _ioLinkUpdate,
     //getFile: _getFile,
     //apiCall: _apiCall
 });
-server.bind(__SETTING.GRPC, grpc.ServerCredentials.createInsecure());
-server.start();
+serverGrpc.bind(__SETTING.GRPC, grpc.ServerCredentials.createInsecure());
+serverGrpc.start();
 console.log('GRPC_READY: ' + __SETTING.GRPC + '\r\n');
-
-

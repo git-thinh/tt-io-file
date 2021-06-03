@@ -1,0 +1,20 @@
+{
+  "user.user_name": {
+    "title": "User name",
+    "description": "",
+    "kit_type": "text",
+    "max_length": 255
+  },
+  "user.password": {
+    "title": "Password",
+    "description": "",
+    "kit_type": "password",
+    "max_length": 255
+  },
+  "user.status": {
+    "title": "Status",
+    "description": "",
+    "kit_type": "status_",
+    "max_length": 255
+  }
+}
