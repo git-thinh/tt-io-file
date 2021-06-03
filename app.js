@@ -8,6 +8,7 @@ const _FS = require('fs');
 const _PATH = require('path');
 const _URL = require('url');
 //------------------------------------------------------------------------
+global.PATH_ROOT = __dirname + '\\';
 const PATH_WWW = _PATH.join(__dirname, 'www/');
 
 const express = require('express');
@@ -19,7 +20,29 @@ const serverHttp = http.createServer(app);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/', express.static('www'))
+//app.use('/', express.static('www'));
+
+app.get('/', (req, res) => {
+    _FS.readdir(PATH_ROOT + 'test/', (err, files) => {
+        if (err == null) {
+            var s = '<!DOCTYPE html><html><head><title>Home</title><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body>';
+            files.forEach(file => {
+                s += '<h3><a href="/test/' + file + '" target="_blank">' + file.substr(0, file.length - 5) + '</a></h3>';
+            });
+            s += '</body></html>';
+            return res.end(s);
+        }
+        res.end('OK');
+    });
+});
+app.get('/test/:page', (req, res) => {
+    const file = PATH_ROOT + 'test/' + req.params.page;
+    if (_FS.existsSync(file)) res.sendFile(file);
+    else res.status(404).send('Not found');
+});
+
+require('./api/theme.js').init(app);
+
 serverHttp.listen(__SETTING.HTTP_PORT, () => {
     console.log('HTTP_PORT = ' + __SETTING.HTTP_PORT);
 });

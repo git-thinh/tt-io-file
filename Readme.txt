@@ -1,5 +1,5 @@
-﻿UI = git-thinh/iot-cache
-
+﻿git-thinh/iot-cache
+git-thinh/node-cloud
 
 https://adityasridhar.com/posts/how-to-easily-use-grpc-and-protocol-buffers-with-nodejs
 

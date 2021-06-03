@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Test Theme</title>
+    <style type="text/css">
+        body {
+            padding: 30px;
+        }
+
+        input[type=text] {
+            width: calc(100% - 60px);
+        }
+    </style>
+</head>
+<body style="padding:30px;">
+    <h1>Api Getting Resources</h1>
+    <form method="get" action="/api/theme/get_resources">
+        <input name="url" type="text" value="https://themes.getbootstrap.com/" />
+        <button type="submit">submit</button>
+    </form>
+    <hr />
+</body>
+</html>
