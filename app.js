@@ -3,10 +3,36 @@ const __SETTING = require('./setting.json')[__ENV];
 console.log('PATH = ' + __dirname);
 console.log(__SETTING);
 //------------------------------------------------------------------------
-const _ = require('lodash');
-const _FS = require('fs');
-const _PATH = require('path');
-const _URL = require('url');
+global.__API = {};
+global._ = require('lodash');
+global._FS = require('fs');
+global._PATH = require('path');
+global._URL = require('url');
+//------------------------------------------------------------------------
+global._LZ4 = require('lz4');
+global._FETCH = require('node-fetch');
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+global._PUPPETEER = require('puppeteer');
+//------------------------------------------------------------------------
+const REDIS = require("ioredis");
+global._REDIS_WRITE = new REDIS(__SETTING.REDIS_WRITE);
+global._REDIS_READ = new REDIS(__SETTING.REDIS_READ);
+global._REDIS_PUBSUB = new REDIS(__SETTING.REDIS_PUBSUB);
+//------------------------------------------------------------------------
+global.__apiResponse = function (data, res) {
+    if (res) res.json(data);
+    else return data;
+}
+global.__apiLz4ObjectJson = function (obj) {
+    if (obj == null || typeof obj != 'object') return null;
+    const json = JSON.stringify(obj);
+    const buf = Buffer.from(json);
+    const lz4 = _LZ4.encode(buf);
+    return lz4;
+}
+__API.pdf = require('./api/pdf.js');
+__API.curl = require('./api/curl.js');
+__API.theme = require('./api/theme.js');
 //------------------------------------------------------------------------
 global.PATH_ROOT = __dirname + '\\';
 const PATH_WWW = _PATH.join(__dirname, 'www/');
@@ -40,11 +66,15 @@ app.get('/test/:page', (req, res) => {
     if (_FS.existsSync(file)) res.sendFile(file);
     else res.status(404).send('Not found');
 });
-
-require('./api/theme.js').init(app);
+app.get('/api/:module/:command', (req, res) => {
+    const module = req.params.module;
+    const cmd = req.params.command;
+    if (__API[module] && __API[module][cmd]) __API[module][cmd](req, res);
+    else res.status(404).send('Not found');
+});
 
 serverHttp.listen(__SETTING.HTTP_PORT, () => {
-    console.log('HTTP_PORT = ' + __SETTING.HTTP_PORT);
+    console.log('HTTP_PORT = ' + __SETTING.HTTP_PORT + '\r\n');
 });
 //------------------------------------------------------------------------
 let grpc = require("grpc");
@@ -92,7 +122,7 @@ function _itemAdd(it) {
     return { __ok: true, __id: __id, __ix: __ix, __md: model };
 }
 
-function _cacheAdd(v) {
+__API._cacheAdd = function (v) {
     if (v == null || typeof v != 'object') return;
     if (Array.isArray(v)) {
         var rs = [];
@@ -106,16 +136,18 @@ function _cacheAdd(v) {
     }
 }
 
-function _cacheUpdate(v) {
+__API._cacheUpdate = function (v) {
     if (v == null || typeof v != 'object') return;
     if (Array.isArray(v)) {
         for (var i = 0; i < v.length; i++) {
+            ;
         }
     } else {
+        ;
     }
 }
 
-function _cacheRemove(v) {
+__API._cacheRemove = function (v) {
     if (v == null || typeof v != 'number' || Array.isArray(v) == false) return;
     if (Array.isArray(v)) {
         const ixs = _.filter(_.map(__it_ids, function (x, k) {
@@ -213,4 +245,8 @@ serverGrpc.addService(packageDefinition.iofile.IoService.service, {
 });
 serverGrpc.bind(__SETTING.GRPC, grpc.ServerCredentials.createInsecure());
 serverGrpc.start();
-console.log('GRPC_READY: ' + __SETTING.GRPC + '\r\n');
+console.log('GRPC_READY: ' + __SETTING.GRPC);
+
+async function __exit() {
+    await _BROWSER.close();
+}

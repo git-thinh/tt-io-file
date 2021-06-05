@@ -5,12 +5,16 @@
   },
   "DEV": {
     "HTTP_PORT": 33000,
-    "REDIS_CONNECT": "redis://127.0.0.1:1000/15",
+    "REDIS_WRITE": "redis://127.0.0.1:1000/0",
+    "REDIS_READ": "redis://127.0.0.1:1000/0",
+    "REDIS_PUBSUB": "redis://127.0.0.1:1000/0",
     "GRPC": "127.0.0.1:33555"
   },
   "PROD": {
     "HTTP_PORT": 55000,
-    "REDIS_CONNECT": "redis://127.0.0.1:1000/1",
+    "REDIS_WRITE": "redis://127.0.0.1:1000/1",
+    "REDIS_READ": "redis://127.0.0.1:1000/1",
+    "REDIS_PUBSUB": "redis://127.0.0.1:1000/1",
     "GRPC": "127.0.0.1:55333"
   }
 }

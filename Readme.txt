@@ -5,6 +5,7 @@ https://adityasridhar.com/posts/how-to-easily-use-grpc-and-protocol-buffers-with
 
 
 npm install node-windows express ioredis lodash grpc @grpc/proto-loader
+npm install lz4 node-fetch puppeteer grpc @grpc/proto-loader
 
 
 ------------------------------------------------------------------
