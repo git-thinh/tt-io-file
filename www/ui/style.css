@@ -2,10 +2,16 @@
     min-height: 100vh;
     min-height: -webkit-fill-available;
     overflow: hidden;
+    font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
 
 html {
     height: -webkit-fill-available;
+}
+
+.ui.card > .content > .header,
+.ui.cards > .card > .content > .header {
+    font-family: inherit;
 }
 
 a {

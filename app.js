@@ -1,8 +1,9 @@
 ﻿const __ENV = process.env.__ENV || 'DEV';
 const __SETTING = require('./setting.json')[__ENV];
-console.log('PATH = ' + __dirname);
 console.log(__SETTING);
 //------------------------------------------------------------------------
+global._ROOT = __dirname + '\\';
+console.log('_ROOT = ' + _ROOT);
 global.__API = {};
 global._ = require('lodash');
 global._FS = require('fs');
@@ -33,6 +34,7 @@ global.__apiLz4ObjectJson = function (obj) {
 __API.pdf = require('./api/pdf.js');
 __API.curl = require('./api/curl.js');
 __API.theme = require('./api/theme.js');
+__API.article = require('./api/article.js');
 //------------------------------------------------------------------------
 global.PATH_ROOT = __dirname + '\\';
 const PATH_WWW = _PATH.join(__dirname, 'www/');

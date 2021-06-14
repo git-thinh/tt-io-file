@@ -129,13 +129,17 @@ function __jsi(id, url, callback) {
     document.head.appendChild(script);
 }
 
-function __fetchAsync(url) {
+function __fetchAsync(url, type) {
+    type = type || 'text';
     return new Promise((resolve, reject) => {
         fetch(url).then(function (r) {
-            if (r.ok) resolve(r.text());
-            else resolve('');
+            if (r.ok) {
+                if (type == 'json') resolve(r.json()); else resolve(r.text());
+            } else {
+                if (type == 'json') resolve(null); else resolve('');
+            }
         }).catch(() => {
-            resolve('');
+            if (type == 'json') resolve(null); else resolve('');
         });
     });
 }

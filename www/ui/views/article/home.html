@@ -1,14 +1,6 @@
 ﻿<div class="d-inline-block w-100 position-relative vh-100">
     <div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">
-        <div class="ui card ui-masonry-item" v-for="m in __vdata.message.items">
-            <div class="content">
-                <div class="right floated meta">
-                    <i class="edit icon"></i>
-                </div>
-                <svg class="bi ui avatar image" width="8" height="8"><use xlink:href="#icon-user" /></svg>
-                <!--<i class="user icon"></i>-->
-                {{m.user}}
-            </div>
+        <div class="ui card ui-masonry-item" v-for="m in articles">            
             <div class="image" v-show="m.img_thumbnail != null">
                 <img class="card-img-top" :src="m.img_thumbnail" />
             </div>
@@ -18,9 +10,19 @@
                     <span class="date">Joined in 2013</span>
                 </div>
                 <div class="description">
-                    {{m.text}}
+                    {{getDescription(m.text)}}
                 </div>
             </div>
+
+
+            <div class="ui fluid multiple search selection dropdown content ui-dropdown-MultipleSearchSelection">
+                <!--<div class="ui clearable multiple selection dropdown content ui-dropdown-MultipleSearchSelection">-->
+                <input type="hidden" name="language" value="dutch,english,french">
+                <i class="dropdown icon"></i>
+                <div class="default text">Select Languages</div>
+                <div class="menu"></div>
+            </div>
+
             <div class="content">
                 <span class="right floated">
                     <i class="heart outline like icon"></i>
@@ -28,12 +30,6 @@
                 </span>
                 <i class="comment icon"></i>
                 3 comments
-            </div>
-            <div class="extra content">
-                <div class="ui large transparent left icon input">
-                    <i class="heart outline icon"></i>
-                    <input type="text" placeholder="Add Comment...">
-                </div>
             </div>
         </div>
     </div>
