@@ -1,0 +1,41 @@
+﻿<div class="d-inline-block w-100 position-relative vh-100">
+    <div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">
+        <div class="ui card ui-masonry-item" v-for="m in __vdata.message.items">
+            <div class="content">
+                <div class="right floated meta">
+                    <i class="edit icon"></i>
+                </div>
+                <svg class="bi ui avatar image" width="8" height="8"><use xlink:href="#icon-user" /></svg>
+                <!--<i class="user icon"></i>-->
+                {{m.user}}
+            </div>
+            <div class="image" v-show="m.img_thumbnail != null">
+                <img class="card-img-top" :src="m.img_thumbnail" />
+            </div>
+            <div class="content">
+                <a class="header">{{m.title}}</a>
+                <div class="meta">
+                    <span class="date">Joined in 2013</span>
+                </div>
+                <div class="description">
+                    {{m.text}}
+                </div>
+            </div>
+            <div class="content">
+                <span class="right floated">
+                    <i class="heart outline like icon"></i>
+                    17 likes
+                </span>
+                <i class="comment icon"></i>
+                3 comments
+            </div>
+            <div class="extra content">
+                <div class="ui large transparent left icon input">
+                    <i class="heart outline icon"></i>
+                    <input type="text" placeholder="Add Comment...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

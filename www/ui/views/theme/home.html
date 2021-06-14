@@ -1,0 +1,12 @@
+﻿<div class="d-inline-block w-100 position-relative vh-100">
+    <div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">
+        <div class="card ui-masonry-item" v-for="theme in theme_collection">
+            <div class="image">
+                <img class="card-img-top" :src="theme.image" />
+            </div>
+            <div class="extra">
+                <strong class="text-capitalize">{{theme.title}}</strong>
+            </div>
+        </div>
+    </div>
+</div>

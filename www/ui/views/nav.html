@@ -1,0 +1,66 @@
+﻿<nav class="d-flex flex-column flex-shrink-0 p-3 bg-light">
+    <div class="nav-link link-dark ui icon top left pointing dropdown button bg-transparent p-0" style="z-index:999;">
+        <div class="btn d-flex align-items-center link-dark text-decoration-none dropdown-toggle position-relative p-0"
+             onclick="$(this.parentElement).dropdown();">
+            <svg class="me-1" width="32" height="32"><use :xlink:href="'#icon-'+scope_current.icon" /></svg>
+            <strong>{{scope_current.title}}</strong>
+        </div>
+        <div class="menu mt-1" style="width:450px !important;">
+            <div class="item float-start" v-for="v in __vdata.scopes" v-on:click="__bindFunctionClick(v, event)"
+                 style="width: 149px !important">
+                <svg class="ui mini image pt-1 me-1" width="16" height="16"><use :xlink:href="'#icon-'+v.icon" /></svg>
+                {{v.title}}
+            </div>
+        </div>
+    </div>
+    <div class="ui top right pointing dropdown px-2 pb-0 pt-2" v-show="scope_actions.length > 0">
+        <i class="float-end icon ellipsis horizontal" onclick="$(this.parentElement).dropdown();"></i>
+        <div class="menu">
+            <div class="item" v-for="v in scope_actions" v-on:click="__bindFunctionClick(v, event)"
+                 style="width: 149px !important">
+                {{v.title}}
+            </div>
+        </div>
+    </div>
+    <div class="ui left icon input mt-0 mb-1" style="width:136px;z-index:0;">
+        <input type="text" placeholder="Search ...">
+        <i class="circular search link icon"></i>
+    </div>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li v-for="v in scope_navs"
+            :class="[v.code == 'hr' ? 'border-top my-1':'nav-item d-inline-block']">
+            <a v-if="v.code != 'hr'" v-on:click="__bindFunctionClick(v, event)"
+               :class="['ui-item nav-link position-relative d-inline-block ps-2 pe-1 '+v.code, (v.code == view_current$ && v.popup != true) ? 'active' : 'link-dark']">
+                <svg class="bi" width="16" height="16"><use :xlink:href="'#icon-'+v.icon" /></svg>
+                <span>{{v.title}}</span>
+                <span v-if="v.code == 'message'"
+                      class="translate-middle badge rounded-pill bg-danger ms-3 mt-2">
+                    {{__vdata.message.unread}} <span class="visually-hidden">unread messages</span>
+                </span>
+            </a>
+        </li>
+        <li class="border-top my-1"></li>
+        <li>
+            <div v-if="__vdata.login" class="nav-link link-dark ui icon top left pointing dropdown button bg-transparent p-2">
+                <button class="btn d-flex align-items-center link-dark text-decoration-none dropdown-toggle position-relative p-0"
+                        onclick="$(this.parentElement).dropdown();">
+                    <svg class="bi rounded-circle" width="24" height="24"><use xlink:href="#icon-user" /></svg>
+                    <strong>{{__vdata.user.user_name}}</strong>
+                    <span class="position-absolute top-0 start-0 translate-middle badge border border-light rounded-circle bg-primary p-1">
+                        <span class="visually-hidden"></span>
+                    </span>
+                </button>
+                <div class="menu me-1">
+                    <div v-for="v in menus_user_panel" :class="[v.code == 'hr' ? 'divider' : 'item']" v-on:click="__bindFunctionClick(v, event)">
+                        <svg class="icon me-2" width="16" height="16"><use :xlink:href="'#icon-'+v.icon" /></svg>
+                        {{v.title}}
+                    </div>
+                </div>
+            </div>
+            <a v-else href="javascript:__vg('_login')" class="nav-link link-dark">
+                <svg class="bi" width="16" height="16"><use xlink:href="#icon-user-circle"></use></svg>
+                Login
+            </a>
+        </li>
+    </ul>
+</nav>
