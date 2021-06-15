@@ -7,7 +7,7 @@ async function get_filter(req, res) {
             fs.readdirSync(_ROOT + 'raw\\' + dir).forEach(name => {
                 const s = fs.readFileSync(_ROOT + 'raw\\' + dir + '\\' + name).toString('utf8');
                 const a = s.split('\n');
-                items.push({ key: name, path: 'raw\\' + dir + '\\' + name, tag: a[1].split(','), title: a[0].trim(), text: s });
+                items.push({ publish: true, key: name, path: 'raw\\' + dir + '\\' + name, tag: a[1].split(','), title: a[0].trim(), text: s });
                 //console.log(name);
             })
         });

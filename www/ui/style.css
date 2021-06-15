@@ -9,9 +9,37 @@ html {
     height: -webkit-fill-available;
 }
 
+.cursor-pointer {
+    cursor: pointer !important;
+}
+.opacity-0 {
+    opacity: 0 !important;
+}
+
+.opacity-25 {
+    opacity: .25 !important;
+}
+
+.opacity-50 {
+    opacity: .5 !important;
+}
+
+.opacity-75 {
+    opacity: .75 !important;
+}
+
+.opacity-100 {
+    opacity: 1 !important;
+}
+
 .ui.card > .content > .header,
 .ui.cards > .card > .content > .header {
     font-family: inherit;
+}
+
+.ui.label {
+    background-color: transparent;
+    font-weight: normal;
 }
 
 a {
@@ -43,9 +71,10 @@ div[ui-view] {
 .ui.stacked.segments:before {
     height: 4px;
 }
-.ui.form .error.message, 
+
+.ui.form .error.message,
 .ui.form .error.message:empty {
-     display: block; 
+    display: block;
 }
 
 .main-page {
@@ -81,9 +110,11 @@ div[ui-view] {
 body.uib-login {
     background-color: #DADADA;
 }
+
     body.uib-login #main-left {
         display: none;
     }
+
     body.uib-login #main-body {
         width: 100%;
     }

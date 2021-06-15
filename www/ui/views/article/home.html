@@ -1,11 +1,14 @@
 ﻿<div class="d-inline-block w-100 position-relative vh-100">
     <div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">
-        <div class="ui card ui-masonry-item" v-for="m in articles">            
+        <div class="ui card ui-masonry-item" v-for="(m,index) in articles">
+            <div class="position-absolute top-0 cursor-pointer" style="right:0;" v-on:click="editClick(m)">
+                <i :class="['checkmark icon', index % 3 == 0 ? 'opacity-25':'text-primary']"></i>
+            </div>
             <div class="image" v-show="m.img_thumbnail != null">
                 <img class="card-img-top" :src="m.img_thumbnail" />
             </div>
             <div class="content">
-                <a class="header">{{m.title}}</a>
+                <a class="header" v-on:click="editClick(m)">{{m.title}}</a>
                 <div class="meta">
                     <span class="date">Joined in 2013</span>
                 </div>
@@ -14,22 +17,14 @@
                 </div>
             </div>
 
-
-            <div class="ui fluid multiple search selection dropdown content ui-dropdown-MultipleSearchSelection">
+            <div class="ui fluid multiple search selection dropdown content border-0 ui-dropdown-MultipleSearchSelection">
                 <!--<div class="ui clearable multiple selection dropdown content ui-dropdown-MultipleSearchSelection">-->
                 <input type="hidden" name="language" value="dutch,english,french">
-                <i class="dropdown icon"></i>
-                <div class="default text">Select Languages</div>
+                <div class="default text" style="width:calc(100% - 32px);">Select tags</div>
+                <div class="position-absolute top-0" style="right:0;">
+                    <i class="tag icon opacity-25"></i>
+                </div>
                 <div class="menu"></div>
-            </div>
-
-            <div class="content">
-                <span class="right floated">
-                    <i class="heart outline like icon"></i>
-                    17 likes
-                </span>
-                <i class="comment icon"></i>
-                3 comments
             </div>
         </div>
     </div>

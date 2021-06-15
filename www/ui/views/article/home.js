@@ -12,7 +12,7 @@
                 console.log(r);
                 if (r && r.ok && r.items) {
                     self.articles = r.items;
-                    self.uiSetup();
+                    Vue.nextTick(function () { self.uiSetup(); });                    
                 }
             });
         },
@@ -49,5 +49,10 @@
         getFilter: function(callback) {
             __fetchAsync('api/article/get_filter', 'json').then(r => callback(r));
         },
+        editClick: function(article) {
+            __vcp({ code: 'edit', scope: __scope, popup: true, title: 'Update: ' + article.title }, null, function (v) {
+                v.$data.article = JSON.parse(JSON.stringify(article));
+            });
+        }
     }
 }

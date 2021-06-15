@@ -270,6 +270,7 @@ function __vcp(vcf, template, callback) {
             $(self.$el).modal({ closable: false, centered: true, }).modal('show');
         } if (typeof self.__init == 'function') self.__init();
 
+        self.$data.view = vcf;
         if (callback) callback(self);
     }).catch(function () {
         if (callback) callback(null);
