@@ -1,11 +1,11 @@
-﻿var __scope = 'article'; var __path = '/ui/views/';
+﻿var __scope = 'document'; var __path = '/ui/views/';
 var __vdata = new Vue({
     data: function () {
         return {
             login: true,
             scope_setting: {
                 login: { code: 'login', base: true, template: 'login2', popup: true },
-                article: {
+                document: {
                     admin: [
                         { code: 'nav', base: true, selector: '#main-left' },
                         { code: 'home' },
@@ -43,6 +43,7 @@ var __vdata = new Vue({
                 total: 12345
             },
             scopes: [
+                { code: 'document', title: 'Document', icon: 'article' },
                 { code: 'task', title: 'Task', icon: 'check-list' },
                 { code: 'chat', title: 'Chat', icon: 'chat' },
                 { code: 'email', title: 'Email', icon: 'email' },
@@ -50,7 +51,6 @@ var __vdata = new Vue({
                 { code: 'product', title: 'Product', icon: 'product' },
                 { code: 'promotion', title: 'Promotion', icon: 'gift' },
                 { code: 'landing', title: 'Landing', icon: 'landing' },
-                { code: 'article', title: 'Article', icon: 'article' },
                 { code: 'job', title: 'Job', icon: 'job' },
                 { code: 'book', title: 'Find Book', icon: 'find-book' },
                 { code: 'english', title: 'English', icon: 'lightning' },

@@ -34,7 +34,7 @@ global.__apiLz4ObjectJson = function (obj) {
 __API.pdf = require('./api/pdf.js');
 __API.curl = require('./api/curl.js');
 __API.theme = require('./api/theme.js');
-__API.article = require('./api/article.js');
+__API.document = require('./api/document.js');
 //------------------------------------------------------------------------
 global.PATH_ROOT = __dirname + '\\';
 const PATH_WWW = _PATH.join(__dirname, 'www/');
@@ -49,6 +49,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use('/', express.static('www'));
+app.use('/static/theme', express.static('./raw/theme'));
 app.get('/login', (req, res) => res.sendFile(PATH_WWW + 'ui/login.html'));
 app.get('/admin', (req, res) => res.sendFile(PATH_WWW + 'ui/admin.html'));
 

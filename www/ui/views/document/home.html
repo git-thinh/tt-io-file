@@ -1,0 +1,40 @@
+﻿<div class="d-inline-block w-100 position-relative vh-100">
+    <div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">
+        <div class="ui card ui-masonry-item" v-for="(m,index) in items">
+            <div class="position-absolute top-0 cursor-pointer" style="right:0;" v-on:click="doc_editClick(m)">
+                <i :class="['checkmark icon', index % 3 == 0 ? 'opacity-25':'text-primary']" style="font-size:0.7em;"></i>
+            </div>
+            <div class="image" v-show="m.image != null">
+                <img class="card-img-top rounded-top" :src="m.image" />
+            </div>
+            <div class="content">
+                <a class="header" v-on:click="doc_editClick(m)">
+                    <i :class="['icon me-0 ps-0',m.icon]"></i>
+                    {{m.title}}
+                </a>
+                <div class="meta">
+                    <span class="date float-start text-capitalize">{{m.type}}</span>
+                    <span class="date float-end">Joined in 2013</span>
+                </div>
+                <div v-if="m.type == 'article' || m.type == 'book'" class="description mt-1">
+                    {{doc_getDescription(m.data)}}
+                </div>
+            </div>
+            <div class="content border-top-0 p-0 px-3 text-end">
+                <span class="ui label border text-capitalize mb-1">{{m.type}}</span>
+                <span class="ui label border text-capitalize mb-1" v-for="tag in doc_getTags(m)">{{tag}}</span>
+            </div>
+
+            <!--<div class="ui fluid multiple search selection dropdown content border-0 ui-dropdown-MultipleSearchSelection">
+                <input type="hidden" name="language" value="dutch,english,french">
+                <div class="default text" style="width:calc(100% - 32px);">Select tags</div>
+                <div class="position-absolute top-0" style="right:0;">
+                    <i class="tag icon opacity-25"></i>
+                </div>
+                <div class="menu"></div>
+            </div>-->
+            <div class="p-2"></div>
+        </div>
+    </div>
+
+</div>
