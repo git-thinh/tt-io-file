@@ -22,7 +22,7 @@
     <div class="row w-100 m-0 p-0 pb-3 position-relative" style="height: calc(100vh - 120px); overflow-x: hidden; overflow-y: auto;">
 
         <div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">
-            <div class="ui card ui-masonry-item" v-for="(m,index) in links">
+            <div class="ui card ui-masonry-item" v-for="(m,index) in articles">
                 <div class="position-absolute top-0 cursor-pointer" style="right:0;" v-on:click="doc_editClick(m)">
                     <i :class="['checkmark icon', m.active ? 'text-primary':'opacity-25']" style="font-size:0.7em;"></i>
                 </div>
@@ -40,7 +40,8 @@
                 </div>
 
                 <div class="content border-top-0 p-0 px-3 text-end">
-                    <span class="ui label border text-capitalize mb-1" v-on:click="openLink(m)">Open</span>
+                    <span class="ui label border text-capitalize cursor-pointer mb-1" v-on:click="openLink(m)">Open</span>
+                    <span v-show="m.data.length > 0" class="ui label border text-capitalize cursor-pointer mb-1" v-on:click="openEditArticle(m)">Edit</span>
                 </div>
 
                 <div class="p-2"></div>

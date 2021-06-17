@@ -2,15 +2,15 @@
     data: function() {
         return {
             view: { title: '' },
-            links: [],
-            //url: 'https://vnexpress.net/',
-            url: 'https://zingnews.vn/',
+            articles: [],
+            url: 'https://vnexpress.net/',
+            //url: 'https://zingnews.vn/',
             loading: false,
             error: ''
         };
     },
     watch: {
-        'url': function (val) {
+        url: function (val) {
             var url;
             try { url = new URL(val); } catch (e) { }
             //console.log(url);
@@ -42,22 +42,35 @@
             window.open(link.href);
         },
         fetchArticle: function(link) {
-            fetch('/curl?url=' + link.href).then(r => r.text()).then(htmlString => {
-                var parser = new DOMParser();
-                var doc = parser.parseFromString(htmlString, "text/html");
-                var s = '';
-                doc.querySelectorAll('h1').forEach(el => {
-                    if (el.textContent == link.title) {
-                        s = '';
-                        el.parentElement.childNodes.forEach(li => {
-                            var si = li.innerText || '';
-                            if (s.length > 0) s += '\n' + si;
-                            if (si == link.title) s = ' ';
-                        });
-                        console.log(s);
-                        return true;
+            link.data = '';
+            return new Promise((resolve, reject) => {
+                __fetchAsync('/curl?url=' + link.href).then(htmlString => {
+                    if (htmlString.length == 0) {
+                        resolve(link);
+                        return;
                     }
-                })
+
+                    var parser = new DOMParser();
+                    var doc = parser.parseFromString(htmlString, "text/html");
+                    var s = '';
+                    doc.querySelectorAll('h1').forEach(el => {
+                        var h1Text = el.textContent || '';
+                        if (h1Text.length > 0
+                            && (h1Text == link.title || h1Text == link.text)) {
+                            s = '';
+                            el.parentElement.childNodes.forEach(li => {
+                                var si = li.innerText || '';
+                                if (s.length > 0) s += '\n' + si;
+                                if (si == link.title) s = ' ';
+                            });
+                            //console.log(s);
+                            link.data = s;
+                            resolve(link);
+                            return true;
+                        }
+                    });
+                    resolve(link);
+                });
             });
         },
         getSourceUrl: function () {
@@ -68,7 +81,7 @@
             }
             self.loading = true;
 
-            fetch('/curl?url=' + self.url).then(r => r.text()).then(htmlString => {
+            __fetchAsync('/curl?url=' + self.url).then(htmlString => {
                 var uri = new URL(self.url);
                 var host = uri.protocol + '//' + uri.host + '/';
 
@@ -79,7 +92,7 @@
                 var doc = parser.parseFromString(htmlString, "text/html");
 
                 var links = doc.querySelectorAll('a');
-                var ls1 = [];
+                var ls = [];
                 for (var i = 0; i < links.length; i++) {
                     var el = links[i],
                         s = el.innerHTML,
@@ -90,57 +103,48 @@
 
                     text = text.split('\n').join(' ').trim();
 
-                    //if ((s.indexOf('picture') != -1 || (s.indexOf('img') != -1))
-                    //    && (s.indexOf('src') != -1 || s.indexOf('data-src') != -1 || s.indexOf('srcset') != -1)) {
-                    //    //console.log(s);
-                    //    //var a = s.split('"');
-                    //    //a = _.filter(x, x => x.indexOf)
-                    //}
-
                     if (text.length > 0) {
                         if (href.indexOf('http') != 0) {
                             if (href[0] == '/') href = href.substr(1);
                             href = host + href;
                         }
 
-                        //var si = '';
-                        //el.querySelectorAll('*').forEach(eli => {
-                        //    si += ' ' + (eli.innerText || '');
-                        //    eli.parentNode.removeChild(eli);
-                        //});
-                        //si = (si + ' ' + (el.innerText || '').trim()).trim();
-                        //if (text != si) text = si;
-
-                        ls1.push({ text: text, href: href });
+                        ls.push({ text: text, href: href });
                     }
                 }
-                //ls1 = _.uniqBy(ls1, 'href');
-                //ls1 = _.sortBy(ls1, x => x.href);
+                //ls = _.uniqBy(ls, 'href');
+                //ls = _.sortBy(ls, x => x.href);
 
-                var gs = _.groupBy(ls1, x => x.href);
-                ls1 = [];
+                var gs = _.groupBy(ls, x => x.href);
+                ls = [];
                 for (gi in gs) {
                     var lks = _.uniqBy(gs[gi], 'text');
-                    if (lks.length == 1) ls1.push({ title: lks[0].text, text: '', href: lks[0].href, active: false });
+                    if (lks.length == 1) ls.push({ title: lks[0].text, text: '', href: lks[0].href, active: false });
                     else {
                         var s_ = '';
                         for (var i = 1; i < lks.length; i++) s_ += ' \n' + lks[i].text;
-                        ls1.push({ title: lks[0].text, text: s_.trim(), href: gi, active: false });
+                        ls.push({ title: lks[0].text, text: s_.trim(), href: gi, active: false });
                     }
                 };
 
-                ls1 = _.filter(ls1, x => x.title.split(' ').length > 3 || x.text.split(' ').length > 3);
-                console.log(ls1);
+                ls = _.filter(ls, x => localStorage[x.href] == null
+                    && (x.title.split(' ').length > 3 || x.text.split(' ').length > 3));
+                ls = _.filter(ls, (x, i) => i == 0);
 
-                ls1.forEach((lk, i) => {
-                    if (i > 0) return false;
-                    console.log(lk);
-                    self.fetchArticle(lk);
+                var fets = _.map(ls, x => self.fetchArticle(x));
+                Promise.all(fets).then(results => {
+                    var arr = _.filter(results, x => x.data.length > 0);
+                    //console.log(arr);
+
+                    self.articles = arr;
+                    self.loading = false;
+                    self.uiSetup();
                 });
-
-                self.links = ls1;
-                self.loading = false;
-                self.uiSetup();
+            });
+        },
+        openEditArticle: function(article) {
+            __vcp({ code: 'edit', scope: __scope, popup: true, title: 'Update: ' + article.title }, null, function (v) {
+                v.$data.article = JSON.parse(JSON.stringify(article));
             });
         }
     }
