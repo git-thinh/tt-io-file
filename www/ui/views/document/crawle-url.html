@@ -19,7 +19,35 @@
             </div>
         </div>
     </div>
-    <div class="row w-100 m-0 p-0 pb-3" style="height:calc(100vh - 120px);"></div>
+    <div class="row w-100 m-0 p-0 pb-3 position-relative" style="height: calc(100vh - 120px); overflow-x: hidden; overflow-y: auto;">
+
+        <div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">
+            <div class="ui card ui-masonry-item" v-for="(m,index) in links">
+                <div class="position-absolute top-0 cursor-pointer" style="right:0;" v-on:click="doc_editClick(m)">
+                    <i :class="['checkmark icon', m.active ? 'text-primary':'opacity-25']" style="font-size:0.7em;"></i>
+                </div>
+                <div class="image" v-show="m.image != null">
+                    <img class="card-img-top rounded-top" :src="m.image" />
+                </div>
+                <div class="content">
+                    <a class="header" v-on:click="doc_editClick(m)">
+                        <i class="file alternate outline icon me-0 ps-0 opacity-25"></i>
+                        {{m.title}}
+                    </a>
+                    <div v-show="m.text.length > 0" class="description mt-1" style="line-height:19px;">
+                        {{m.text}}
+                    </div>
+                </div>
+
+                <div class="content border-top-0 p-0 px-3 text-end">
+                    <span class="ui label border text-capitalize mb-1" v-on:click="openLink(m)">Open</span>
+                </div>
+
+                <div class="p-2"></div>
+            </div>
+        </div>
+
+    </div>
     <div class="actions text-end">
         <div class="ui black button" v-on:click="__popupClose">
             Cancel

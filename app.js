@@ -55,10 +55,15 @@ app.get('/admin', (req, res) => res.sendFile(PATH_WWW + 'ui/admin.html'));
 
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
+const virtualConsole = new jsdom.VirtualConsole();
+
 app.get('/curl', (req, res) => {
     const url = req.query.url;
-    console.log(url);
-    JSDOM.fromURL(url, {}).then(dom => {
+    //console.log(url);
+    JSDOM.fromURL(url, { virtualConsole }).then(dom => {
+        const document = dom.window.document;
+        let ns = document.querySelectorAll('style, link, script, meta, noscript, iframe');
+        ns.forEach(el => el.parentNode.removeChild(el));
         const html = dom.serialize();
         //_FS.writeFileSync('1.html', html);
         res.end(html);
