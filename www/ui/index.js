@@ -262,6 +262,7 @@ function __vcp(vcf, template, callback) {
         $(self.$el).addClass('ui-view').addClass(code);
         if (vcf.base == true) $(self.$el).addClass('base');
         else $(self.$el).addClass(__scope);
+        if (vcf.class != null && vcf.class.length > 0) $(self.$el).addClass(vcf.class);
 
         var id = code + '-' + (new Date().getTime());
         if (!self.$el.hasAttribute('id')) self.$el.setAttribute('id', id);
@@ -270,6 +271,7 @@ function __vcp(vcf, template, callback) {
             $(self.$el).modal({ closable: false, centered: true, }).modal('show');
         } if (typeof self.__init == 'function') self.__init();
 
+        console.log('__vcp = ' + code);
         self.$data.view = vcf;
         if (callback) callback(self);
     }).catch(function () {
@@ -321,5 +323,7 @@ function __init() {
 window.addEventListener('DOMContentLoaded', __init);
 
 function __test_Stub() {
-    __vg('import-files');
+    //debugger;
+    //__vg('import-files');
+    __vg('crawle-url');
 }

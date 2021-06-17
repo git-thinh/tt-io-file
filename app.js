@@ -53,6 +53,18 @@ app.use('/static/theme', express.static('./raw/theme'));
 app.get('/login', (req, res) => res.sendFile(PATH_WWW + 'ui/login.html'));
 app.get('/admin', (req, res) => res.sendFile(PATH_WWW + 'ui/admin.html'));
 
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+app.get('/curl', (req, res) => {
+    const url = req.query.url;
+    console.log(url);
+    JSDOM.fromURL(url, {}).then(dom => {
+        const html = dom.serialize();
+        //_FS.writeFileSync('1.html', html);
+        res.end(html);
+    });
+});
+
 //app.get('/', (req, res) => {
 //    _FS.readdir(PATH_ROOT + 'test/', (err, files) => {
 //        if (err == null) {

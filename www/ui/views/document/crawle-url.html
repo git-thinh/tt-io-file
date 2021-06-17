@@ -1,0 +1,32 @@
+﻿<div class="ui form bg-white p-3 w-100 vh-100">
+    <div class="ui dividing header mt-0 d-inline-block w-100 mt-0 mb-2 pb-2 p1-2 position-relative">
+        <div class="position-absolute w-100 h-100 opacity-25 bg-transparent" v-show="loading" style="z-index:999;right:100px;"></div>
+        <strong class="float-start">
+            {{view.title}}
+        </strong>
+        <div class="actions float-end text-end" style="width: calc(100% - 100px);">
+            <div :class="['ui left icon input red fast elastic mini field ', loading ? 'loading' : '', error.length == 0 ? '' : 'error']" style="width: calc(100% - 300px);">
+                <input type="text" placeholder="Url..." v-model="url">
+                <i class="linkify icon"></i>
+            </div>
+            <div class="ui primary button" v-on:click="getSourceUrl" v-show="!loading">
+                Proceed
+                <i class="right chevron icon"></i>
+            </div>
+            <div class="ui secondary button" v-on:click="loading=false" v-show="loading">
+                Cancel
+                <i class="right times icon"></i>
+            </div>
+        </div>
+    </div>
+    <div class="row w-100 m-0 p-0 pb-3" style="height:calc(100vh - 120px);"></div>
+    <div class="actions text-end">
+        <div class="ui black button" v-on:click="__popupClose">
+            Cancel
+        </div>
+        <div class="ui positive right labeled icon button">
+            Update
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>

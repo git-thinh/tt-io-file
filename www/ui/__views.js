@@ -4,7 +4,8 @@
     { scope: '', type: '', code: 'login', base: true, title: "Login", popup: true },
     { scope: '', type: '', code: 'nav', base: true, title: "Sidebar", selector: '#main-left', replace: true },
 
-    { scope: 'document', type: 'action', code: 'import-files', title: "Import files", click: "__vg", popup: true },
+    { scope: 'document', type: 'action', code: 'import-files', title: "Import Files", click: "__vg", popup: true },
+    { scope: 'document', type: 'action', code: 'crawle-url', title: "Crawle Url", click: "__vg", class: 'ui overlay fullscreen modal', popup: true },
 
     { scope: 'document', type: 'nav', code: 'advance-search', title: "Advance search", icon: "filter", click: "__vg", popup: true },
     { scope: 'document', type: 'nav', code: "hr" },
