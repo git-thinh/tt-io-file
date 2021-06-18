@@ -5,11 +5,18 @@
             article: {
                 title: '',
                 path: '',
-                text: '',
+                data: '',
                 tags: [],
                 images: []
-            }
+            },
+            loading: false,
+            error: ''
         };
+    },
+    watch: {
+        article: function (val) {
+            console.log('CHANGE ARTICLE: ', val);
+        }
     },
     methods: {
         __init: function () {
@@ -24,6 +31,13 @@
                 //fullTextSearch: 'exact',
                 allowAdditions: true
             });
+            setTimeout(function () {
+                $('.ui-dropdown-MultipleSearchSelection--edit').dropdown({ action: 'hide' });
+                $('.ui-dropdown-MultipleSearchSelection--edit').css({ opacity: 1 });
+            }, 1000);
+        },
+        updateArticle: function() {
+
         }
     }
 }

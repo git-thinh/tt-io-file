@@ -1,37 +1,43 @@
-﻿<div class="ui form bg-white p-3" style="width:600px;height:550px;">
-    <div class="ui dividing header text-start mt-0">
-        {{view.title}}
-    </div>
-    <div class="ui fluid multiple search selection dropdown content border-0 ui-dropdown-MultipleSearchSelection--edit">
-        <!--<div class="ui clearable multiple selection dropdown content ui-dropdown-MultipleSearchSelection">-->
-        <input type="hidden" name="language" value="dutch,english,french">
-        <div class="default text" style="width:calc(100% - 32px);">Select tags</div>
-        <div class="position-absolute top-0" style="right:0;">
-            <i class="tag icon opacity-25"></i>
-        </div>
-        <div class="menu">
-        </div>
-    </div>
-    <div class="field text-start mb-1 mt-3">
-        <i class="code icon ms-1"></i>
-        <i class="eye icon ms-1"></i>
-    </div>
-    <div class="field">
-        <textarea v-model="article.text" style="height:444px;"></textarea>
-    </div>
-    <div class="field text-start">
-        <div class="ui checkbox">
-            <input type="checkbox" tabindex="0" class="hidden">
-            <label>Publish</label>
+﻿<div class="ui form bg-white p-3 w-100 vh-100">
+    <div class="ui dividing header mt-0 d-inline-block w-100 mt-0 mb-2 pb-2 p1-2 position-relative">
+        <strong class="float-start">
+            {{view.title}}
+        </strong>
+        <div class="actions float-end text-end">
+            <div class="ui primary button" v-on:click="updateArticle" v-show="!loading">
+                Update
+                <i class="right chevron icon"></i>
+            </div>
+            <div class="ui secondary button" v-on:click="loading=false">
+                Cancel
+                <i class="right times icon"></i>
+            </div>
         </div>
     </div>
-    <div class="actions text-end">
-        <div class="ui black deny button">
-            Cancel
-        </div>
-        <div class="ui positive right labeled icon button">
-            Update
-            <i class="checkmark icon"></i>
+    <div class="row w-100 m-0 p-0 pb-3 position-relative" style="height: calc(100vh - 120px); overflow-x: hidden; overflow-y: auto;">
+        <div>
+            <div class="ui fluid multiple search selection dropdown content border-0 ui-dropdown-MultipleSearchSelection--edit"
+                 style="opacity:0">
+                <div class="default text" style="width:calc(100% - 32px);">Select tags</div>
+                <div class="position-absolute top-0" style="right:0;">
+                    <i class="tag icon opacity-25"></i>
+                </div>
+                <div class="menu">
+                </div>
+            </div>
+            <div class="field text-start mb-1 mt-3">
+                <i class="code icon ms-1"></i>
+                <i class="eye icon ms-1"></i>
+            </div>
+            <div class="field">
+                <textarea v-model="article.data" style="height:444px;"></textarea>
+            </div>
+            <div class="field text-start">
+                <div class="ui checkbox">
+                    <input type="checkbox" tabindex="0" class="hidden">
+                    <label>Publish</label>
+                </div>
+            </div>
         </div>
     </div>
 </div>

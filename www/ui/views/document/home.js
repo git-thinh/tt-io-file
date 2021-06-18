@@ -13,7 +13,7 @@
                 self.items = items;
                 Vue.nextTick(function () {
                     self.uiSetup();
-                    //self.editClick(items[0]);
+                    self.doc_editClick(items[0]);
                 });
             });
         },
@@ -51,7 +51,7 @@
             var self = this, arr = [], result = [];
 
             var apiDoc = await __fetchAsync('api/document/get_filter', 'json');
-            console.log(apiDoc);
+            //console.log(apiDoc);
             if (apiDoc && apiDoc.ok && apiDoc.items) arr.push(apiDoc.items);
 
             //var themes = self.theme_getCollection();
@@ -77,7 +77,13 @@
             if (callback) callback(result);
         },
         doc_editClick: function(article) {
-            __vcp({ code: 'edit', scope: __scope, popup: true, title: 'Update: ' + article.title }, null, function (v) {
+            __vcp({
+                code: 'edit',
+                scope: __scope,
+                popup: true,
+                title: 'Update: ' + article.title,
+                class: 'ui overlay fullscreen modal'
+            }, null, function (v) {
                 v.$data.article = JSON.parse(JSON.stringify(article));
             });
         },
