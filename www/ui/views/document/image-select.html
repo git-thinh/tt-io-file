@@ -1,0 +1,21 @@
+﻿<div class="ui form bg-white p-0 p-md-3 w-100 vh-100 overflow-hidden">
+    <div class="ui dividing header d-inline-block w-100 mt-0 mb-md-2 mb-0 pb-md-2 pb-0 position-relative">
+        <strong class="float-start p-1 p-md-0">
+            {{view.title}}
+        </strong>
+        <div class="actions float-end text-end py-0 m-0" style="height:42px;">
+            <div class="ui primary button" v-on:click="updateArticle" v-show="!loading">
+                Update
+                <i class="right chevron icon"></i>
+            </div>
+            <div class="ui secondary button" v-on:click="__popupClose">
+                Cancel
+                <i class="right times icon"></i>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-9"></div>
+    </div>
+</div>

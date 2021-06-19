@@ -85,7 +85,7 @@ var __vdata = new Vue({
         }
     }
 });
-
+var __pop_current;
 var __vmix = {
     computed: {
         scope_current: function () {
@@ -97,17 +97,25 @@ var __vmix = {
         __popupClose: function () {
             var self = this, el = self.$el, pa = el.parentElement,
                 id = el.getAttribute('id'),
-                view = self.$view;
+                data,
+                callbackClose = window[id + '.close'];
             //console.log('id = ', id, view);
+
+            if (callbackClose) data = JSON.parse(JSON.stringify(self.$data));
 
             $(pa).removeClass('visible').removeClass('active')
                 .removeClass('transition').addClass('hidden');
             pa.style.removeProperty("display");
 
             self.$destroy();
-            //pa.removeChild(el);
-            if (pa) document.body.removeChild(pa);
-            $(document.body).removeClass('dimmable').removeClass('dimmed');
+            pa.removeChild(el);
+
+            if (pa.childNodes.length == 0) {
+                if (pa) document.body.removeChild(pa);
+                $(document.body).removeClass('dimmable').removeClass('dimmed');
+            }
+
+            if (callbackClose) callbackClose(data);
         }
     }
 };
@@ -144,12 +152,12 @@ function __fetchAsync(url, type) {
     });
 }
 
-function __vcp(vcf, template, callback) {
+function __vcp(vcf, template, callbackOpen, callbackClose) {
     var code = vcf.code || '';
     if (template == null || template.length == 0) template = code;
     var no_css = vcf.no_css || false;
     var no_js = vcf.no_js || false;
-    if (code.length == 0) return callback(null);
+    if (code.length == 0) return callbackOpen(null);
     var is_popup = vcf.popup || false;
     var root_ = __path;
     if (vcf.base != true) root_ += __scope + '/';
@@ -165,14 +173,14 @@ function __vcp(vcf, template, callback) {
                 const blobURL = URL.createObjectURL(blob);
                 //console.log(code, blobURL);
                 __jsi('___vc_' + code, blobURL, function (ok) {
-                    if (ok) __vcp(vcf, template, callback);
-                    else callback(null);
+                    if (ok) __vcp(vcf, template, callbackOpen, callbackClose);
+                    else callbackOpen(null);
                 });
 
             });
         } catch (e) {
             window['___vc_' + code] = {};
-            __vcp(vcf, template, callback);
+            __vcp(vcf, template, callbackOpen, callbackClose);
         }
         return;
     }
@@ -268,14 +276,20 @@ function __vcp(vcf, template, callback) {
         if (!self.$el.hasAttribute('id')) self.$el.setAttribute('id', id);
 
         if (is_popup) {
-            $(self.$el).modal({ closable: false, centered: true, }).modal('show');
+            $(self.$el).modal({ closable: false, centered: true, allowMultiple: true }).modal('show');
         } if (typeof self.__init == 'function') self.__init();
 
         console.log('__vcp = ' + code);
         self.$data.view = vcf;
-        if (callback) callback(self);
+
+        if (is_popup) {
+            __pop_current = self;
+            self.$el.parentElement.childNodes.forEach((el, i_) => { el.style.zIndex = i_; });
+        }
+        if (callbackClose) window[id + '.close'] = callbackClose;
+        if (callbackOpen) callbackOpen(self);
     }).catch(function () {
-        if (callback) callback(null);
+        if (callbackOpen) callbackOpen(null);
     });
 }
 
