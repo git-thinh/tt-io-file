@@ -1,4 +1,6 @@
-﻿var __scope = 'document'; var __path = '/ui/views/';
+﻿var __site = 'thinh.iot.vn';
+var __scope = 'document';
+var __path = '/ui/views/';
 var __vdata = new Vue({
     data: function () {
         return {
@@ -95,7 +97,9 @@ var __vmix = {
     },
     methods: {
         __popupClose: function () {
-            var self = this, el = self.$el, pa = el.parentElement,
+            var self = this,
+                el = self.$el,
+                pa = el.parentElement,
                 id = el.getAttribute('id'),
                 data,
                 callbackClose = window[id + '.close'];
@@ -103,16 +107,16 @@ var __vmix = {
 
             if (callbackClose) data = JSON.parse(JSON.stringify(self.$data));
 
-            $(pa).removeClass('visible').removeClass('active')
-                .removeClass('transition').addClass('hidden');
-            pa.style.removeProperty("display");
-
             self.$destroy();
-            pa.removeChild(el);
+            if (pa.childNodes.length == 1) {
+                pa.style.removeProperty("display");
+                $(pa).removeClass('visible').removeClass('active').removeClass('transition').addClass('hidden');
 
-            if (pa.childNodes.length == 0) {
-                if (pa) document.body.removeChild(pa);
                 $(document.body).removeClass('dimmable').removeClass('dimmed');
+
+                document.body.removeChild(pa);
+            } else {
+                pa.removeChild(el);
             }
 
             if (callbackClose) callbackClose(data);
@@ -194,6 +198,8 @@ function __vcp(vcf, template, callbackOpen, callbackClose) {
     }
 
     var urlTemp = root_ + template + '.html';
+    var id = code + '-' + (new Date().getTime());
+
     __fetchAsync(urlTemp).then(function (htmlString) {
         //console.log('htmlString = ', htmlString);
         if (htmlString.length == 0 && is_popup)
@@ -272,11 +278,14 @@ function __vcp(vcf, template, callbackOpen, callbackClose) {
         else $(self.$el).addClass(__scope);
         if (vcf.class != null && vcf.class.length > 0) $(self.$el).addClass(vcf.class);
 
-        var id = code + '-' + (new Date().getTime());
         if (!self.$el.hasAttribute('id')) self.$el.setAttribute('id', id);
 
         if (is_popup) {
-            $(self.$el).modal({ closable: false, centered: true, allowMultiple: true }).modal('show');
+            $(self.$el).modal({
+                closable: false,
+                centered: true,
+                allowMultiple: true
+            }).modal('show');
         } if (typeof self.__init == 'function') self.__init();
 
         console.log('__vcp = ' + code);
@@ -285,7 +294,9 @@ function __vcp(vcf, template, callbackOpen, callbackClose) {
         if (is_popup) {
             __pop_current = self;
             self.$el.parentElement.childNodes.forEach((el, i_) => { el.style.zIndex = i_; });
+            //console.log(self.view);
         }
+
         if (callbackClose) window[id + '.close'] = callbackClose;
         if (callbackOpen) callbackOpen(self);
     }).catch(function () {

@@ -8,20 +8,23 @@ async function get_filter(req, res) {
             switch (dir) {
                 case 'article':
                 case 'book':
-                    fs.readdirSync(_ROOT + 'raw\\' + dir).forEach(name => {
-                        const key = name.substr(0, name.length - 4);
-                        const s = fs.readFileSync(_ROOT + 'raw\\' + dir + '\\' + name).toString('utf8');
-                        const a = s.split('\n');
-                        items.push({
-                            key: dir + '.' + key,
-                            type: dir,
-                            tag: a[1].trim(),
-                            publish: true,
-                            path: 'raw\\' + dir + '\\' + name,
-                            title: a[0].trim(),
-                            data: s
+                    fs.readdirSync(_ROOT + 'raw\\' + dir).forEach(site => {
+                        fs.readdirSync(_ROOT + 'raw\\' + dir + '\\' + site).forEach(name => {
+                            const key = name.substr(0, name.length - 4);
+                            const s = fs.readFileSync(_ROOT + 'raw\\' + dir + '\\' + site + '\\' + name).toString('utf8');
+                            const a = s.split('\n');
+                            items.push({
+                                key: dir + '.' + key,
+                                site: site,
+                                type: dir,
+                                tag: a[1].trim(),
+                                publish: true,
+                                path: 'raw\\' + dir + '\\' + name,
+                                title: a[0].trim(),
+                                data: s
+                            });
+                            //console.log(name);
                         });
-                        //console.log(name);
                     });
                     break;
                 case 'theme':
@@ -50,6 +53,9 @@ async function get_filter(req, res) {
         });
         global.__articles = items;
     } else items = global.__articles;
+
+    var site = req.query.site || '';
+    if (site.length > 0) items = _.filter(items, x => x.site == site);
 
     return __apiResponse({ ok: true, items: items }, res);
 }

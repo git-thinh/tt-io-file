@@ -15,26 +15,28 @@
     },
     watch: {
         article: function (val) {
-            console.log('CHANGE ARTICLE: ', val);
+            var self = this;
+            //console.log('CHANGE ARTICLE: ', val);
+            self.openPopupBrowserImage();
         }
     },
     methods: {
         __init: function () {
             var self = this;
-            var sitem = _.map(['Arabic', 'Chinese', 'Danish', 'Dutch', 'English', 'French', 'German', 'Greek', 'Hungarian', 'Italian',
-                'Japanese', 'Korean', 'Lithuanian', 'Persian', 'Polish', 'Portuguese', 'Russian', 'Spanish', 'Swedish', 'Turkish', 'Vietnamese']
-                , x => '<div class="item">' + x + '</div>').join('');
-            $('.ui-dropdown-MultipleSearchSelection--edit .menu').html(sitem);
-            $('.ui-dropdown-MultipleSearchSelection--edit').dropdown({
-                //ignoreDiacritics: true,
-                sortSelect: true,
-                //fullTextSearch: 'exact',
-                allowAdditions: true
-            });
-            setTimeout(function () {
-                $('.ui-dropdown-MultipleSearchSelection--edit').dropdown({ action: 'hide' });
-                $('.ui-dropdown-MultipleSearchSelection--edit').css({ opacity: 1 });
-            }, 1000);
+            //var sitem = _.map(['Arabic', 'Chinese', 'Danish', 'Dutch', 'English', 'French', 'German', 'Greek', 'Hungarian', 'Italian',
+            //    'Japanese', 'Korean', 'Lithuanian', 'Persian', 'Polish', 'Portuguese', 'Russian', 'Spanish', 'Swedish', 'Turkish', 'Vietnamese']
+            //    , x => '<div class="item">' + x + '</div>').join('');
+            //$('.ui-dropdown-MultipleSearchSelection--edit .menu').html(sitem);
+            //$('.ui-dropdown-MultipleSearchSelection--edit').dropdown({
+            //    //ignoreDiacritics: true,
+            //    sortSelect: true,
+            //    //fullTextSearch: 'exact',
+            //    allowAdditions: true
+            //});
+            //setTimeout(function () {
+            //    $('.ui-dropdown-MultipleSearchSelection--edit').dropdown({ action: 'hide' });
+            //    $('.ui-dropdown-MultipleSearchSelection--edit').css({ opacity: 1 });
+            //}, 1000);
 
             var elEdit = document.getElementById('edit-html');
             if (elEdit) {
@@ -59,6 +61,7 @@
             });
 
             $('.ui--browse-image').popup();
+
         },
         updateArticle: function() {
 
@@ -77,15 +80,22 @@
             console.log(pid);
         },
         openPopupBrowserImage: function() {
-            var self = this;
+            var self = this, el = self.$el, id = el.getAttribute('id');
+
             __vcp({
                 code: 'image-select',
                 scope: __scope,
                 popup: true,
-                //title: 'Select Image: ' + self.article.title
+                title: 'Images: ' + self.article.title,
+                class: 'ui overlay fullscreen modal'
             }, null, function (v) {
 
+            }, function (data) {
+                console.log('close = ', id, data);
+                $('#' + id).modal('show');
+                $('#' + id + ' .dimmer').removeClass('active');
             });
+
         }
     }
 }

@@ -1,21 +1,55 @@
-﻿<div class="ui form bg-white p-0 p-md-3 w-100 vh-100 overflow-hidden">
-    <div class="ui dividing header d-inline-block w-100 mt-0 mb-md-2 mb-0 pb-md-2 pb-0 position-relative">
-        <strong class="float-start p-1 p-md-0">
-            {{view.title}}
-        </strong>
-        <div class="actions float-end text-end py-0 m-0" style="height:42px;">
-            <div class="ui primary button" v-on:click="updateArticle" v-show="!loading">
-                Update
-                <i class="right chevron icon"></i>
+﻿<div class="ui form bg-white p-0 w-100 vh-100 overflow-hidden">
+    <div class="ui dividing header d-inline-block w-100 position-relative m-0 p-1 pb-2">
+        <div class="position-absolute w-100 h-100 opacity-25 bg-transparent" v-show="loading" style="z-index:999;right:100px;"></div>
+        <strong class="float-start pt-2 ps-3">Images</strong>
+        <div class="actions float-end text-end m-0 p-0" style="width: calc(100% - 100px);">
+            <div class="ui left icon input red fast elastic mini field m-0 p-0" style="min-width:212px">
+                <input type="text" placeholder="Search..." v-model="key_word">
+                <i class="search icon"></i>
             </div>
-            <div class="ui secondary button" v-on:click="__popupClose">
-                Cancel
+            <div class="ui primary button m-0 mt-1" v-on:click="uploadClick" v-show="!loading">
+                Upload
+                <i class="right upload icon"></i>
+            </div>
+            <div class="ui secondary button m-0 mt-1" v-on:click="__popupClose">
+                Close
                 <i class="right times icon"></i>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-3"></div>
-        <div class="col-9"></div>
+    <div class="m-0 p-0" style="height: calc(100% - 50px);">
+        <div class="h-100 pt-2" style="overflow-x: hidden; overflow-y: auto;">
+            <div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">
+                <div class="ui card ui-masonry-item" v-for="(m,index) in images">
+                    <div class="position-absolute top-0 cursor-pointer" style="right:0;" v-on:click="editClick(m)">
+                        <i :class="['checkmark icon', index % 3 == 0 ? 'opacity-25':'text-primary']" style="font-size:0.7em;"></i>
+                    </div>
+                    <div class="image">
+                        <img class="card-img-top rounded-top" :src="'/static/images/' + __site + '/' + m.key" />
+                    </div>
+                    <div class="content">
+                        <a class="header" v-on:click="doc_editClick(m)">
+                            <i class="icon image me-0 ps-0"></i>
+                            {{m.title}}
+                        </a>
+                        <div class="meta">
+                            <span class="date float-start text-capitalize">WxH</span>
+                            <span class="date float-end">Joined in 2013</span>
+                        </div>
+                        <div class="description mt-1">
+                            Desciption
+                        </div>
+                    </div>
+                    <div class="content border-top-0 p-0 px-3 text-end">
+                        <span class="ui label border text-capitalize mb-1">111</span>
+                        <span class="ui label border text-capitalize mb-1">222</span>
+                    </div>
+
+                    <div class="p-2"></div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
 </div>

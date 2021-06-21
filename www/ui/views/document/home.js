@@ -50,7 +50,7 @@
         doc_getFilter: async function(callback) {
             var self = this, arr = [], result = [];
 
-            var apiDoc = await __fetchAsync('api/document/get_filter', 'json');
+            var apiDoc = await __fetchAsync('api/document/get_filter?site=' + __site, 'json');
             //console.log(apiDoc);
             if (apiDoc && apiDoc.ok && apiDoc.items) arr.push(apiDoc.items);
 

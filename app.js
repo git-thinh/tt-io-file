@@ -35,6 +35,7 @@ __API.pdf = require('./api/pdf.js');
 __API.curl = require('./api/curl.js');
 __API.theme = require('./api/theme.js');
 __API.document = require('./api/document.js');
+__API.image = require('./api/image.js');
 //------------------------------------------------------------------------
 global.PATH_ROOT = __dirname + '\\';
 const PATH_WWW = _PATH.join(__dirname, 'www/');
@@ -50,6 +51,7 @@ app.use(bodyParser.json());
 
 app.use('/', express.static('www'));
 app.use('/static/theme', express.static('./raw/theme'));
+app.use('/static/images', express.static('./raw/images'));
 app.get('/login', (req, res) => res.sendFile(PATH_WWW + 'ui/login.html'));
 app.get('/admin', (req, res) => res.sendFile(PATH_WWW + 'ui/admin.html'));
 
