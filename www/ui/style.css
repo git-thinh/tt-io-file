@@ -12,9 +12,14 @@ html {
     height: -webkit-fill-available;
 }
 
+div, p, label {
+    text-align: left;
+}
+
 .cursor-pointer {
     cursor: pointer !important;
 }
+
 .opacity-0 {
     opacity: 0 !important;
 }
@@ -33,6 +38,14 @@ html {
 
 .opacity-100 {
     opacity: 1 !important;
+}
+
+.bd-1 {
+    border: solid 1px #555 !important;
+    border-radius: 5px !important;
+}
+.outline-1 {
+    outline: solid 1px #555 !important;
 }
 
 .ui.card > .content > .header,

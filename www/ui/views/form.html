@@ -1,6 +1,26 @@
-﻿<div class="d-inline-block m-auto">
-    <div class="header">Header</div>
-    <div class="content">
-        <p>Very long content goes here</p>
+﻿<div class="ui card d-inline-block m-auto bg-white outline-1">
+    <div class="content position-relative">
+        <i class="times icon position-absolute end-0 top-0 large ui cursor-pointer mt-2" v-on:click="__popupClose"></i>
+        <div class="header" style="width:calc(100% - 14px);">
+            {{view.title}}
+        </div>
+        <div class="meta">
+            
+        </div>
+        <div class="description">
+            Please input url
+        </div>
+    </div>
+    <div class="content p-3">
+        <div class="ui left icon input red fast elastic small field m-0 p-0 w-100" style="min-width:212px">
+            <input type="text" placeholder="http://... or https://...">
+            <i class="linkify icon"></i>
+        </div>
+    </div>
+    <div class="extra content text-end">
+        <div class="ui button">
+            <i class="checkmark icon"></i>
+            OK
+        </div>
     </div>
 </div>

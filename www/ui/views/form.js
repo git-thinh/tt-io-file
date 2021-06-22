@@ -1,4 +1,11 @@
 ﻿{
+    data: function() {
+        return {
+            view: { title: '' },
+            loading: false,
+            error: ''
+        };
+    },
     mounted: function () { },
     methods: {
         __init: function () {

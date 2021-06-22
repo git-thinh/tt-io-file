@@ -17,6 +17,7 @@
                 apiImages.items.forEach(img => { img.src = '/static/images/' + __site + '/' + img.key; });
                 self.images = apiImages.items;
                 self.uiSetup();
+
                 self.openCrawleFromSite();
             }
             //console.log(apiImages.items);
@@ -48,17 +49,17 @@
         },
         editClick: function(m) {
         },
-        uploadClick: function(m) {
-            var self = this;
-            var id = new Date().getTime();
-            self.input_id = id;
+        uploadClick: function() {
+            var self = this, el = self.$el, id = el.getAttribute('id');
+            var input_id = new Date().getTime();
+            self.input_id = input_id;
             var input = document.createElement('input');
             input.setAttribute('type', 'file');
-            input.setAttribute('id', id);
-            input.setAttribute('onchange', '__pop_current.uploadFileOnChange(this)');
+            input.setAttribute('id', input_id);
+            input.setAttribute('onchange', id + '.uploadFileOnChange(this)');
             input.style.display.opacity = 0;
             document.body.appendChild(input);
-            $('#' + id).trigger('click');
+            $('#' + input_id).trigger('click');
         },
         uploadFileOnChange: function(input) {
             var self = this, el = self.$el, id = el.getAttribute('id');
@@ -90,6 +91,8 @@
             document.body.removeChild(input);
         },
         openCrawleFromSite: function() {
+            var self = this, el = self.$el, id = el.getAttribute('id');
+
             __vcp({
                 code: 'form',
                 base: true,
@@ -98,10 +101,11 @@
                 ],
                 scope: __scope,
                 popup: true,
+                view_ref: id,
                 title: 'Site to crawle images',
-                class: 'ui modal mini position-relative'
+                class: 'bg-transparent position-absolute top-0 start-0 w-100 h-100 d-flex'
             }, null, function (v) {
-                console.log(v);
+                
             });
         },
         openSearchOnGoogle: function() {

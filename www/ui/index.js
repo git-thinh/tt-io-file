@@ -101,6 +101,7 @@ var __vmix = {
                 el = self.$el,
                 pa = el.parentElement,
                 id = el.getAttribute('id'),
+                view = self.view || {},
                 data,
                 callbackClose = window[id + '.close'];
             //console.log('id = ', id, view);
@@ -118,6 +119,9 @@ var __vmix = {
             } else {
                 pa.removeChild(el);
             }
+
+            if (view.view_ref)
+                $('#' + view.view_ref + ' .dimmer').first().dimmer('hide');
 
             if (callbackClose) callbackClose(data);
         }
@@ -198,7 +202,7 @@ function __vcp(vcf, template, callbackOpen, callbackClose) {
     }
 
     var urlTemp = root_ + template + '.html';
-    var id = code + '-' + (new Date().getTime());
+    var id = code.split('-').join('_') + '_' + (new Date().getTime());
 
     __fetchAsync(urlTemp).then(function (htmlString) {
         //console.log('htmlString = ', htmlString);
@@ -282,11 +286,24 @@ function __vcp(vcf, template, callbackOpen, callbackClose) {
 
         if (is_popup) {
             $(self.$el).modal({
+                inverted: false,
                 closable: false,
                 centered: true,
                 allowMultiple: true
             }).modal('show');
-        } if (typeof self.__init == 'function') self.__init();
+
+            console.log(vcf.view_ref);
+            if (vcf.view_ref) {
+                //$('#' + vcf.view_ref + ' .dimmer').addClass('active');
+                $('#' + vcf.view_ref + ' .dimmer').first().dimmer({
+                    closable: false,
+                    transition: 'fade up',
+                    //on: 'hover'
+                }).addClass('opacity-50').dimmer('show');
+            }
+        }
+
+        if (typeof self.__init == 'function') self.__init();
 
         console.log('__vcp = ' + code);
         self.$data.view = vcf;
@@ -297,6 +314,9 @@ function __vcp(vcf, template, callbackOpen, callbackClose) {
             //console.log(self.view);
         }
 
+        if (vcf.style) $(self.$el).css(vcf.style);
+
+        window[id] = self;
         if (callbackClose) window[id + '.close'] = callbackClose;
         if (callbackOpen) callbackOpen(self);
     }).catch(function () {
