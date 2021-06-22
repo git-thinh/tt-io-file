@@ -17,8 +17,9 @@
                 apiImages.items.forEach(img => { img.src = '/static/images/' + __site + '/' + img.key; });
                 self.images = apiImages.items;
                 self.uiSetup();
+                self.openCrawleFromSite();
             }
-            console.log(apiImages.items);
+            //console.log(apiImages.items);
         },
         uiSetup: function() {
             var self = this, el = self.$el, id = el.getAttribute('id');
@@ -75,6 +76,7 @@
                         tag: '',
                         title: file.name.split('.')[0],
                         type: 'image',
+                        dimmer: true,
                         src: e.target.result
                     };
                     console.log(img);
@@ -86,6 +88,24 @@
             }
 
             document.body.removeChild(input);
+        },
+        openCrawleFromSite: function() {
+            __vcp({
+                code: 'form',
+                base: true,
+                fields: [
+
+                ],
+                scope: __scope,
+                popup: true,
+                title: 'Site to crawle images',
+                class: 'ui modal mini position-relative'
+            }, null, function (v) {
+                console.log(v);
+            });
+        },
+        openSearchOnGoogle: function() {
+
         }
     }
 
