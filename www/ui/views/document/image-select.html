@@ -19,20 +19,21 @@
     </div>
     <div class="m-0 p-0" style="height: calc(100% - 50px);">
         <div class="h-100 pt-2" style="overflow-x: hidden; overflow-y: auto;">
-            <div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">
+            <!--<div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">-->
+            <div class="ui ui-masonry-grid ms-3" style="opacity:0;">
                 <div class="ui card ui-masonry-item" v-for="(m,index) in images">
                     <div class="position-absolute top-0 cursor-pointer" style="right:0;" v-on:click="editClick(m)">
                         <i :class="['checkmark icon', index % 3 == 0 ? 'opacity-25':'text-primary']" style="font-size:0.7em;"></i>
                     </div>
                     <div class="image">
-                        <img class="card-img-top rounded-top" :src="'/static/images/' + __site + '/' + m.key" />
+                        <img class="card-img-top rounded-top" :src="m.src" />
                     </div>
                     <div class="content">
                         <a class="header" v-on:click="doc_editClick(m)">
                             <i class="icon image me-0 ps-0"></i>
                             {{m.title}}
                         </a>
-                        <div class="meta">
+                        <div class="meta d-inline-block py-1 w-100">
                             <span class="date float-start text-capitalize">WxH</span>
                             <span class="date float-end">Joined in 2013</span>
                         </div>
