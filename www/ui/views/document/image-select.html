@@ -17,11 +17,11 @@
             </div>
         </div>
     </div>
-    <div class="m-0 p-0" style="height: calc(100% - 50px);">
+    <div class="m-0 p-0" style="height: calc(100% - 55px);">
         <div class="h-100 pt-2" style="overflow-x: hidden; overflow-y: auto;">
             <!--<div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">-->
             <div class="ui ui-masonry-grid ms-3" style="opacity:0;">
-                <div class="ui card ui-masonry-item" v-for="(m,index) in images">
+                <div class="ui card m-0 mb-3" v-for="(m,index) in images">
                     <div class="position-absolute top-0 cursor-pointer" style="right:0;" v-on:click="editClick(m)">
                         <i :class="['checkmark icon', index % 3 == 0 ? 'opacity-25':'text-primary']" style="font-size:0.7em;"></i>
                     </div>

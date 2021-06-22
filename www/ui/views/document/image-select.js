@@ -22,44 +22,16 @@
         },
         uiSetup: function() {
             var self = this, el = self.$el, id = el.getAttribute('id');
-            var elMasonry = document.querySelector('#' + id + ' .ui-masonry-grid');
-            if (elMasonry) {
-                setTimeout(function () {
-                    window.msnry = new Masonry(elMasonry, {
-                        itemSelector: '.ui-masonry-item',
-                        gutter: 15
-                    });
-                    window.msnry.once('layoutComplete', function () {
-                        console.log('layout is complete, just once');
-                    });
-                    msnry.reloadItems();
 
+            setTimeout(function () {
+                var masonryContainer = '#' + id + ' .ui-masonry-grid';
+                $(masonryContainer).masonry();
+                $(masonryContainer).masonry('destroy');
+                $(masonryContainer).removeData('masonry');
+                $(masonryContainer).masonry({ gutter: 10 });
 
-                    elMasonry.style.opacity = 1;
-                }, 50);
-                setTimeout(function () {
-                    //var resizeEvent = window.document.createEvent('UIEvents');
-                    //resizeEvent.initUIEvent('resize', true, false, window, 0);
-                    //window.dispatchEvent(resizeEvent);
-                    
-                    //$(window).trigger('resize');
-
-                    //window.dispatchEvent(new Event('resize'));
-                    //window.msnry.reloadItems();
-
-                    const event = new Event('resize');
-                    window.addEventListener('resize', function (e) { /* ... */ }, false);
-                    window.dispatchEvent(event);
-                    window.removeEventListener('resize', null);
-                }, 500);
-            }
-
-
-
-
-
-
-
+                $(masonryContainer).css({ opacity: 1 });
+            }, 250);
 
 
             //var sitem = _.map(['Arabic', 'Chinese', 'Danish', 'Dutch', 'English', 'French', 'German', 'Greek', 'Hungarian', 'Italian',
@@ -105,11 +77,10 @@
                         type: 'image',
                         src: e.target.result
                     };
-
                     console.log(img);
                     self.images.unshift(img);
-                    //self.images.push(img);
-                    self.uiSetup();
+                    self.$forceUpdate();
+                    setTimeout(function () { self.uiSetup(); }, 150);
                 }
                 reader.readAsDataURL(file);
             }
