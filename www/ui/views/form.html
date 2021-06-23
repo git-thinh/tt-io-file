@@ -6,34 +6,48 @@
         </div>
     </div>
     <div class="content p-3">
-        <div class="ui form">
+        <div class="ui form info">
+            <!--loading error info-->
+            <div class="ui error message">
+                <div class="header">Action Forbidden</div>
+                <p>You can only sign up for an account once with a given e-mail address.</p>
+            </div>
+
+            <div class="ui info message">
+                <div class="header">Requirements</div>
+                <ul class="list">
+                    <li>Password must contain at least 8 characters</li>
+                </ul>
+            </div>
+
             <div class="fields grouped">
-                <div v-for="(fd,i_) in view.fields" v-if="fd.type=='text'" :class="['fd-form field', fd.class]">
+                <div v-for="(fd,i_) in view.fields" v-if="fd.type=='text'" :class="['fd-form field error', fd.class, fd.disable ? 'disabled':'']">
                     <label v-if="fd.caption && fd.caption.length > 0">{{fd.caption}}</label>
                     <div class="ui left icon input">
                         <input :type="fd.type" :name="fd.name" :placeholder="fd.placeholder" v-model="fd.value">
                         <i class="linkify icon"></i>
                     </div>
                 </div>
-                <div v-else-if="fd.type=='checkbox'" :class="['fd-form field', fd.class]">
+
+                <div v-else-if="fd.type=='checkbox'" :class="['fd-form field', fd.class, fd.disable ? 'disabled':'']">
                     <div class="ui checkbox" v-on:click="fd.value = !fd.value;">
                         <input type="checkbox" class="hidden" v-model="fd.value">
                         <label v-if="fd.title && fd.title.length > 0">{{fd.title}}</label>
                     </div>
                 </div>
-                <div v-else-if="fd.type=='toggle'" :class="['fd-form field', fd.class]">
+                <div v-else-if="fd.type=='toggle'" :class="['fd-form field', fd.class, fd.disable ? 'disabled':'']">
                     <div class="ui toggle checkbox" v-on:click="fd.value = !fd.value;">
                         <input type="checkbox" class="hidden" v-model="fd.value">
                         <label v-if="fd.title && fd.title.length > 0">{{fd.title}}</label>
                     </div>
                 </div>
-                <div v-else-if="fd.type=='slider'" :class="['fd-form field', fd.class]">
+                <div v-else-if="fd.type=='slider'" :class="['fd-form field', fd.class, fd.disable ? 'disabled':'']">
                     <div class="ui slider checkbox" v-on:click="fd.value = !fd.value;">
                         <input type="checkbox" class="hidden" v-model="fd.value">
                         <label v-if="fd.title && fd.title.length > 0">{{fd.title}}</label>
                     </div>
                 </div>
-                <div v-else-if="fd.type=='radio'" :class="['fd-form fields', fd.class]">
+                <div v-else-if="fd.type=='radio'" :class="['fd-form fields', fd.class, fd.disable ? 'disabled':'']">
                     <label v-if="fd.title && fd.title.length > 0">{{fd.title}}</label>
                     <div class="field" v-for="it in fd.items" v-on:click="fd.value = it.value;">
                         <div :class="['ui radio checkbox m-0', it.value == fd.value ? 'checked':'']">
@@ -42,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-else-if="fd.type=='dropdown'" class="fd-form field">
+                <div v-else-if="fd.type=='dropdown'" :class="['fd-form field', fd.class, fd.disable ? 'disabled':'']">
                     <label v-if="fd.title && fd.title.length > 0">{{fd.title}}</label>
                     <div :class="['ui dropdown', fd.class]">
                         <input type="hidden" name="gender">
@@ -53,18 +67,47 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                <div v-else-if="fd.type=='dropdown'" :class="['fd-form field', fd.class, fd.disable ? 'disabled':'']">
+                    <label v-if="fd.title && fd.title.length > 0">{{fd.title}}</label>
+                    <div :class="['ui dropdown', fd.class]">
+                        <input type="hidden" name="gender">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Gender</div>
+                        <div class="menu">
+                            <div v-for="it in fd.items" class="item" :data-value="it.value">{{it.text}}</div>
+                        </div>
+                    </div>
+                </div>
 
-        <!--<div class="ui left icon input red fast elastic small field m-0 p-0 w-100" style="min-width:212px">
-            <input type="text" placeholder="http://... or https://...">
-            <i class="linkify icon"></i>
-        </div>-->
-    </div>
-    <div class="extra content text-end">
-        <div class="ui button">
-            <i class="checkmark icon"></i>
-            OK
+                <div v-else-if="fd.type=='select'" :class="['fd-form field', fd.class, fd.disable ? 'disabled':'']">
+                    <label v-if="fd.title && fd.title.length > 0">{{fd.title}}</label>
+                    <select multiple="" class="ui dropdown">
+                        <option v-for="it in fd.items" :value="it.value">{{it.text}}</option>
+                    </select>
+                </div>
+
+                <div v-else-if="fd.type=='calendar'" :class="['fd-form field', fd.class, fd.disable ? 'disabled':'']">
+                    <label v-if="fd.title && fd.title.length > 0">{{fd.title}}</label>
+                    <div class="ui calendar">
+                        <div class="ui input left icon">
+                            <i class="calendar icon"></i>
+                            <input type="text" placeholder="Pick up a date" name="date">
+                        </div>
+                    </div>
+                </div>
+
+                <div v-else-if="fd.type=='textarea'" :class="['fd-form field', fd.class, fd.disable ? 'disabled':'']">
+                    <label>Description</label>
+                    <textarea placeholder="Transparent textarea" cols="30" rows="3" spellcheck="false"></textarea>
+                </div>
+
+                <div class="field text-end">
+                    <div class="ui button">
+                        <i class="checkmark icon"></i>
+                        OK
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

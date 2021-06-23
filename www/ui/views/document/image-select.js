@@ -120,6 +120,16 @@
                         value: true
                     },
                     {
+                        type: 'calendar',
+                        title: 'calendar field',
+                        value: ''
+                    },
+                    {
+                        type: 'textarea',
+                        title: 'textarea field',
+                        value: ''
+                    },
+                    {
                         type: 'radio',
                         title: 'Radio field',
                         class: 'grouped', //inline
@@ -134,6 +144,28 @@
                         type: 'dropdown',
                         title: 'Dropdown field',
                         class: 'selection', //inline
+                        value: 2,
+                        items: [
+                            { text: 'text 1', value: 1 },
+                            { text: 'text 2', value: 2 },
+                            { text: 'text 3', value: 3 },
+                        ]
+                    },
+                    {
+                        type: 'dropdown',
+                        disable: true,
+                        title: 'Dropdown field',
+                        class: 'selection', //inline
+                        value: 2,
+                        items: [
+                            { text: 'text 1', value: 1 },
+                            { text: 'text 2', value: 2 },
+                            { text: 'text 3', value: 3 },
+                        ]
+                    },
+                    {
+                        type: 'select',
+                        title: 'Select field',
                         value: 2,
                         items: [
                             { text: 'text 1', value: 1 },

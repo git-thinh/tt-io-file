@@ -61,7 +61,9 @@ div, p, label {
 .ui.button {
     font-weight: normal;
 }
-
+.hidden {
+    display: none !important;
+}
 .ui.card > .content > .header,
 .ui.cards > .card > .content > .header {
     font-family: inherit;
