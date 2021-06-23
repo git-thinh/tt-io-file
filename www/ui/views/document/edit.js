@@ -68,12 +68,6 @@
         updateArticle: function() {
 
         },
-        modeChanged: function(mode) {
-            var self = this;
-            console.log(self.mode + ' -> ' + mode);
-            self.mode = mode;
-            self.$forceUpdate();
-        },
         formatArticle: function(view_id, article) {
             var self = this;
             console.log('formatArticle = ' + self.mode);
@@ -119,10 +113,33 @@
             $('.__line').removeClass('active');
             $('#' + pid).addClass('active');
         },
+        cmdCall: function(cmd) {
+            var self = this;
+            switch (cmd) {
+                case 'CODE':
+                case 'VIEW':
+                    console.log(self.mode + ' -> ' + cmd);
+                    self.mode = cmd.toLowerCase();
+                    self.$forceUpdate();
+                    break;
+                case 'HEADING':
+                    break;
+                case 'BOLD':
+                    break;
+                case 'REMOVE':
+                    break;
+                case 'INSERT_IMAGE':
+                    break;
+                case 'INSERT_VIDEO':
+                    break;
+                case 'INSERT_LINK':
+                    break;
+            }
+        },
         updateHeading: function() {
 
         },
-        insertImageDialog: function() {
+        cmd_insertImage: function() {
             var self = this, el = self.$el, view_id = el.getAttribute('id');
 
             if (self.lineId_selected.length == 0) {
@@ -179,21 +196,8 @@
 
                         self.article.data = a.join('\n');
                     }
-
-
-                    //var line = document.getElementById(self.lineId_selected);
-                    //if (line) line.style.backgroundColor = 'red';
-                    //document.execCommand('insertHTML', false, imgs.join('<br>'));
-
-                    //debugger;
-                    //var line = document.getElementById(self.lineId_selected);
-                    //if (line) line.innerHTML = imgs.join('<br>');
                 }
-
-                //$('#' + view_id).modal('show');
-                //$('#' + view_id + ' .dimmer').removeClass('active');
             });
-
         },
         openPopupBrowserImage: function() {
             var self = this, el = self.$el, view_id = el.getAttribute('id');

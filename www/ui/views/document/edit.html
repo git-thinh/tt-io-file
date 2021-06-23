@@ -44,38 +44,38 @@
                 <div class="ui icon button p-1 bg-transparent"
                      data-content="View Source" data-position="bottom left"
                      :style="{color: mode == 'code' ? '#2185d0':''}"
-                     v-on:click="modeChanged('code')">
+                     v-on:click="cmdCall('CODE')">
                     <i class="code icon large"></i>
                 </div>
                 <div class="ui icon button p-1 bg-transparent"
                      data-content="View Publish" data-position="bottom left"
                      :style="{color: mode == 'view' ? '#2185d0':''}"
-                     v-on:click="modeChanged('view')">
+                     v-on:click="cmdCall('VIEW')">
                     <i class="eye icon large"></i>
                 </div>
 
                 <div class="ui icon button p-1 bg-transparent"
                      data-content="Insert Image" data-position="bottom left"
                      v-show="mode=='code'"
-                     v-on:click="insertImageDialog">
+                     v-on:click="cmdCall('INSERT_IMAGE')">
                     <i class="image outline icon large"></i>
                 </div>
                 <div class="ui icon button p-1 bg-transparent"
                      data-content="Insert Video" data-position="bottom left"
                      v-show="mode=='code'"
-                     v-on:click="insertImageDialog">
+                     v-on:click="cmdCall('INSERT_VIDEO')">
                     <i class="youtube icon large"></i>
                 </div>
                 <div class="ui icon button p-1 bg-transparent"
                      data-content="heading line" data-position="bottom left"
                      v-show="mode=='code'"
-                     v-on:click="updateHeading">
+                     v-on:click="cmdCall('HEADING')">
                     <i class="heading icon large"></i>
                 </div>
                 <div class="ui icon button p-1 bg-transparent"
                      data-content="Bold line" data-position="bottom left"
                      v-show="mode=='code'"
-                     v-on:click="updateHeading">
+                     v-on:click="cmdCall('BOLD')">
                     <i class="bold icon large"></i>
                 </div>
 
