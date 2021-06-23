@@ -21,6 +21,7 @@ async function get_filter(req, res) {
                                 publish: true,
                                 path: 'raw\\' + dir + '\\' + name,
                                 title: a[0].trim(),
+                                images: [],
                                 data: s
                             });
                             //console.log(name);
@@ -41,7 +42,7 @@ async function get_filter(req, res) {
                                     publish: true,
                                     path: file,
                                     title: tag + ' ' + key,
-                                    image: '/static/theme/' + tag + '/' + key + '.png',
+                                    images: ['/static/theme/' + tag + '/' + key + '.png'],
                                     data: s
                                 });
                                 //console.log(name);

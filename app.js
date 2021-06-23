@@ -72,6 +72,38 @@ app.get('/curl', (req, res) => {
     });
 });
 
+const multer = require("multer");
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const site = req.query.site || 'none';
+        const dir = './raw/images/' + site + '/';
+        if (!_FS.existsSync(dir)) _FS.mkdirSync(dir);
+        cb(null, dir);
+    },
+    filename: function (req, file, cb) {
+        const a = file.originalname.split('.');
+        var file_name = (a[0] + '-' + Date.now() + '.' + a[a.length - 1]).toLowerCase();
+        cb(null, file_name);
+    }
+})
+var upload = multer({ storage: storage });
+app.post("/images", upload.single("file"), (req, res) => {
+    const file = req.file;
+    res.json({ ok: true, file: file.filename });
+});
+app.delete("/images", (req, res) => {
+    const site = req.query.site || '';
+    const file = './raw/images/' + site + '/' + req.query.file;
+    if (_FS.existsSync(file)) {
+        try {
+            _FS.unlinkSync(file);
+            res.json({ ok: true });
+        } catch (err) {
+            res.json({ ok: false, message: err.message });
+        }
+    } else res.json({ ok: false });
+});
+
 //app.get('/', (req, res) => {
 //    _FS.readdir(PATH_ROOT + 'test/', (err, files) => {
 //        if (err == null) {

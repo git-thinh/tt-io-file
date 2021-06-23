@@ -5,10 +5,10 @@
             {{view.title}}
         </div>
     </div>
-    <div class="content p-3">
+    <div class="content p-3 scrolling">
         <div class="ui form info">
             <!--loading error info-->
-            <div class="ui error message">
+            <!--<div class="ui error message">
                 <div class="header">Action Forbidden</div>
                 <p>You can only sign up for an account once with a given e-mail address.</p>
             </div>
@@ -18,10 +18,14 @@
                 <ul class="list">
                     <li>Password must contain at least 8 characters</li>
                 </ul>
-            </div>
+            </div>-->
 
             <div class="fields grouped">
-                <div v-for="(fd,i_) in view.fields" v-if="fd.type=='text'" :class="['fd-form field error', fd.class, fd.disable ? 'disabled':'']">
+                <div v-for="(fd,i_) in view.fields" v-if="fd.type=='alert'" :class="['fd-form field', fd.class]">
+                    <p v-if="fd.value && fd.value.length > 0" class="text-center">{{fd.value}}</p>
+                </div>
+
+                <div v-else-if="fd.type=='text'" :class="['fd-form field error', fd.class, fd.disable ? 'disabled':'']">
                     <label v-if="fd.caption && fd.caption.length > 0">{{fd.caption}}</label>
                     <div class="ui left icon input">
                         <input :type="fd.type" :name="fd.name" :placeholder="fd.placeholder" v-model="fd.value">
@@ -100,14 +104,13 @@
                     <label>Description</label>
                     <textarea placeholder="Transparent textarea" cols="30" rows="3" spellcheck="false"></textarea>
                 </div>
-
-                <div class="field text-end">
-                    <div class="ui button">
-                        <i class="checkmark icon"></i>
-                        OK
-                    </div>
-                </div>
             </div>
+        </div>
+    </div>
+    <div class="actions text-end p-2">
+        <div class="ui button" v-on:click="ok = true; __popupClose();">
+            <i class="checkmark icon"></i>
+            OK
         </div>
     </div>
 </div>

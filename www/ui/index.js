@@ -96,6 +96,24 @@ var __vmix = {
         },
     },
     methods: {
+        __alert: function (title, message, callbackOpen, callbackClose) {
+            var self = this, el = self.$el, id = el.getAttribute('id');
+            __vcp({
+                code: 'form',
+                base: true,
+                fields: [
+                    {
+                        type: 'alert',
+                        value: message
+                    },
+                ],
+                scope: __scope,
+                popup: true,
+                view_ref: id,
+                title: title,
+                class: 'bg-transparent position-absolute top-0 start-0 w-100 h-100 d-flex'
+            }, null, callbackOpen, callbackClose);
+        },
         __popupClose: function () {
             var self = this,
                 el = self.$el,
@@ -203,6 +221,7 @@ function __vcp(vcf, template, callbackOpen, callbackClose) {
 
     var urlTemp = root_ + template + '.html';
     var id = code.split('-').join('_') + '_' + (new Date().getTime());
+    vcf.id = id;
 
     __fetchAsync(urlTemp).then(function (htmlString) {
         //console.log('htmlString = ', htmlString);

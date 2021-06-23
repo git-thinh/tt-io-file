@@ -28,19 +28,19 @@
         <div class="h-100 pt-2" style="overflow-x: hidden; overflow-y: auto;">
             <!--<div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">-->
             <div class="ui ui-masonry-grid ms-3" style="opacity:0;">
-                <div class="ui card m-0 mb-3" v-for="(m,index) in images">
+                <div class="ui card m-0 mb-3" v-for="(m,index) in images" :style="{border: (m.select == true ? '1px solid red':'')}">
                     <div :class="['ui dimmer center aligned', m.dimmer ? 'active':'']">
                         <div class="ui text loader blue inline double">Uploading</div>
                     </div>
-                    <div class="position-absolute top-0 cursor-pointer" style="right:0;" v-on:click="editClick(m)">
-                        <i :class="['checkmark icon', index % 3 == 0 ? 'opacity-25':'text-primary']" style="font-size:0.7em;"></i>
+                    <div v-show="m.select" class="position-absolute top-0 cursor-pointer" style="right:0;z-index:99999;">
+                        <i class="checkmark icon text-danger large"></i>
                     </div>
-                    <div class="image">
-                        <img class="card-img-top rounded-top" :src="m.src" />
+                    <div class="image" v-on:click="selectImage(m)">
+                        <img class="card-img-top rounded-top cursor-pointer" :src="m.src" />
                     </div>
-                    <div class="content">
-                        <a class="header" v-on:click="doc_editClick(m)">
-                            <i class="icon image me-0 ps-0"></i>
+                    <div class="content" v-on:click="selectImage(m)">
+                        <a class="header">
+                            <i class="icon checkmark me-0 ps-0 d-none"></i>
                             {{m.title}}
                         </a>
                         <div class="meta d-inline-block py-1 w-100">
@@ -54,9 +54,14 @@
                     <div class="content border-top-0 p-0 px-3 text-end">
                         <span class="ui label border text-capitalize mb-1">111</span>
                         <span class="ui label border text-capitalize mb-1">222</span>
+
+                        <div class="ui button m-0 mt-1 p-1 bg-transparent" v-on:click="removeConfirm(m)">
+                            <i class="trash alternate outline icon me-0 large"></i>
+                        </div>
+
                     </div>
 
-                    <div class="p-2"></div>
+                    <div class="p-1"></div>
                 </div>
             </div>
 

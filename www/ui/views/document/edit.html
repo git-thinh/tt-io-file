@@ -27,10 +27,11 @@
             </div>
             <div class="field text-end px-3 m-0">
                 <label class="ui label float-start p-0 fw-normal">Image default</label>
-                <div class="ui ms-3 border-1 p-3 bg-secondary float-start cursor-pointer ui--browse-image"
+                <div class="ui ms-3 border-1 p-0 bg-secondary float-start cursor-pointer ui--tooltip d-inline-block"
                      data-content="Choose image default"
                      v-on:click="openPopupBrowserImage"
-                     style="width:69px;height:69px;">
+                     style="width:69px;min-height:39px;">
+                    <img class="w-100 h-auto" v-if="article.images && article.images.length > 0" :src="article.images[0]" />
                 </div>
             </div>
             <div class="field text-end px-3 m-0">
@@ -40,11 +41,20 @@
                 </div>
             </div>
             <div class="field text-start mb-1 mt-1 px-3">
-                <i class="edit icon ms-1"></i>
-                <i class="eye icon ms-1 opacity-25"></i>
+                <div class="ui icon button p-1 bg-transparent" data-content="View Source" data-position="bottom left">
+                    <i class="code icon large"></i>
+                </div>
+
+                <div class="ui icon button p-1 bg-transparent" data-content="Insert Image" data-position="bottom left">
+                    <i class="image outline icon large"></i>
+                </div>
+
+                <div class="ui icon button p-1 bg-transparent" data-content="View Publish" data-position="bottom left">
+                    <i class="eye icon large"></i>
+                </div>
             </div>
             <div class="field" id="edit-box">
-                <div id="edit-html" contentEditable="true" v-html="formatArticle(article.data)"></div>
+                <div id="edit-html" contentEditable="true" v-html="formatArticle(view.id, article)"></div>
             </div>
         </div>
     </div>

@@ -14,11 +14,14 @@
             var self = this;
             var apiImages = await __fetchAsync('api/image/get_filter?site=' + __site, 'json');
             if (apiImages && apiImages.ok && apiImages.items) {
-                apiImages.items.forEach(img => { img.src = '/static/images/' + __site + '/' + img.key; });
+                apiImages.items.forEach(img => {
+                    img.src = '/static/images/' + __site + '/' + img.key;
+                    img.select = false;
+                });
                 self.images = apiImages.items;
                 self.uiSetup();
 
-                self.openCrawleFromSite();
+                //self.openCrawleFromSite();
             }
             //console.log(apiImages.items);
         },
@@ -46,6 +49,18 @@
             //    //fullTextSearch: 'exact',
             //    allowAdditions: true
             //});
+        },
+        selectImage: function(image) {
+            var self = this, el = self.$el, id = el.getAttribute('id');
+            if (self.multi_select)
+                image.select = !image.select;
+            else {
+                if (image.select) image.select = false;
+                else {
+                    self.images.forEach(x => { x.select = false; });
+                    image.select = true;
+                }
+            }
         },
         editClick: function(m) {
         },
@@ -78,17 +93,44 @@
                         title: file.name.split('.')[0],
                         type: 'image',
                         dimmer: true,
+                        select: false,
                         src: e.target.result
                     };
-                    console.log(img);
+                    //console.log(img);
                     self.images.unshift(img);
                     self.$forceUpdate();
                     setTimeout(function () { self.uiSetup(); }, 150);
+
+                    self.uploadFileToServer(file);
                 }
                 reader.readAsDataURL(file);
             }
 
             document.body.removeChild(input);
+        },
+        uploadFileToServer: function(file) {
+            var self = this;
+            const f = new FormData();
+            f.append('file', file);
+            fetch('/images?site=' + __site, { method: 'POST', body: f }).then(r => r.json()).then(j => {
+                console.log(j);
+                self.__init();
+            });
+        },
+        removeConfirm: function(image) {
+            var self = this, el = self.$el, id = el.getAttribute('id');
+            self.__alert('Delete image', 'Are you sure remove image: ' + image.key,
+                function (v) {
+                    //console.log('open = ', v);
+                }, function (v) {
+                    console.log('close = ', v.ok, image.key);
+                    if (v.ok) {
+                        fetch('/images?site=' + __site + '&file=' + image.key, { method: 'DELETE' }).then(r => r.json()).then(j => {
+                            console.log(j);
+                            self.__init();
+                        });
+                    }
+                });
         },
         openCrawleFromSite: function() {
             var self = this, el = self.$el, id = el.getAttribute('id');

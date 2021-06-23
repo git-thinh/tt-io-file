@@ -7,6 +7,7 @@
 
                 ],
             },
+            ok: false,
             loading: false,
             error: ''
         };
