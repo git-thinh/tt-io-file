@@ -236,19 +236,17 @@
                 var line = doc.getElementById(self.lineId_selected);
                 if (line) {
                     var isHeading = line.className.indexOf('h3') != -1;
-                    var s = line.innerText || '';
-                    s = s.trim();
-                    if (s[0] == '^') s = s.substr(1).trim();
-                    console.log(s);
-                    if (isHeading) {
-                        s = s.substr(3);
-                        line.innerText = s;
-                    }
-                    else  line.innerText = '^{H}' + s;
+                    var s = (line.innerText || '').trim();
+                    console.log('?????=', s);
+                    if (s.indexOf('^{H}') == 0) s = '^' + s.substr(4).trim();
+                    else if (s.indexOf('^') == 0) s = '^{H}' + s.substr(1).trim();
+                    line.innerText = s;
+
+                    var out = self.domGetText(doc);
+                    self.article.data = out;
+                    self.$forceUpdate();
+                    $('#' + self.lineId_selected).addClass('active');
                 }
-                var out = self.domGetText(doc);
-                self.article.data = out;
-                self.$forceUpdate();
             }
         },
         cmd_insertImage: function() {
