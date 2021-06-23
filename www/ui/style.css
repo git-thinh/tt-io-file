@@ -49,6 +49,15 @@ div, p, label {
     outline: solid 1px #555 !important;
 }
 
+.fd-form {
+    padding-bottom: 7px !important;
+}
+
+    .fd-form.fields {
+        margin: 0 0 1em !important;
+        padding-bottom: 0 !important;
+    }
+
 .ui.button {
     font-weight: normal;
 }

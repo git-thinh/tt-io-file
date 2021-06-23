@@ -97,7 +97,50 @@
                 code: 'form',
                 base: true,
                 fields: [
-
+                    {
+                        type: 'text',
+                        caption: 'Url',
+                        icon: 'linkify',
+                        placeholder: 'http://... or https://...',
+                        value: 'https://baovebinhtruongan.com/'
+                    },
+                    {
+                        type: 'checkbox',
+                        title: 'Checkbox field',
+                        value: true
+                    },
+                    {
+                        type: 'toggle',
+                        title: 'Toggle field',
+                        value: true
+                    },
+                    {
+                        type: 'slider',
+                        title: 'Slider field',
+                        value: true
+                    },
+                    {
+                        type: 'radio',
+                        title: 'Radio field',
+                        class: 'grouped', //inline
+                        value: 2,
+                        items: [
+                            { text: 'radio 1', value: 1 },
+                            { text: 'radio 2', value: 2 },
+                            { text: 'radio 3', value: 3 },
+                        ]
+                    },
+                    {
+                        type: 'dropdown',
+                        title: 'Dropdown field',
+                        class: 'selection', //inline
+                        value: 2,
+                        items: [
+                            { text: 'text 1', value: 1 },
+                            { text: 'text 2', value: 2 },
+                            { text: 'text 3', value: 3 },
+                        ]
+                    }
                 ],
                 scope: __scope,
                 popup: true,
@@ -105,7 +148,7 @@
                 title: 'Site to crawle images',
                 class: 'bg-transparent position-absolute top-0 start-0 w-100 h-100 d-flex'
             }, null, function (v) {
-                
+
             });
         },
         openSearchOnGoogle: function() {
