@@ -45,3 +45,8 @@
     .ui-view.document.edit .__line.active {
         border-left: dotted 3px red !important;
     }
+
+    .ui-view.document.edit .__line.h3 {
+        font-weight: bold;
+        padding: 10px 0;
+    }

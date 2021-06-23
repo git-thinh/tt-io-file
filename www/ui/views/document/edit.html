@@ -28,9 +28,9 @@
             <div class="field text-end px-3 m-0">
                 <label class="ui label float-start p-0 fw-normal">Image default</label>
                 <div class="ui ms-3 border-1 p-0 bg-secondary float-start cursor-pointer ui--tooltip d-inline-block"
+                     style="width:69px;min-height:39px;"
                      data-content="Choose image default"
-                     v-on:click="openPopupBrowserImage"
-                     style="width:69px;min-height:39px;">
+                     v-on:click="changeImageDefault">
                     <img class="w-100 h-auto" v-if="article.images && article.images.length > 0" :src="article.images[0]" />
                 </div>
             </div>
