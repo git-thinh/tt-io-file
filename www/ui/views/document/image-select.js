@@ -52,7 +52,7 @@
         },
         selectImage: function(image) {
             var self = this, el = self.$el, id = el.getAttribute('id');
-            if (self.multi_select)
+            if (self.view.multi_select)
                 image.select = !image.select;
             else {
                 if (image.select) image.select = false;

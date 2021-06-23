@@ -3,7 +3,7 @@
     display: inline-block;
     overflow-y: auto;
     overflow-x: hidden;
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;*/
 }
 
 .ui-view.document.edit #edit-html {
@@ -25,3 +25,23 @@
 .ui-view.document.edit [contenteditable] {
     outline: 0px solid transparent;
 }
+
+.ui-view.document.edit div.__img {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+    .ui-view.document.edit div.__img img {
+        max-width: 69%;
+        margin: 15px auto;
+    }
+
+.ui-view.document.edit .__line {
+    padding-left: 5px !important;
+    border-left: dotted 3px white !important;
+}
+
+    .ui-view.document.edit .__line.active {
+        border-left: dotted 3px red !important;
+    }
