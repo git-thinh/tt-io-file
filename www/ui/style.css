@@ -44,8 +44,13 @@ div, p, label {
     border: solid 1px #555 !important;
     border-radius: 5px !important;
 }
+
 .outline-1 {
     outline: solid 1px #555 !important;
+}
+
+.ui.button {
+    font-weight: normal;
 }
 
 .ui.card > .content > .header,
