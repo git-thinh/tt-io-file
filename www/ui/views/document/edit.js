@@ -24,35 +24,12 @@
             self.formatAutoAllLines();
 
             //self.openPopupBrowserImage();
+
         }
     },
     methods: {
         __init: function () {
             var self = this, el = self.$el, view_id = el.getAttribute('id');
-            //var sitem = _.map(['Arabic', 'Chinese', 'Danish', 'Dutch', 'English', 'French', 'German', 'Greek', 'Hungarian', 'Italian',
-            //    'Japanese', 'Korean', 'Lithuanian', 'Persian', 'Polish', 'Portuguese', 'Russian', 'Spanish', 'Swedish', 'Turkish', 'Vietnamese']
-            //    , x => '<div class="item">' + x + '</div>').join('');
-            //$('.ui-dropdown-MultipleSearchSelection--edit .menu').html(sitem);
-            //$('.ui-dropdown-MultipleSearchSelection--edit').dropdown({
-            //    //ignoreDiacritics: true,
-            //    sortSelect: true,
-            //    //fullTextSearch: 'exact',
-            //    allowAdditions: true
-            //});
-            //setTimeout(function () {
-            //    $('.ui-dropdown-MultipleSearchSelection--edit').dropdown({ action: 'hide' });
-            //    $('.ui-dropdown-MultipleSearchSelection--edit').css({ opacity: 1 });
-            //}, 1000);
-
-            var elEdit = document.getElementById('edit-html');
-            if (elEdit) {
-                var rec = elEdit.getBoundingClientRect();
-                var h = window.innerHeight - rec.top - 32;
-                h = h.toString().split('.')[0];
-                //console.log(window.innerHeight, rec.top, h);
-                elEdit.parentElement.style.height = h + 'px';
-                elEdit.style.padding = '10px';
-            }
 
             $('#edit-html').keydown(function (e) {
                 // trap the return key being pressed                
@@ -67,6 +44,143 @@
             });
 
             $('*[data-content]').popup();
+        },
+        formatArticleByCode: function() {
+            var self = this, view_id = self.view.id, article = self.article;
+            var html = '';
+            console.log('formatArticle = ' + self.mode);
+
+            var s = article.data || '';
+            var a = s.trim().split('\n'), ta = [];
+            a = _.filter(a, x => x.trim().length > 0);
+            var id = new Date().getTime(), cid = Number((id / 99).toString().split('.')[0]);
+            for (var i = 0; i < a.length; i++) {
+                id++;
+                cid++;
+                var line = a[i].trim(), code = '',
+                    r_empty = '<p id="' + id + '" cmd-i="' + i + '" cmd-type="empty" onclick="' + view_id + '.lineSelectChanged(' + id + ')" class="__line __empty __empty-' + i + '"></p>';
+
+                switch (i) {
+                    case 0:
+                        html += '<h1>' + line + '</h1>';
+                        //html += '<p id="' + id + '" cmd-i="' + i + '" cmd-type="tag" onclick="' + view_id + '.changeTags(' + id + ')" class="__line __tag"></p>';
+                        html += '<div id="tag-select" class="field opacity-0 mx-3"><input type="text" value="Select Tags" readonly class="border-0 p-0 m-0"><select multiple="" class="ui dropdown">'
+                            + '<option value="">Select tags</option><option value="AF">Afghanistan</option><option value="AX">Åland Islands</option><option value="AL">Albania</option>'
+                            + '<select></div>';
+                        html += r_empty;
+                        continue;
+                        break;
+                }
+
+                if (line.indexOf('{H}') == 0) {
+                    code = 'H';
+                    line = line.substr(3);
+                }
+
+                switch (code) {
+                    case 'H':
+                        html += '<div cmd-text="{H}" cmd-i="' + i + '" id="' + cid + '" cmd-type="text" onclick="' + view_id + '.lineSelectChanged(' + cid + ')" class="__line h3 __text-' + i + '">' + line + '</div>';
+                        break;
+                    default:
+                        if (line.endsWith('.jpg') || line.endsWith('.jpeg') || line.endsWith('.png') || line.endsWith('.gif') || line.endsWith('.svg')) {
+                            ta = _.map(line.split('|'), x => x.trim());
+                            if (self.mode == 'view') {
+                                html += '<div id="' + cid + '" cmd-i="' + i + '" cmd-type="image" class="__img __line __image-' + i + '">';
+                                html += '<img src="' + ta.join('"><img src="') + '">';
+                                html += '</div>';
+                                continue;
+                            }
+                        }
+                        html += '<div id="' + cid + '" cmd-i="' + i + '" cmd-type="text" onclick="' + view_id + '.lineSelectChanged(' + cid + ')" class="__line __text-' + i + '">' + line + '</div>';
+                        break;
+                }
+                html += r_empty;
+            }
+
+            setTimeout(function () {
+                $('#tag-select select').dropdown({
+                    //action: function (value, text) {
+                    //    console.log(value, text)
+                    //}
+                });
+                $('#tag-select').removeClass('opacity-0');
+                //$('#tag-select').dropdown('set selected', 'AX');
+            }, 500);
+
+            return html;
+        },
+        formatArticleByView: function() {
+            var self = this, view_id = self.view.id, article = self.article;
+            console.log('formatArticle = ' + self.mode);
+
+            var s = article.data || '';
+            var html = '';
+            var a = s.split('\n'), ta = [];
+            a = _.filter(a, x => x.trim().length > 0);
+
+            for (var i = 0; i < a.length; i++) {
+                var line = a[i].trim(), code = '';
+
+                switch (i) {
+                    case 0:
+                        html += '<h1>' + line + '</h1>';
+                        continue;
+                        break;
+                }
+
+                if (line.indexOf('{H}') == 0) {
+                    code = 'H';
+                    line = line.substr(3);
+                }
+
+                switch (code) {
+                    case 'H':
+                        html += '<h3>' + line + '</h3>';
+                        break;
+                    default:
+                        if (line.endsWith('.jpg') || line.endsWith('.jpeg') || line.endsWith('.png') || line.endsWith('.gif') || line.endsWith('.svg')) {
+                            ta = _.map(line.split('|'), x => x.trim());
+                            if (self.mode == 'view') {
+                                html += '<div class="__img">';
+                                html += '<img src="' + ta.join('"><img src="') + '">';
+                                html += '</div>';
+                                continue;
+                            }
+                        }
+                        html += '<p>' + line + '</p>';
+                        break;
+                }
+            }
+            return html;
+        },
+        lineCheckIsHeading: function (line) {
+            line = (line || '').trim();
+            if (line[line.length - 1] == ':' || (line[0] == '"' && line[line.length - 1] == '"')) return true;
+
+            var a = line.toLowerCase().split(/[\s,.]+/), s = a[0];
+            var ix = Number(s);
+            if (isNaN(ix) == false
+                || s == 'i'
+                || s == 'ii'
+                || s == 'iii'
+                || s == 'iv'
+                || s == 'v'
+                || s == 'vi'
+                || s == 'vii'
+                || s == 'viii'
+                || s == 'ix'
+                || s == 'x'
+                || s == 'xi'
+                || s == 'xii'
+                || s == 'xiii'
+                || s == 'xiv'
+                || s == 'xv'
+            ) return true;
+            return false
+        },
+        changeTags: function(line_id) {
+            var self = this;
+            self.lineSelectChanged(line_id);
         },
         changeImageDefault: function() {
             var self = this, el = self.$el, view_id = el.getAttribute('id');
@@ -100,106 +214,6 @@
         updateArticle: function() {
 
         },
-        formatArticleByCode: function() {
-            var self = this, view_id = self.view.id, article = self.article;
-            console.log('formatArticle = ' + self.mode);
-
-            var s = article.data || '';
-            var html = '';
-            var a = s.split('\n'), ta = [];
-            a = _.filter(a, x => x.trim().length > 0);
-            var id = new Date().getTime(), cid = Number((id / 99).toString().split('.')[0]);
-            for (var i = 0; i < a.length; i++) {
-                id++;
-                cid++;
-                var line = a[i].trim(), code = '';
-                if (line.indexOf('{H}') == 0) {
-                    code = 'H';
-                    line = line.substr(3);
-                }
-
-                switch (code) {
-                    case 'H':
-                        html += '<div cmd-text="{H}" cmd-i="' + i + '" id="' + cid + '" cmd-type="text" onclick="' + view_id + '.lineSelectChanged(' + cid + ')" class="__line h3 __text-' + i + '">' + line + '</div>';
-                        break;
-                    default:
-                        if (line.endsWith('.jpg') || line.endsWith('.jpeg') || line.endsWith('.png') || line.endsWith('.gif') || line.endsWith('.svg')) {
-                            ta = _.map(line.split('|'), x => x.trim());
-                            if (self.mode == 'view') {
-                                html += '<div id="' + cid + '" cmd-i="' + i + '" cmd-type="image" class="__img __line __image-' + i + '">';
-                                html += '<img src="' + ta.join('"><img src="') + '">';
-                                html += '</div>';
-                                continue;
-                            }
-                        }
-                        html += '<div id="' + cid + '" cmd-i="' + i + '" cmd-type="text" onclick="' + view_id + '.lineSelectChanged(' + cid + ')" class="__line __text-' + i + '">' + line + '</div>';
-                        break;
-                }
-                html += '<p id="' + id + '" cmd-i="' + i + '" cmd-type="empty" onclick="' + view_id + '.lineSelectChanged(' + id + ')" class="__line __empty __empty-' + i + '"></p>';
-            }
-            return html;
-        },
-        formatArticleByView: function() {
-            var self = this, view_id = self.view.id, article = self.article;
-            console.log('formatArticle = ' + self.mode);
-
-            var s = article.data || '';
-            var html = '';
-            var a = s.split('\n'), ta = [];
-            a = _.filter(a, x => x.trim().length > 0);
-
-            for (var i = 0; i < a.length; i++) {
-                var line = a[i].trim(), code = '';
-                if (line.indexOf('{H}') == 0) {
-                    code = 'H';
-                    line = line.substr(3);
-                }
-
-                switch (code) {
-                    case 'H':
-                        html += '<h3>' + line + '</h3>';
-                        break;
-                    default:
-                        if (line.endsWith('.jpg') || line.endsWith('.jpeg') || line.endsWith('.png') || line.endsWith('.gif') || line.endsWith('.svg')) {
-                            ta = _.map(line.split('|'), x => x.trim());
-                            if (self.mode == 'view') {
-                                html += '<div class="__img">';
-                                html += '<img src="' + ta.join('"><img src="') + '">';
-                                html += '</div>';
-                                continue;
-                            }
-                        }
-                        html += '<p>' + line + '</p>';
-                        break;
-                }
-            }
-            return html;
-        },
-        lineCheckIsHeading: function (line) {
-            line = (line || '').trim();
-            if (line[line.length - 1] == ':' || (line[0] == '"' && line[line.length - 1] == '"')) return true;
-            
-            var a = line.toLowerCase().split(/[\s,.]+/), s = a[0];
-            var ix = Number(s);
-            if (isNaN(ix) == false
-                || s == 'i'
-                || s == 'ii'
-                || s == 'iii'
-                || s == 'iv'
-                || s == 'v'
-                || s == 'vi'
-                || s == 'vii'
-                || s == 'viii'
-                || s == 'ix'
-                || s == 'x'
-                || s == 'xi'
-                || s == 'xii'
-                || s == 'xiii'
-                || s == 'xiv'
-                || s == 'xv'
-            ) return true;
-            return false
-        },
         formatAutoAllLines: function() {
             var self = this;
             console.log('formatArticle = ' + self.mode);
@@ -221,9 +235,9 @@
                     if (ta.length > 1) {
                         a[i] = '{H}' + ta[0] + '\n\n' +
                             line.substr(ta[0].length, line.length - ta[0].length).trim().substr(1).trim();
-                    }else a[i] = '{H}' + line;
+                    } else a[i] = '{H}' + line;
                 } else if (line.endsWith('.jpg') || line.endsWith('.jpeg') || line.endsWith('.png') || line.endsWith('.gif') || line.endsWith('.svg')) {
-                    
+
                 }
             }
             self.article.data = a.join('\n');
@@ -239,7 +253,7 @@
             $('.__line').removeClass('active');
             $('#' + line_id).addClass('active');
         },
-        domVirtualBuild: function(funcProcess) {
+        domVirtualBuild: function() {
             var edit = document.getElementById('edit-html');
             if (edit) {
                 var htmlString = edit.innerHTML;
@@ -250,6 +264,9 @@
 
                 var parser = new DOMParser();
                 var doc = parser.parseFromString(htmlString, "text/html");
+
+                var tag = doc.getElementById('tag-select');
+                tag.parentElement.removeChild(tag);
 
                 var cms = doc.body.querySelectorAll('.__line[cmd-text]');
                 //console.log(cms);

@@ -1,92 +1,71 @@
-﻿<div class="ui form bg-white p-0 p-md-3 w-100 vh-100 overflow-hidden">
-    <div class="ui dividing header d-inline-block w-100 mt-0 mb-md-2 mb-0 pb-md-2 pb-0 position-relative">
-        <strong class="float-start p-1 p-md-0">
-            {{view.title}}
-        </strong>
-        <div class="actions float-end text-end py-0 m-0" style="height:42px;">
-            <div class="ui button" v-on:click="__popupClose">
-                Cancel
-                <i class="right times icon"></i>
-            </div>
-            <div class="ui primary button" v-on:click="updateArticle" v-show="!loading">
-                Update
-                <i class="right chevron icon"></i>
-            </div>
+﻿<div class="ui form bg-white p-0 m-0 w-100 vh-100 overflow-hidden">
+    <div class="ui dividing w-100 border-bottom px-3 mx-md-0 pt-1">
+        <div class="ui icon button p-1 bg-transparent"
+             data-content="View Source" data-position="bottom left"
+             :style="{color: mode == 'code' ? '#2185d0':''}"
+             v-on:click="cmdCall('CODE')">
+            <i class="code icon large"></i>
+        </div>
+        <div class="ui icon button p-1 bg-transparent"
+             data-content="View Publish" data-position="bottom left"
+             :style="{color: mode == 'view' ? '#2185d0':''}"
+             v-on:click="cmdCall('VIEW')">
+            <i class="eye icon large"></i>
+        </div>
+
+        <div class="ui icon button p-1 bg-transparent"
+             data-content="Insert Image" data-position="bottom left"
+             v-show="mode=='code'"
+             v-on:click="cmdCall('INSERT_IMAGE')">
+            <i class="image outline icon large"></i>
+        </div>
+        <div class="ui icon button p-1 bg-transparent"
+             data-content="Insert Video" data-position="bottom left"
+             v-show="mode=='code'"
+             v-on:click="cmdCall('INSERT_VIDEO')">
+            <i class="youtube icon large"></i>
+        </div>
+        <div class="ui icon button p-1 bg-transparent"
+             data-content="heading line" data-position="bottom left"
+             v-show="mode=='code'"
+             v-on:click="formatAutoAllLines()">
+            <i class="heading icon large"></i>
+        </div>
+        <div class="ui icon button p-1 bg-transparent"
+             data-content="Format all lines" data-position="bottom right"
+             v-show="mode=='code'"
+             v-on:click="cmdCall('HEADING')">
+            <i class="list ol icon large"></i>
+        </div>
+        <div class="ui icon button p-1 m-0 bg-transparent"
+             data-content="Publish Online" data-position="bottom right"
+             v-show="mode=='code'"
+             v-on:click="cmdCall('HEADING')">
+            <i class="checkmark icon large"></i>
+        </div>
+        <div class="ui icon button p-1 m-0 bg-transparent"
+             data-content="Save" data-position="bottom right"
+             v-show="mode=='code'"
+             v-on:click="cmdCall('HEADING')">
+            <i class="save outline icon large"></i>
+        </div>
+        <div class="ui icon button p-1 bg-transparent"
+             data-content="Bold line" data-position="bottom left"
+             v-show="mode=='code'"
+             v-on:click="cmdCall('BOLD')">
+            <i class="bold icon large"></i>
+        </div>
+
+        <div class="ui icon button mt-1 me-1 p-1 bg-transparent position-absolute end-0 top-0"
+             data-content="Close" data-position="bottom right"
+             v-on:click="cmdCall('HEADING')">
+            <i class="times icon large fw-normal"></i>
         </div>
     </div>
-    <div class="row w-100 m-0 p-0 position-relative overflow-hidden" style="overflow-x: hidden; overflow-y: auto;">
-        <div class="p-0" style="max-width:800px;margin:0 auto;">
-            <div class="ui fluid multiple search selection dropdown content border-0 ui-dropdown-MultipleSearchSelection--edit"
-                 style="opacity:0">
-                <div class="default text" style="width:calc(100% - 32px);">Select tags</div>
-                <div class="position-absolute top-0" style="right:0;">
-                    <i class="tag icon opacity-25"></i>
-                </div>
-                <div class="menu">
-                </div>
-            </div>
-            <div class="field text-end px-3 m-0">
-                <label class="ui label float-start p-0 fw-normal">Image default</label>
-                <div class="ui ms-3 border-1 p-0 bg-secondary float-start cursor-pointer ui--tooltip d-inline-block"
-                     style="width:69px;min-height:39px;"
-                     data-content="Choose image default"
-                     v-on:click="changeImageDefault">
-                    <img class="w-100 h-auto" v-if="article.images && article.images.length > 0" :src="article.images[0]" />
-                </div>
-            </div>
-            <div class="field text-end px-3 m-0">
-                <div class="ui checkbox">
-                    <input type="checkbox" tabindex="0" class="hidden">
-                    <label>Publish</label>
-                </div>
-                <div class="ui button p-2 ms-2 cursor-pointer" v-on:click="formatAutoAllLines">
-                    <label>Format</label>
-                </div>
-            </div>
-            <div class="field text-start mb-1 mt-1 px-3">
-                <div class="ui icon button p-1 bg-transparent"
-                     data-content="View Source" data-position="bottom left"
-                     :style="{color: mode == 'code' ? '#2185d0':''}"
-                     v-on:click="cmdCall('CODE')">
-                    <i class="code icon large"></i>
-                </div>
-                <div class="ui icon button p-1 bg-transparent"
-                     data-content="View Publish" data-position="bottom left"
-                     :style="{color: mode == 'view' ? '#2185d0':''}"
-                     v-on:click="cmdCall('VIEW')">
-                    <i class="eye icon large"></i>
-                </div>
-
-                <div class="ui icon button p-1 bg-transparent"
-                     data-content="Insert Image" data-position="bottom left"
-                     v-show="mode=='code'"
-                     v-on:click="cmdCall('INSERT_IMAGE')">
-                    <i class="image outline icon large"></i>
-                </div>
-                <div class="ui icon button p-1 bg-transparent"
-                     data-content="Insert Video" data-position="bottom left"
-                     v-show="mode=='code'"
-                     v-on:click="cmdCall('INSERT_VIDEO')">
-                    <i class="youtube icon large"></i>
-                </div>
-                <div class="ui icon button p-1 bg-transparent"
-                     data-content="heading line" data-position="bottom left"
-                     v-show="mode=='code'"
-                     v-on:click="cmdCall('HEADING')">
-                    <i class="heading icon large"></i>
-                </div>
-                <!--<div class="ui icon button p-1 bg-transparent"
-                     data-content="Bold line" data-position="bottom left"
-                     v-show="mode=='code'"
-                     v-on:click="cmdCall('BOLD')">
-                    <i class="bold icon large"></i>
-                </div>-->
-
-            </div>
-            <div class="field" id="edit-box">
-                <div v-if="mode == 'code'" id="edit-html" :contentEditable="true" v-html="formatArticleByCode()"></div>
-                <div v-else id="view-html" class="article-view" v-html="formatArticleByView()"></div>
-            </div>
+    <div class="position-relative w-100 m-0 p-0 pb-5 pb-md-2 text-center" style="height: calc(100vh - 35px); overflow-x: hidden; overflow-y: auto;">
+        <div id="edit-box" class="d-inline-block m-0 p-0" style="max-width: 800px;">
+            <div v-if="mode == 'code'" id="edit-html" :contentEditable="true" v-html="formatArticleByCode()"></div>
+            <div v-else id="view-html" class="article-view" v-html="formatArticleByView()"></div>
         </div>
     </div>
 </div>
