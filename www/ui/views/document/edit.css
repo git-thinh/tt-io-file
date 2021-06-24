@@ -26,17 +26,6 @@
     outline: 0px solid transparent;
 }
 
-.ui-view.document.edit div.__img {
-    display: inline-block;
-    width: 100%;
-    text-align: center;
-}
-
-    .ui-view.document.edit div.__img img {
-        max-width: 69%;
-        margin: 15px auto;
-    }
-
 .ui-view.document.edit .__line {
     padding-left: 5px !important;
     border-left: dotted 3px white !important;
@@ -49,4 +38,34 @@
     .ui-view.document.edit .__line.h3 {
         font-weight: bold;
         padding: 10px 0;
+    }
+
+.ui-view.document.edit .article-view h3 {
+    font-weight: bold;
+    padding: 10px 0 10px;
+    margin: 0;
+    font-size: 1.5em;
+    word-spacing: 3px;
+}
+
+.ui-view.document.edit .article-view p {
+    font-weight: normal;
+    padding: 0 0 25px;
+    font-size: 1.3em;
+    margin: 0;
+    line-height: 1.5em;
+    word-spacing: 1px;
+}
+
+.ui-view.document.edit .article-view .__img {
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+    .ui-view.document.edit .article-view .__img img {
+        max-width: 69%;
+        margin: 15px auto;
     }

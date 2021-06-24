@@ -4,13 +4,13 @@
             {{view.title}}
         </strong>
         <div class="actions float-end text-end py-0 m-0" style="height:42px;">
+            <div class="ui button" v-on:click="__popupClose">
+                Cancel
+                <i class="right times icon"></i>
+            </div>
             <div class="ui primary button" v-on:click="updateArticle" v-show="!loading">
                 Update
                 <i class="right chevron icon"></i>
-            </div>
-            <div class="ui secondary button" v-on:click="__popupClose">
-                Cancel
-                <i class="right times icon"></i>
             </div>
         </div>
     </div>
@@ -38,6 +38,9 @@
                 <div class="ui checkbox">
                     <input type="checkbox" tabindex="0" class="hidden">
                     <label>Publish</label>
+                </div>
+                <div class="ui button p-2 ms-2 cursor-pointer" v-on:click="formatAutoAllLines">
+                    <label>Format</label>
                 </div>
             </div>
             <div class="field text-start mb-1 mt-1 px-3">
@@ -81,7 +84,8 @@
 
             </div>
             <div class="field" id="edit-box">
-                <div id="edit-html" :contentEditable="mode == 'code'" v-html="formatArticle(view.id, article)"></div>
+                <div v-if="mode == 'code'" id="edit-html" :contentEditable="true" v-html="formatArticleByCode()"></div>
+                <div v-else id="view-html" class="article-view" v-html="formatArticleByView()"></div>
             </div>
         </div>
     </div>

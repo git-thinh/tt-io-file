@@ -12,6 +12,7 @@
             },
             mode: 'code',
             lineId_selected: '',
+            lineIndex_selected: 0,
             loading: false,
             error: ''
         };
@@ -19,7 +20,9 @@
     watch: {
         article: function (val) {
             var self = this;
-            //console.log('CHANGE ARTICLE: ', val);
+            console.log('CHANGE ARTICLE ... ');
+            self.formatAutoAllLines();
+
             //self.openPopupBrowserImage();
         }
     },
@@ -97,8 +100,8 @@
         updateArticle: function() {
 
         },
-        formatArticle: function(view_id, article) {
-            var self = this;
+        formatArticleByCode: function() {
+            var self = this, view_id = self.view.id, article = self.article;
             console.log('formatArticle = ' + self.mode);
 
             var s = article.data || '';
@@ -117,30 +120,119 @@
 
                 switch (code) {
                     case 'H':
-                        html += '<div cmd-text="{H}" id="' + cid + '" onclick="' + view_id + '.lineSelectChanged(' + cid + ')" class="__line h3">' + line + '</div>';
+                        html += '<div cmd-text="{H}" cmd-i="' + i + '" id="' + cid + '" cmd-type="text" onclick="' + view_id + '.lineSelectChanged(' + cid + ')" class="__line h3 __text-' + i + '">' + line + '</div>';
                         break;
                     default:
                         if (line.endsWith('.jpg') || line.endsWith('.jpeg') || line.endsWith('.png') || line.endsWith('.gif') || line.endsWith('.svg')) {
                             ta = _.map(line.split('|'), x => x.trim());
                             if (self.mode == 'view') {
-                                html += '<div id="' + cid + '" class="__img __line">';
+                                html += '<div id="' + cid + '" cmd-i="' + i + '" cmd-type="image" class="__img __line __image-' + i + '">';
                                 html += '<img src="' + ta.join('"><img src="') + '">';
                                 html += '</div>';
                                 continue;
                             }
                         }
-                        html += '<div id="' + cid + '" onclick="' + view_id + '.lineSelectChanged(' + cid + ')" class="__line">' + line + '</div>';
+                        html += '<div id="' + cid + '" cmd-i="' + i + '" cmd-type="text" onclick="' + view_id + '.lineSelectChanged(' + cid + ')" class="__line __text-' + i + '">' + line + '</div>';
                         break;
                 }
-                html += '<p id="' + id + '" onclick="' + view_id + '.lineSelectChanged(' + id + ')" class="__line"></p>';
+                html += '<p id="' + id + '" cmd-i="' + i + '" cmd-type="empty" onclick="' + view_id + '.lineSelectChanged(' + id + ')" class="__line __empty __empty-' + i + '"></p>';
             }
             return html;
         },
-        lineSelectChanged: function(pid) {
-            console.log(pid);
-            this.lineId_selected = pid;
+        formatArticleByView: function() {
+            var self = this, view_id = self.view.id, article = self.article;
+            console.log('formatArticle = ' + self.mode);
+
+            var s = article.data || '';
+            var html = '';
+            var a = s.split('\n'), ta = [];
+            a = _.filter(a, x => x.trim().length > 0);
+
+            for (var i = 0; i < a.length; i++) {
+                var line = a[i].trim(), code = '';
+                if (line.indexOf('{H}') == 0) {
+                    code = 'H';
+                    line = line.substr(3);
+                }
+
+                switch (code) {
+                    case 'H':
+                        html += '<h3>' + line + '</h3>';
+                        break;
+                    default:
+                        if (line.endsWith('.jpg') || line.endsWith('.jpeg') || line.endsWith('.png') || line.endsWith('.gif') || line.endsWith('.svg')) {
+                            ta = _.map(line.split('|'), x => x.trim());
+                            if (self.mode == 'view') {
+                                html += '<div class="__img">';
+                                html += '<img src="' + ta.join('"><img src="') + '">';
+                                html += '</div>';
+                                continue;
+                            }
+                        }
+                        html += '<p>' + line + '</p>';
+                        break;
+                }
+            }
+            return html;
+        },
+        lineCheckIsHeading: function (line) {
+            line = (line || '').trim();
+            if (line[line.length - 1] == ':') return true;
+
+            var a = line.toLowerCase().split(/[\s,.]+/), s = a[0];
+            var ix = Number(s);
+            if (isNaN(ix) == false
+                || s == 'i'
+                || s == 'ii'
+                || s == 'iii'
+                || s == 'iv'
+                || s == 'v'
+                || s == 'vi'
+                || s == 'vii'
+                || s == 'viii'
+                || s == 'ix'
+                || s == 'x'
+                || s == 'xi'
+                || s == 'xii'
+                || s == 'xiii'
+                || s == 'xiv'
+                || s == 'xv'
+            ) return true;
+            return false
+        },
+        formatAutoAllLines: function() {
+            var self = this;
+            console.log('formatArticle = ' + self.mode);
+
+            var s = self.article.data || '';
+            var a = s.split('\n'), ta = [];
+            a = _.filter(a, x => x.trim().length > 0);
+            for (var i = 0; i < a.length; i++) {
+                var line = a[i].trim();
+                if (line[0] == '{') continue;
+
+                if (self.lineCheckIsHeading(line)) {
+                    ta = _.filter(line.split(':'), x => x.trim().length > 0);
+                    if (ta.length > 1) {
+                        a[i] = '{H}' + ta[0] + '\n\n' +
+                            line.substr(ta[0].length, line.length - ta[0].length).trim().substr(1).trim();
+                    }else a[i] = '{H}' + line;
+                } else if (line.endsWith('.jpg') || line.endsWith('.jpeg') || line.endsWith('.png') || line.endsWith('.gif') || line.endsWith('.svg')) {
+                    
+                }
+            }
+            self.article.data = a.join('\n');
+        },
+        lineSelectChanged: function(line_id) {
+            this.lineId_selected = line_id;
+            var line = document.getElementById(line_id);
+            if (line) {
+                var index = Number(line.getAttribute('cmd-i') || '');
+                this.lineIndex_selected = index;
+                console.log(line_id, index);
+            }
             $('.__line').removeClass('active');
-            $('#' + pid).addClass('active');
+            $('#' + line_id).addClass('active');
         },
         domVirtualBuild: function(funcProcess) {
             var edit = document.getElementById('edit-html');
@@ -171,7 +263,7 @@
             var out = doc.body.innerText.split('^').join('\n');
             var a = _.filter(out.split('\n'), x => x.trim().length > 0);
             out = a.join('\n');
-            console.log(a);
+            //console.log(a);
             return out;
         },
         cmdCall: function(cmd) {
@@ -237,15 +329,23 @@
                 if (line) {
                     var isHeading = line.className.indexOf('h3') != -1;
                     var s = (line.innerText || '').trim();
-                    console.log('?????=', s);
+                    //console.log('?????=', s);
                     if (s.indexOf('^{H}') == 0) s = '^' + s.substr(4).trim();
                     else if (s.indexOf('^') == 0) s = '^{H}' + s.substr(1).trim();
                     line.innerText = s;
 
                     var out = self.domGetText(doc);
                     self.article.data = out;
-                    self.$forceUpdate();
-                    $('#' + self.lineId_selected).addClass('active');
+                    //self.$forceUpdate();
+
+                    setTimeout(function () {
+                        line = document.querySelector('.__text-' + self.lineIndex_selected);
+                        if (line) {
+                            self.lineId_selected = line.getAttribute('id');
+                            $('#' + self.lineId_selected).addClass('active');
+                            $('#' + self.lineId_selected).focus();
+                        }
+                    }, 350);
                 }
             }
         },
