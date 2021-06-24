@@ -177,8 +177,8 @@
         },
         lineCheckIsHeading: function (line) {
             line = (line || '').trim();
-            if (line[line.length - 1] == ':') return true;
-
+            if (line[line.length - 1] == ':' || (line[0] == '"' && line[line.length - 1] == '"')) return true;
+            
             var a = line.toLowerCase().split(/[\s,.]+/), s = a[0];
             var ix = Number(s);
             if (isNaN(ix) == false
@@ -205,7 +205,12 @@
             console.log('formatArticle = ' + self.mode);
 
             var s = self.article.data || '';
-            var a = s.split('\n'), ta = [];
+            var a = s
+                .split('<BR>').join('\n')
+                .split('<br>').join('\n')
+                .split('<br/>').join('\n')
+                .split('<br />').join('\n')
+                .split('\n'), ta = [];
             a = _.filter(a, x => x.trim().length > 0);
             for (var i = 0; i < a.length; i++) {
                 var line = a[i].trim();
