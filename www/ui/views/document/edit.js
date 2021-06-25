@@ -43,7 +43,15 @@
                 }
             });
 
+            $('#' + view_id + ' .ui.dropdown').dropdown({
+                on: __ismobi ? 'click' : 'hover',
+                //forceSelection: false,
+                //autoFocus: false,
+                showOnFocus: false
+            });
+
             $('*[data-content]').popup();
+             
         },
         formatArticleByCode: function() {
             var self = this, view_id = self.view.id, article = self.article;
@@ -105,26 +113,20 @@
             }
 
             setTimeout(function () {
-                var its =''
-                    //+ '<div class="header"><i class="tags icon"></i>Filter by tag</div>'
-                    //+ '<div class="divider"></div>'
-                    + '<div class="ui icon search input w-100"><i class="search icon"></i><input type="text" placeholder="Search tags..."></div>'
-                    //+ '<div class="ui error message"><div class="header">Error</div><p>You must log-in to see all categories</p></div>'
-                    //+ '<div class="item">Danish</div><div class="item">Dutch</div><div class="item">English</div><div class="item">French</div><div class="item">German</div><div class="item">Greek</div><div class="item">Hungarian</div><div class="item">Italian</div><div class="item">Japanese</div><div class="item">Korean</div><div class="item">Lithuanian</div><div class="item">Persian</div><div class="item">Polish</div><div class="item">Portuguese</div><div class="item">Russian</div><div class="item">Spanish</div><div class="item">Swedish</div><div class="item">Turkish</div><div class="item">Vietnamese</div>';
-
-                for (var i = 1; i < 1000; i++) its += '<div class="item">Item ' + i + '</div>';
-
                 $('#tag-select').dropdown({
                     //action: function (value, text) {
                     //    console.log(value, text)
                     //}
                 });
 
+                var its = ''
+                    //+ '<div class="header"><i class="tags icon"></i>Filter by tag</div>'
+                    //+ '<div class="divider"></div>'
+                    + '<div class="ui icon search input w-100"><i class="search icon"></i><input type="text" placeholder="Search tags..."></div>'
+                //+ '<div class="ui error message"><div class="header">Error</div><p>You must log-in to see all categories</p></div>'
+                //+ '<div class="item">Danish</div><div class="item">Dutch</div><div class="item">English</div><div class="item">French</div><div class="item">German</div><div class="item">Greek</div><div class="item">Hungarian</div><div class="item">Italian</div><div class="item">Japanese</div><div class="item">Korean</div><div class="item">Lithuanian</div><div class="item">Persian</div><div class="item">Polish</div><div class="item">Portuguese</div><div class="item">Russian</div><div class="item">Spanish</div><div class="item">Swedish</div><div class="item">Turkish</div><div class="item">Vietnamese</div>';
+                for (var i = 1; i < 1000; i++) its += '<div class="item">Item ' + i + '</div>';
                 $('#tag-select .menu').html(its);
-
-                //$('#tag-select .menu').addClass('hidden');
-                //$('#tag-select').removeClass('disabled');
-                //$('#tag-select').dropdown('set selected', 'AX');
             }, 500);
 
             return html;

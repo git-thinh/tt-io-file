@@ -1,5 +1,44 @@
 ﻿<div class="ui form bg-white p-0 m-0 w-100 vh-100 overflow-hidden">
     <div class="ui dividing w-100 border-bottom px-3 mx-md-0 pt-1">
+        <div class="ui icon top left pointing dropdown button bg-transparent p-1 ps-0">
+            <i class="bars icon"></i>
+            <div class="menu">
+                <div class="item"
+                     v-show="mode=='code'"
+                     v-on:click="cmdCall('INSERT_VIDEO')">
+                    <i class="youtube icon large"></i>
+                    Insert Videos
+                </div>
+                <div class="item"
+                     v-show="mode=='code'"
+                     v-on:click="formatAutoAllLines()">
+                    <i class="heading icon large"></i>
+                    Format All Lines
+                </div>
+                <div class="ui divider"></div>
+                <div class="item">Cozy</div>
+                <div class="item">Compact</div>
+                <div class="item">Settings</div>
+                <div class="item">
+                    <i class="dropdown icon"></i>
+                    <span class="text">Export</span>
+                    <div class="menu right">
+                        <div class="item">
+                            <i class="check icon"></i>
+                            To PDF
+                        </div>
+                        <div class="item">
+                            <i class="check icon"></i>
+                            To Zip
+                        </div>
+                    </div>
+                </div>
+                <div class="item">Manage Apps</div>
+                <div class="item">Keyboard Shortcuts</div>
+                <div class="item">Help</div>
+            </div>
+        </div>
+
         <div class="ui icon button p-1 bg-transparent"
              data-content="View Source" data-position="bottom left"
              :style="{color: mode == 'code' ? '#2185d0':''}"
@@ -18,18 +57,6 @@
              v-show="mode=='code'"
              v-on:click="cmdCall('INSERT_IMAGE')">
             <i class="image outline icon large"></i>
-        </div>
-        <div class="ui icon button p-1 bg-transparent"
-             data-content="Insert Video" data-position="bottom left"
-             v-show="mode=='code'"
-             v-on:click="cmdCall('INSERT_VIDEO')">
-            <i class="youtube icon large"></i>
-        </div>
-        <div class="ui icon button p-1 bg-transparent"
-             data-content="heading line" data-position="bottom left"
-             v-show="mode=='code'"
-             v-on:click="formatAutoAllLines()">
-            <i class="heading icon large"></i>
         </div>
         <div class="ui icon button p-1 bg-transparent"
              data-content="Format all lines" data-position="bottom right"
@@ -58,7 +85,7 @@
 
         <div class="ui icon button mt-1 me-1 p-1 bg-transparent position-absolute end-0 top-0"
              data-content="Close" data-position="bottom right"
-             v-on:click="cmdCall('HEADING')">
+             v-on:click="__popupClose">
             <i class="times icon large fw-normal"></i>
         </div>
     </div>

@@ -1,6 +1,7 @@
 ﻿var __site = 'thinh.iot.vn';
 var __scope = 'document';
 var __path = '/ui/views/';
+var __ismobi = window.innerWidth < 700;
 var __vdata = new Vue({
     data: function () {
         return {
@@ -305,6 +306,7 @@ function __vcp(vcf, template, callbackOpen, callbackClose) {
 
         if (is_popup) {
             $(self.$el).modal({
+                //autofocus: false,
                 inverted: false,
                 closable: false,
                 centered: true,
@@ -320,6 +322,7 @@ function __vcp(vcf, template, callbackOpen, callbackClose) {
                     //on: 'hover'
                 }).addClass('opacity-50').dimmer('show');
             }
+
         }
 
         if (typeof self.__init == 'function') self.__init();
@@ -331,6 +334,7 @@ function __vcp(vcf, template, callbackOpen, callbackClose) {
             __pop_current = self;
             self.$el.parentElement.childNodes.forEach((el, i_) => { el.style.zIndex = i_; });
             //console.log(self.view);
+            setTimeout(function () { $('.ui.popup').popup('hide all'); }, 150);
         }
 
         if (vcf.style) $(self.$el).css(vcf.style);
