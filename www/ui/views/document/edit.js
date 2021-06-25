@@ -63,10 +63,17 @@
                 switch (i) {
                     case 0:
                         html += '<h1>' + line + '</h1>';
-                        //html += '<p id="' + id + '" cmd-i="' + i + '" cmd-type="tag" onclick="' + view_id + '.changeTags(' + id + ')" class="__line __tag"></p>';
-                        html += '<div id="tag-select" class="field opacity-0 mx-3"><input type="text" value="Select Tags" readonly class="border-0 p-0 m-0"><select multiple="" class="ui dropdown">'
-                            + '<option value="">Select tags</option><option value="AF">Afghanistan</option><option value="AX">Åland Islands</option><option value="AL">Albania</option>'
-                            + '<select></div>';
+                        //html += '<div id="tag-select" class="field opacity-0 mx-3">'
+                        //    + '<i class="tags icon"></i><input type="text" value="Select Tags" readonly class="border-0 p-0 m-0">'
+                        //    + '<select class="ui dropdown clearable multiple selection" multiple="">'
+                        //    + '<option value="">Select tags</option><option value="AF">Afghanistan</option><option value="AX">Åland Islands</option><option value="AL">Albania</option>'
+                        //    + '</select></div>';
+                        var numCols = window.innerWidth < 500 ? 'two' : 'five';
+                        var mnHeight = window.innerHeight < 500 ? 200 : 350;
+                        html += '<div id="tag-select" class="ui dropdown multiple ' + numCols + ' column scrolling w-100">' //error disabled
+                            + '<input type="hidden" name="filters"><i class="tags icon"></i>'
+                            + '<span class="text"></span>'
+                            + '<div class="menu hidden" style="max-height: ' + mnHeight + 'px !important;"></div></div>';
                         html += r_empty;
                         continue;
                         break;
@@ -98,12 +105,25 @@
             }
 
             setTimeout(function () {
-                $('#tag-select select').dropdown({
+                var its =''
+                    //+ '<div class="header"><i class="tags icon"></i>Filter by tag</div>'
+                    //+ '<div class="divider"></div>'
+                    + '<div class="ui icon search input w-100"><i class="search icon"></i><input type="text" placeholder="Search tags..."></div>'
+                    //+ '<div class="ui error message"><div class="header">Error</div><p>You must log-in to see all categories</p></div>'
+                    //+ '<div class="item">Danish</div><div class="item">Dutch</div><div class="item">English</div><div class="item">French</div><div class="item">German</div><div class="item">Greek</div><div class="item">Hungarian</div><div class="item">Italian</div><div class="item">Japanese</div><div class="item">Korean</div><div class="item">Lithuanian</div><div class="item">Persian</div><div class="item">Polish</div><div class="item">Portuguese</div><div class="item">Russian</div><div class="item">Spanish</div><div class="item">Swedish</div><div class="item">Turkish</div><div class="item">Vietnamese</div>';
+
+                for (var i = 1; i < 1000; i++) its += '<div class="item">Item ' + i + '</div>';
+
+                $('#tag-select').dropdown({
                     //action: function (value, text) {
                     //    console.log(value, text)
                     //}
                 });
-                $('#tag-select').removeClass('opacity-0');
+
+                $('#tag-select .menu').html(its);
+
+                //$('#tag-select .menu').addClass('hidden');
+                //$('#tag-select').removeClass('disabled');
                 //$('#tag-select').dropdown('set selected', 'AX');
             }, 500);
 
