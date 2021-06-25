@@ -12,7 +12,7 @@
                 <div class="item"
                      v-show="mode=='code'"
                      v-on:click="formatAutoAllLines()">
-                    <i class="heading icon large"></i>
+                    <i class="list ol icon large"></i>
                     Format All Lines
                 </div>
                 <div class="ui divider"></div>
@@ -59,10 +59,10 @@
             <i class="image outline icon large"></i>
         </div>
         <div class="ui icon button p-1 bg-transparent"
-             data-content="Format all lines" data-position="bottom right"
+             data-content="Heading line" data-position="bottom right"
              v-show="mode=='code'"
              v-on:click="cmdCall('HEADING')">
-            <i class="list ol icon large"></i>
+            <i class="heading icon large"></i>
         </div>
         <div class="ui icon button p-1 m-0 bg-transparent"
              data-content="Publish Online" data-position="bottom right"

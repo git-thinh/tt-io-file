@@ -71,14 +71,10 @@
                 switch (i) {
                     case 0:
                         html += '<h1>' + line + '</h1>';
-                        //html += '<div id="tag-select" class="field opacity-0 mx-3">'
-                        //    + '<i class="tags icon"></i><input type="text" value="Select Tags" readonly class="border-0 p-0 m-0">'
-                        //    + '<select class="ui dropdown clearable multiple selection" multiple="">'
-                        //    + '<option value="">Select tags</option><option value="AF">Afghanistan</option><option value="AX">Åland Islands</option><option value="AL">Albania</option>'
-                        //    + '</select></div>';
                         var numCols = window.innerWidth < 500 ? 'two' : 'five';
                         var mnHeight = window.innerHeight < 500 ? 200 : 350;
-                        html += '<div id="tag-select" class="ui dropdown multiple ' + numCols + ' column scrolling w-100">' //error disabled
+                        html += '<div id="tag-select" data-content="Change tags" data-position="bottom left"'
+                            + 'class="ui dropdown multiple ' + numCols + ' column scrolling w-100">' //error disabled
                             + '<input type="hidden" name="filters"><i class="tags icon"></i>'
                             + '<span class="text"></span>'
                             + '<div class="menu hidden" style="max-height: ' + mnHeight + 'px !important;"></div></div>';
@@ -127,6 +123,8 @@
                 //+ '<div class="item">Danish</div><div class="item">Dutch</div><div class="item">English</div><div class="item">French</div><div class="item">German</div><div class="item">Greek</div><div class="item">Hungarian</div><div class="item">Italian</div><div class="item">Japanese</div><div class="item">Korean</div><div class="item">Lithuanian</div><div class="item">Persian</div><div class="item">Polish</div><div class="item">Portuguese</div><div class="item">Russian</div><div class="item">Spanish</div><div class="item">Swedish</div><div class="item">Turkish</div><div class="item">Vietnamese</div>';
                 for (var i = 1; i < 1000; i++) its += '<div class="item">Item ' + i + '</div>';
                 $('#tag-select .menu').html(its);
+
+                $('*[data-content]').popup();
             }, 500);
 
             return html;
