@@ -7,9 +7,9 @@
     { scope: 'document', type: 'action', code: 'import-files', title: "Import Files", click: "__vg", popup: true },
     { scope: 'document', type: 'action', code: 'crawle-url', title: "Crawle Url", click: "__vg", class: 'ui overlay fullscreen modal', popup: true },
 
-    { scope: 'document', type: 'nav', code: 'advance-search', title: "Advance search", icon: "filter", click: "__vg", popup: true },
-    { scope: 'document', type: 'nav', code: "hr" },
     { scope: 'document', type: 'nav', code: 'home', title: "Home", icon: "home", click: "__vg", active: true },
+    { scope: 'document', type: 'nav', code: "hr" },
+    { scope: 'document', type: 'nav', code: 'advance-search', title: "Advance search", icon: "filter", click: "__vg", popup: true },
     { scope: 'document', type: 'nav', code: 'message', base: true, title: "Message", icon: "notify", click: "__vg", count: 99 },
     { scope: 'document', type: 'nav', code: 'category', base: true, title: "Category", icon: "folder", click: "__vg" },
     { scope: 'document', type: 'nav', code: 'tag', base: true, title: "Tag", icon: "tag", click: "__vg", popup: true },

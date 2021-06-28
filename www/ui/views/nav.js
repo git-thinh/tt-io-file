@@ -28,9 +28,12 @@
     methods: {
         __init: function () {
             var self = this, el = self.$el;
-            var msr = new Masonry(el, {
-                percentPosition: true,
-            });
+
+            //var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            //tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+            //    new bootstrap.Tooltip(tooltipTriggerEl)
+            //})
+
             var v = _.find(__vdata.views, x => x.scope == __scope && x.active);
             if (v) {
                 self.view_current$ = v.code;

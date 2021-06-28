@@ -10,7 +10,7 @@ var __vdata = new Vue({
                 login: { code: 'login', base: true, template: 'login2', popup: true },
                 document: {
                     admin: [
-                        { code: 'nav', base: true, selector: '#main-left' },
+                        { code: 'nav', template: 'nav-1', base: true, selector: '#main-left' },
                         { code: 'home' },
                     ]
                 },
@@ -287,6 +287,13 @@ function __vcp(vcf, template, callbackOpen, callbackClose) {
                     el = document.getElementById('main-body');
                     if (el) {
                         el.innerHTML = '';
+                        var elLeft = document.getElementById('main-left');
+                        if (elLeft) {
+                            var wmain = window.innerWidth - elLeft.getBoundingClientRect().width;
+                            console.log(wmain);
+                            el.style.width = wmain + 'px';
+                        }
+
                         el.appendChild(self.$el);
                     }
                 }

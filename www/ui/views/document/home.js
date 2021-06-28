@@ -13,7 +13,7 @@
                 self.items = items;
                 Vue.nextTick(function () {
                     self.uiSetup();
-                    self.doc_editClick(items[0]);
+                    //self.doc_editClick(items[0]);
                 });
             });
         },

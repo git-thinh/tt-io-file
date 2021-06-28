@@ -1,4 +1,25 @@
-﻿* {
+﻿/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #333 !important;
+    border-radius: 0 !important;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #ccc !important;
+    }
+
+* {
     font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
 }
 
@@ -14,6 +35,36 @@ html {
 
 div, p, label {
     text-align: left;
+}
+
+.theme--bg-main {
+    background-color: #000 !important;
+}
+.theme--bg-nav {
+    background-color: #212529 !important;
+}
+.theme--bg-box {
+    background-color: #212529 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    outline: 1px solid #333;
+}
+.theme--hr {
+    height: 1px;
+    background-color: #333;
+}
+.theme--title-1 {
+    color: whitesmoke !important;
+    font-weight: bold !important;
+    line-height: 1.8rem !important;
+    word-spacing: 1px !important;
+}
+.theme--color-1 {
+    color: whitesmoke !important;
+}
+.theme--color-2 {
+    color: #cac2c2 !important;
 }
 
 .cursor-pointer {
@@ -38,6 +89,19 @@ div, p, label {
 
 .opacity-100 {
     opacity: 1 !important;
+}
+
+.fs-07 {
+    font-size: 0.7rem !important;
+    line-height: 0.8rem !important;
+}
+.fs-08 {
+    font-size: 0.8rem !important;
+    line-height: 0.9rem !important;
+}
+.fs-09 {
+    font-size: 0.9rem !important;
+    line-height: 1rem !important;
 }
 
 .bd-1 {
@@ -121,22 +185,22 @@ div[ui-view] {
 }
 
 #main-left {
-    width: 163px;
+    /*width: 163px;*/
 }
 
 #main-body {
     flex-shrink: 0;
-    width: calc(100% - 163px);
+    /*width: calc(100% - 163px);*/
     height: 100vh;
-    background-color: rgba(0, 0, 0, .1);
+    /*background-color: rgba(0, 0, 0, .1);
     border: solid rgba(0, 0, 0, .15);
     border-width: 1px 0;
-    box-shadow: inset 0 0.5em 1.5em rgb(0 0 0 / 10%), inset 0 0.125em 0.5em rgb(0 0 0 / 15%);
+    box-shadow: inset 0 0.5em 1.5em rgb(0 0 0 / 10%), inset 0 0.125em 0.5em rgb(0 0 0 / 15%);*/
     overflow: hidden;
     display: inline-block;
     position: relative;
-    overflow-x: hidden;
-    overflow-y: auto;
+    /*overflow-x: hidden;
+    overflow-y: auto;*/
 }
 
 /*****************/

@@ -1,6 +1,6 @@
 ﻿<div class="d-inline-block w-100 position-relative vh-100">
     <div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">
-        <div class="ui card ui-masonry-item" v-for="(m,index) in items">
+        <div class="ui card ui-masonry-item theme--bg-box" v-for="(m,index) in items">
             <div class="position-absolute top-0 cursor-pointer" style="right:0;" v-on:click="doc_editClick(m)">
                 <i :class="['checkmark icon', index % 3 == 0 ? 'opacity-25':'text-primary']" style="font-size:0.7em;"></i>
             </div>
@@ -9,20 +9,20 @@
             </div>
             <div class="content">
                 <a class="header" v-on:click="doc_editClick(m)">
-                    <i :class="['icon me-0 ps-0',m.icon]"></i>
-                    {{m.title}}
+                    <i :class="['icon me-0 ps-0 opacity-25 theme--color-2',m.icon]"></i>
+                    <span class="theme--title-1">{{m.title}}</span>
                 </a>
-                <div class="meta">
+                <div class="meta d-inline-block pt-3 w-100 theme--color-2">
                     <span class="date float-start text-capitalize">{{m.type}}</span>
                     <span class="date float-end">Joined in 2013</span>
                 </div>
-                <div v-if="m.type == 'article' || m.type == 'book'" class="description mt-1">
+                <div v-if="m.type == 'article' || m.type == 'book'" class="description mt-1 theme--color-2">
                     {{doc_getDescription(m.data)}}
                 </div>
             </div>
             <div class="content border-top-0 p-0 px-3 text-end">
-                <span class="ui label border text-capitalize mb-1">{{m.type}}</span>
-                <span class="ui label border text-capitalize mb-1" v-for="tag in doc_getTags(m)">{{tag}}</span>
+                <span class="ui button text-capitalize mb-1 px-2 py-1 fs-08 bg-secondary theme--color-2">{{m.type}}</span>
+                <span class="ui button text-capitalize mb-1 px-2 py-1 fs-08 bg-secondary theme--color-2" v-for="tag in doc_getTags(m)">{{tag}}</span>
             </div>
 
             <!--<div class="ui fluid multiple search selection dropdown content border-0 ui-dropdown-MultipleSearchSelection">

@@ -1,6 +1,6 @@
-﻿<nav class="d-flex flex-column flex-shrink-0 p-3 bg-light">
-    <div class="nav-link link-dark ui icon top left pointing dropdown button bg-transparent p-0" style="z-index:999;">
-        <div class="btn d-flex align-items-center link-dark text-decoration-none dropdown-toggle position-relative p-0"
+﻿<nav class="d-flex flex-column flex-shrink-0 p-3 theme--bg-nav">
+    <div class="nav-link theme--text ui icon top left pointing dropdown button bg-transparent p-0" style="z-index:999;">
+        <div class="btn d-flex align-items-center theme--text text-decoration-none dropdown-toggle position-relative p-0"
              onclick="$(this.parentElement).dropdown();">
             <svg class="me-1" width="32" height="32"><use :xlink:href="'#icon-'+scope_current.icon" /></svg>
             <strong>{{scope_current.title}}</strong>
@@ -30,7 +30,7 @@
         <li v-for="v in scope_navs"
             :class="[v.code == 'hr' ? 'border-top my-1':'nav-item d-inline-block']">
             <a v-if="v.code != 'hr'" v-on:click="__bindFunctionClick(v, event)"
-               :class="['ui-item nav-link position-relative d-inline-block ps-2 pe-1 '+v.code, (v.code == view_current$ && v.popup != true) ? 'active' : 'link-dark']">
+               :class="['ui-item nav-link position-relative d-inline-block ps-2 pe-1 '+v.code, (v.code == view_current$ && v.popup != true) ? 'active' : 'theme--text']">
                 <svg class="bi" width="16" height="16"><use :xlink:href="'#icon-'+v.icon" /></svg>
                 <span>{{v.title}}</span>
                 <span v-if="v.code == 'message'"
@@ -41,8 +41,8 @@
         </li>
         <li class="border-top my-1"></li>
         <li>
-            <div v-if="__vdata.login" class="nav-link link-dark ui icon top left pointing dropdown button bg-transparent p-2">
-                <button class="btn d-flex align-items-center link-dark text-decoration-none dropdown-toggle position-relative p-0"
+            <div v-if="__vdata.login" class="nav-link theme--text ui icon top left pointing dropdown button bg-transparent p-2">
+                <button class="btn d-flex align-items-center theme--text text-decoration-none dropdown-toggle position-relative p-0"
                         onclick="$(this.parentElement).dropdown();">
                     <svg class="bi rounded-circle" width="24" height="24"><use xlink:href="#icon-user" /></svg>
                     <strong>{{__vdata.user.user_name}}</strong>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </div>
-            <a v-else href="javascript:__vg('_login')" class="nav-link link-dark">
+            <a v-else href="javascript:__vg('_login')" class="nav-link theme--text">
                 <svg class="bi" width="16" height="16"><use xlink:href="#icon-user-circle"></use></svg>
                 Login
             </a>
