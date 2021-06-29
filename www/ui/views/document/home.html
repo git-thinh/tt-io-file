@@ -1,4 +1,13 @@
-﻿<div class="d-inline-block w-100 position-relative vh-100">
+﻿<div class="d-inline-block w-100">
+    <div class="position-absolute start-0 top-0 w-100 theme--bg-main" style="height:54px;z-index:1;">
+        <div class="w-100 theme--color-2" style="height:25px;">
+            Books(999) Articles(3456) English(6789)
+        </div>
+        <div class="ui transparent icon input border-bottom me-5 mt-1 float-end">
+            <input type="text" placeholder="Search..." class="theme--color-1">
+            <i class="search icon theme--color-2"></i>
+        </div>
+    </div>
     <div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">
         <div class="ui card ui-masonry-item theme--bg-box" v-for="(m,index) in items">
             <div class="position-absolute top-0 cursor-pointer" style="right:0;" v-on:click="doc_editClick(m)">

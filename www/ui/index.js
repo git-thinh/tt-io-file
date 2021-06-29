@@ -287,12 +287,12 @@ function __vcp(vcf, template, callbackOpen, callbackClose) {
                     el = document.getElementById('main-body');
                     if (el) {
                         el.innerHTML = '';
-                        var elLeft = document.getElementById('main-left');
-                        if (elLeft) {
-                            var wmain = window.innerWidth - elLeft.getBoundingClientRect().width;
-                            console.log(wmain);
-                            el.style.width = wmain + 'px';
-                        }
+                        //var elLeft = document.getElementById('main-left');
+                        //if (elLeft) {
+                        //    var wmain = window.innerWidth - elLeft.getBoundingClientRect().width;
+                        //    console.log(wmain);
+                        //    el.style.width = wmain + 'px';
+                        //}
 
                         el.appendChild(self.$el);
                     }

@@ -4,13 +4,13 @@
         <span class="visually-hidden">{{scope_current.title}}</span>
     </a>-->
     <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-        <li v-for="v in scope_navs" v-if="v.code != 'hr'" 
+        <li v-for="(v, i_) in scope_navs" v-if="v.code != 'hr'"
             v-on:click="__bindFunctionClick(v, event)"
             class="position-relative">
+            <div v-if="i_ != 0" class="theme--hr position-absolute start-0 top-0 w-100"></div>
             <a href="#" :class="['nav-link py-3', (v.code == view_current$ && v.popup != true) ? 'active rounded-0 theme--color-1' : 'theme--color-2']" title="Dashboard">
                 <svg class="bi" width="24" height="24" role="img" aria-label="Dashboard"><use :xlink:href="'#icon-'+v.icon" /></svg>
             </a>
-            <div class="theme--hr position-absolute start-0 top-0 w-100"></div>
         </li>
 
     </ul>
