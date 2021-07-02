@@ -1,14 +1,17 @@
 ﻿<div class="d-inline-block w-100">
-    <div class="position-absolute start-0 top-0 w-100 theme--bg-main" style="height:54px;z-index:1;">
-        <i class="bars icon large theme--color-1 d-md-none d-inline-block position-fixed ms-2 mt-3"></i>
-        <div class="ui transparent icon input border-1 border-bottom border-secondary me-5 mt-2 float-end">
-            <input type="text" placeholder="Search..." class="theme--color-1">
-            <i class="search icon theme--color-2"></i>
+    <div class="position-absolute start-0 top-0 w-100 theme--bg-main d-flex flex-row" style="height:54px;z-index:1;">
+        <div class="d-md-none d-inline-block p-4 pe-0 cursor-pointer" onclick="$('#main-left').toggleClass('d-none')">
+            <i class="bars icon large theme--color-1"></i>
         </div>
-        <div class="w-100 theme--color-2 ps-md-4 ps-5 pt-2 fs-09 float-none d-inline-block">
-            <label>Books(999)</label>
-            <label>Articles(3456)</label>
-            <label>English(6789)</label>
+        <div>
+            <div class="ui left icon input ms-4 mt-2 transparent border-1 border-bottom border-secondary">
+                <input type="text" placeholder="Search..." class="theme--color-1 py-2">
+                <i class="search icon theme--color-2"></i>
+            </div>
+        </div>
+        <div class="flex-fill"></div>
+        <div class="d-inline-block p-4 cursor-pointer" v-on:click="filter_openPopup()">
+            <i class="filter icon large theme--color-2"></i>
         </div>
     </div>
     <div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">
