@@ -64,15 +64,15 @@ div, p, label {
 }
 .theme--title-1 {
     color: whitesmoke !important;
-    font-weight: bold !important;
+    font-weight: normal !important;
     line-height: 1.8rem !important;
     word-spacing: 1px !important;
 }
-.theme--color-1 {
-    color: #fff !important;
-}
 .theme--color-2 {
     color: #cac2c2 !important;
+}
+.theme--color-1 {
+    color: #fff !important;
 }
 
 .cursor-pointer {

@@ -5,6 +5,9 @@ var __mx_coms = {
     props: {
         cla_: String,
         cla_sub_: String,
+        cla_icon_: String,
+        cla_input_: String,
+        cla_image_: String,
         code_: String,
         active_: Boolean,
         disable_: Boolean,
@@ -20,6 +23,9 @@ var __mx_coms = {
         var dt = {
             cla: self.cla_ || '',
             cla_sub: self.cla_sub_ || '',
+            cla_icon: self.cla_icon_ || '',
+            cla_image: self.cla_image_ || '',
+            cla_input: self.cla_input_ || '',
             code: self.code_ || '',
             active: self.active_ || false,
             disable: self.disable_ || false,
@@ -28,6 +34,7 @@ var __mx_coms = {
             items: self.items_ || [],
             total: self.total_ || 0,
             view_id: self.__getGuid(),
+            input_id: self.__getGuid(),
             sub_id: self.__getGuid(),
             sub_open: false,
             has_sub: (self.items_ != null && self.items_.length > 0),
@@ -46,25 +53,6 @@ var __mx_coms = {
 };
 
 Vue.component('ui-button', {
-    mixins: [__mx_coms],
-    watch: {
-        active: function (val) {
-        }
-    },
-    mounted: function () {
-        var self = this;
-    },
-    methods: {
-    },
-    template: `
-<a :class="['btn', cla]">
-    <svg :class="['p-0 m-0',cla_sub]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-        <slot name="SVG_PATH"></slot>
-    </svg>
-</a>
-`});
-
-Vue.component('ui-nav-item', {
     mixins: [__mx_coms],
     watch: {
         active: function (val) {
@@ -122,15 +110,61 @@ Vue.component('ui-nav-item', {
         }
     },
     template: `
-<li :id="view_id" @click="click(code,false,event)" :class="['__vicom nav-item cursor-pointer',cla, has_sub ? '__domclick_outside_close':'' , !active_disbale_ && active ? 'theme--active' : '']">
+<div :id="view_id" @click="click(code,false,event)" :class="['__vicom cursor-pointer',cla, has_sub ? '__domclick_outside_close':'' , !active_disbale_ && active ? 'theme--active' : '']">
     <a :class="['nav-link p-0 rounded-0 text-center']"
         :title="title_">
-        <svg :class="[active ? 'theme--color-1' : 'theme--color-2']" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+        <svg :class="[active ? 'theme--color-1' : 'theme--color-2', cla_icon]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
             <slot name="SVG_PATH"></slot>
         </svg>
     </a>
     <ul :id="sub_id" v-if="has_sub" :class="['dropdown-menu text-small shadow',cla_sub]">
         <li v-for="it in items"><a @click="click(it,true,event)" class="dropdown-item">{{it}}</a></li>
     </ul>
-</li>
+</div>
+`});
+
+Vue.component('ui-input', {
+    mixins: [__mx_coms],
+    watch: {
+        active: function (val) {
+            var self = this, childs = self.$parent.$children;
+            if (val) {
+                if (self.active_disbale_ == false) {
+                    childs.forEach(v => { if (v.view_id != self.view_id && v.active) v.active = false; });
+                }
+            }
+        }
+    },
+    mounted: function () {
+        var self = this;
+        if (self.has_sub)
+            __domclick_outside_close.push(this.__domclick_outside_close);
+    },
+    methods: {
+        __domclick_outside_close: function (e) {
+        },
+        click: function (value, isSub, e) {
+        },
+        updateChange: function (value, isSub) {
+        },
+        subHide: function (e) {
+        }
+    },
+    template: `
+<div :id="view_id" @click="click(code,false,event)" :class="['__vicom cursor-pointer',cla, has_sub ? '__domclick_outside_close':'']">
+    <div>
+        <label v-if="title.length > 0" :for="input_id" class="form-label">{{title}}</label>
+        <div class="input-group">
+            <span class="input-group-text bg-white">
+                <svg :class="[active ? 'theme--color-1' : 'theme--color-2', cla_icon]" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <slot name="SVG_PATH"></slot>
+                </svg>
+            </span>
+            <input :id="input_id" type="email" :class="['form-control form-control-sm', cla_input]" placeholder="name@example.com" autocomplete="off">
+        </div>        
+    </div>
+    <ul :id="sub_id" v-if="has_sub" :class="['dropdown-menu text-small shadow',cla_sub]">
+        <li v-for="it in items"><a @click="click(it,true,event)" class="dropdown-item">{{it}}</a></li>
+    </ul>
+</div>
 `});
