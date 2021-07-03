@@ -5,7 +5,7 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #000;
 }
 
 /* Handle */
@@ -78,7 +78,10 @@ div, p, label {
     border-color: #6c757d !important;
 }
 .theme--border-color-2 {
-    border-color: #808080 !important;
+    border-color: #454545 !important;
+}
+.theme--border-color-3 {
+    border-color: #353535 !important;
 }
 
 
@@ -128,33 +131,6 @@ div, p, label {
     outline: solid 1px #555 !important;
 }
 
-.fd-form {
-    padding-bottom: 7px !important;
-}
-
-    .fd-form.fields {
-        margin: 0 0 1em !important;
-        padding-bottom: 0 !important;
-    }
-
-.ui.button {
-    font-weight: normal;
-}
-.scrolling.content {
-    max-height: calc(80vh - 10rem);
-    overflow: auto;
-}
-
-.ui.card > .content > .header,
-.ui.cards > .card > .content > .header {
-    font-family: inherit;
-}
-
-.ui.label {
-    background-color: transparent;
-    font-weight: normal;
-}
-
 a {
     cursor: pointer;
 }
@@ -178,18 +154,12 @@ div[ui-view] {
         background-color: #f8f9fa;
     }
 
-.ui.stacked.segment:after,
-.ui.stacked.segment:before,
-.ui.stacked.segments:after,
-.ui.stacked.segments:before {
-    height: 4px;
+.__vicom.ui-input input.ui-input-item:focus {
+    outline: none !important;
+    box-shadow: none;
 }
 
-.ui.form .error.message,
-.ui.form .error.message:empty {
-    display: block;
-}
-
+/*****************/
 .main-page {
     display: flex;
     flex-wrap: nowrap;
@@ -219,16 +189,3 @@ div[ui-view] {
     overflow-y: auto;*/
 }
 
-/*****************/
-
-body.uib-login {
-    background-color: #DADADA;
-}
-
-    body.uib-login #main-left {
-        display: none;
-    }
-
-    body.uib-login #main-body {
-        width: 100%;
-    }

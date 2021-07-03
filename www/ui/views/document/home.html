@@ -8,9 +8,9 @@
             </ui-button>
         </div>
         <div class="">
-            <ui-input :cla_="'p-0 m-0 mt-2 ms-3 bg-transparent rounded-0'" 
-                      :cla_icon_="'bg-transparent rounded-0'" 
-                      :cla_input_="'border-start-0 ps-0 bg-transparent rounded-0'">
+            <ui-input :cla_="'p-0 m-0 mt-2 ms-3 bg-transparent rounded-0 border-0 border-bottom theme--border-color-2'"
+                      :cla_icon_="'theme--color-2'"
+                      :cla_input_="'ps-0 theme--color-1'">
                 <template slot="SVG_PATH">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                 </template>
@@ -46,10 +46,15 @@
                 <p class="card-text theme--color-2">{{doc_getDescription(m.data)}}</p>
             </div>
 
-            <ul class="list-group list-group-flush border-top border-bottom theme--border-color-2">
-                <li class="list-group-item bg-transparent theme--color-2 theme--border-color-2">An item</li>
-                <li class="list-group-item bg-transparent theme--color-2 theme--border-color-2">A second item</li>
-                <li class="list-group-item bg-transparent theme--color-2 theme--border-color-2">A third item</li>
+            <div class="card-body text-end px-1 pt-0">
+                <a class="btn btn-sm theme--color-2 theme--border-color-2 py-0 px-1 me-1 mb-1">{{m.type}}</a>
+                <a class="btn btn-sm theme--color-2 theme--border-color-2 py-0 px-1 me-1 mb-1" v-for="tag in doc_getTags(m)">{{tag}}</a>
+            </div>
+
+            <ul class="list-group list-group-flush border-top border-bottom theme--border-color-3">
+                <li class="list-group-item bg-transparent theme--color-2 theme--border-color-3">An item</li>
+                <li class="list-group-item bg-transparent theme--color-2 theme--border-color-3">A second item</li>
+                <li class="list-group-item bg-transparent theme--color-2 theme--border-color-3">A third item</li>
             </ul>
             <div class="card-body">
                 <a href="#" class="btn btn-sm theme--color-2 theme--border-color-1">Go somewhere</a>
@@ -58,31 +63,31 @@
         </div>
 
         <!--<div class="ui card ui-masonry-item theme--bg-box" v-for="(m,index) in items">
-        <div class="position-absolute top-0 cursor-pointer" style="right:0;" v-on:click="doc_editClick(m)">
-            <i :class="['checkmark icon', index % 3 == 0 ? 'opacity-25':'text-primary']" style="font-size:0.7em;"></i>
-        </div>
-        <div class="image" v-show="m.image != null">
-            <img class="card-img-top rounded-top" :src="m.image" />
-        </div>
-        <div class="content">
-            <a class="header" v-on:click="doc_editClick(m)">
-                <svg class="theme--color-2 opacity-50" width="24" height="20" role="img"><use :xlink:href="'#tag-'+m.type" /></svg>
-                <span class="theme--title-1">{{m.title}}</span>
-            </a>
-            <div class="meta d-inline-block pt-3 w-100 theme--color-2">
-                <span class="date float-start text-capitalize">{{m.type}}</span>
-                <span class="date float-end">Joined in 2013</span>
+            <div class="position-absolute top-0 cursor-pointer" style="right:0;" v-on:click="doc_editClick(m)">
+                <i :class="['checkmark icon', index % 3 == 0 ? 'opacity-25':'text-primary']" style="font-size:0.7em;"></i>
             </div>
-            <div v-if="m.type == 'article' || m.type == 'book'" class="description mt-1 theme--color-2">
-                {{doc_getDescription(m.data)}}
+            <div class="image" v-show="m.image != null">
+                <img class="card-img-top rounded-top" :src="m.image" />
             </div>
-        </div>
-        <div class="content border-top-0 p-0 px-3 text-end">
-            <span class="ui button text-capitalize mb-1 px-2 py-1 fs-08 bg-secondary theme--color-2">{{m.type}}</span>
-            <span class="ui button text-capitalize mb-1 px-2 py-1 fs-08 bg-secondary theme--color-2" v-for="tag in doc_getTags(m)">{{tag}}</span>
-        </div>
-        <div class="p-2"></div>
-    </div>-->
+            <div class="content">
+                <a class="header" v-on:click="doc_editClick(m)">
+                    <svg class="theme--color-2 opacity-50" width="24" height="20" role="img"><use :xlink:href="'#tag-'+m.type" /></svg>
+                    <span class="theme--title-1">{{m.title}}</span>
+                </a>
+                <div class="meta d-inline-block pt-3 w-100 theme--color-2">
+                    <span class="date float-start text-capitalize">{{m.type}}</span>
+                    <span class="date float-end">Joined in 2013</span>
+                </div>
+                <div v-if="m.type == 'article' || m.type == 'book'" class="description mt-1 theme--color-2">
+                    {{doc_getDescription(m.data)}}
+                </div>
+            </div>
+            <div class="content border-top-0 p-0 px-3 text-end">
+                <span class="ui button text-capitalize mb-1 px-2 py-1 fs-08 bg-secondary theme--color-2">{{m.type}}</span>
+                <span class="ui button text-capitalize mb-1 px-2 py-1 fs-08 bg-secondary theme--color-2" v-for="tag in doc_getTags(m)">{{tag}}</span>
+            </div>
+            <div class="p-2"></div>
+        </div>-->
     </div>
 
 </div>

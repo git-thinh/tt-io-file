@@ -151,16 +151,16 @@ Vue.component('ui-input', {
         }
     },
     template: `
-<div :id="view_id" @click="click(code,false,event)" :class="['__vicom cursor-pointer',cla, has_sub ? '__domclick_outside_close':'']">
+<div :id="view_id" @click="click(code,false,event)" :class="['__vicom ui-input cursor-pointer',cla, has_sub ? '__domclick_outside_close':'']">
     <div>
         <label v-if="title.length > 0" :for="input_id" class="form-label">{{title}}</label>
         <div class="input-group">
-            <span class="input-group-text bg-transparent">
-                <svg :class="[active ? 'theme--color-1' : 'theme--color-2', cla_icon]" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <span class="input-group-text bg-transparent border-0 ms-0 ps-1 rounded-2">
+                <svg :class="['bg-transparent border-0 opacity-50',cla_icon]" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                     <slot name="SVG_PATH"></slot>
                 </svg>
             </span>
-            <input :id="input_id" type="text" :class="['form-control form-control-sm', cla_input]" placeholder="search..." autocomplete="off">
+            <input :id="input_id" type="text" :class="['ui-input-item form-control form-control-sm bg-transparent border-0 rounded-2', cla_input]" placeholder="search..." autocomplete="off">
         </div>        
     </div>
     <ul :id="sub_id" v-if="has_sub" :class="['dropdown-menu text-small shadow',cla_sub]">
