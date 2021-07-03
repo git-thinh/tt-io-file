@@ -1,127 +1,57 @@
-﻿<div class="ui--menu ui vertical menu theme--bg-nav border-0 rounded-0 vh-100 w-auto position-relative">
-    <div class="ui left pointing dropdown link item d-inline-block p-0 m-0">
-        <div class="d-flex flex-row justify-content-center px-3 py-4 w-100 theme--active">
-            <i class="icon large tags theme--color-2"></i>
-            <i class="icon caret right theme--color-2 opacity-25" style="width:3px;"></i>
-        </div>
-        <div class="menu">
-            <div class="ui search icon input bg-transparent">
-                <i class="search icon"></i>
-                <input type="text" name="search" placeholder="Search issues...">
-            </div>
-            <div class="divider"></div>
-            <div class="header">
-                <i class="tags icon"></i>
-                Filter by tag
-            </div>
-            <div class="item">
-                <div class="ui red empty circular label"></div>
-                Important
-                <div class="ui teal left pointing label ms-2">1</div>
-            </div>
-            <div class="item">
-                <div class="ui blue empty circular label"></div>
-                Announcement
-                <div class="ui label">51</div>
-            </div>
-            <div class="item">
-                <div class="ui black empty circular label"></div>
-                Discussion
-            </div>
-            <div class="divider"></div>
-            <div class="header">
-                <i class="calendar icon"></i>
-                Filter by date
-            </div>
-            <div class="item">
-                <i class="olive circle icon"></i>
-                This Week
-            </div>
-            <div class="item">
-                <i class="violet circle icon"></i>
-                This Month
-            </div>
-            <div class="item">
-                <i class="orange circle icon"></i>
-                This Year
-            </div>
-        </div>
-    </div>
-    <div class="theme--hr"></div>
-
-    <div class="ui left pointing dropdown column link item d-inline-block px-3 py-4 w-100">
-        <div class="d-flex flex-row justify-content-center">
-            <i class="icon large plus square outline theme--color-2"></i>
-            <i class="icon caret right theme--color-2 opacity-25" style="width:3px;"></i>
-        </div>
-        <div class="menu vertical hidden">
-            <div class="item hide"></div>
-            <div class="header">
-                Create new
-            </div>
-            <div class="divider"></div>
-            <a v-for="tag in __vdata.tags" class="px-0 py-3 d-inline-block position-relative text-dark">
-                <svg class="bi ui image ms-3" width="24" height="24" role="img"><use :xlink:href="'#tag-'+tag" /></svg>
-                <span class="text-capitalize pe-3">{{tag}}</span>
-                <div class="theme--hr position-absolute bottom-0 opacity-25"></div>
+﻿<div class="bg-light vh-100 theme--bg-nav" style="width: 4.5rem;">
+    <ul class="nav nav-pills nav-flush mb-auto text-center vh-100 d-flex flex-column">
+        <ui-nav-item :code_="'home'" :active_="true" @click="navClick" :cla_="'p-4 border-bottom'">
+            <template slot="SVG_PATH">
+                <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
+                <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
+            </template>
+        </ui-nav-item>
+        <ui-nav-item :code_="'create_new'" :items_="__vdata.tags" @clicksub="navClick" :cla_="'p-4 border-bottom'" :cla_sub_="'ms-4'">
+            <template slot="SVG_PATH">
+                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
+                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+            </template>
+        </ui-nav-item>
+        <ui-nav-item :code_="'filter_tag'" @click="navClick" :tooltip_="'This is tooltip 3'" :cla_="'p-4 border-bottom'">
+            <template slot="SVG_PATH">
+                <path d="M3 2v4.586l7 7L14.586 9l-7-7H3zM2 2a1 1 0 0 1 1-1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 2 6.586V2z" />
+                <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1zm0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1v5.086z" />
+            </template>
+        </ui-nav-item>
+        <li>
+            <a href="#" class="nav-link py-3 border-bottom" title="Orders" data-bs-toggle="tooltip" data-bs-placement="right">
+                <svg class="bi" width="24" height="24" role="img" aria-label="Orders"><use xlink:href="#table" /></svg>
             </a>
-        </div>
-    </div>
-    <div class="theme--hr"></div>
-    <a class="d-inline-block px-3 py-4 w-100 text-center position-relative">
-        <i class="m-0 icon large chat theme--color-2"></i>
-        <div class="ui label position-absolute end-0 top-0 bg-danger p-1 pt-0 mt-2 me-1 fs-07 text-white">1+</div>
-    </a>
-    <div class="theme--hr"></div>
-    <a class="d-inline-block px-3 py-4 w-100 text-center position-relative">
-        <i class="m-0 icon large shopping cart theme--color-2"></i>
-        <div class="ui label position-absolute end-0 top-0 bg-danger p-1 pt-0 mt-2 me-1 fs-07 text-white">1+</div>
-    </a>
-    <div class="theme--hr"></div>
+        </li>
+        <li>
+            <a href="#" class="nav-link py-3 border-bottom" title="Products" data-bs-toggle="tooltip" data-bs-placement="right">
+                <svg class="bi" width="24" height="24" role="img" aria-label="Products"><use xlink:href="#grid" /></svg>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link py-3 border-bottom" title="Customers" data-bs-toggle="tooltip" data-bs-placement="right">
+                <svg class="bi" width="24" height="24" role="img" aria-label="Customers"><use xlink:href="#people-circle" /></svg>
+            </a>
+        </li>
 
-
-
-
-    <div class="theme--hr"></div>
-    <a class="d-inline-block px-3 py-4 w-100 text-center">
-        <i class="m-0 icon large users theme--color-2"></i>
-    </a>
-    <div class="theme--hr"></div>
-    <a class="d-inline-block px-3 py-4 w-100 text-center">
-        <i class="m-0 icon large filter theme--color-2"></i>
-    </a>
-    <div class="theme--hr"></div>
-    <div class="ui left pointing dropdown link item d-inline-block px-3 py-4 w-100 position-absolute bottom-0">
-        <div class="d-flex flex-row justify-content-center">
-            <i class="icon large wrench theme--color-2"></i>
-            <i class="icon caret right theme--color-2 opacity-25" style="width:3px;"></i>
-        </div>
-        <div class="menu two column">
-            <div class="item hide"></div>
-            <div class="header">
-                Change Theme
-            </div>
-            <div class="divider"></div>
-            <div class="p-3">
-                <div class="ui red empty circular label"></div>
-                Color Red
-            </div>
-            <div class="p-3 theme--active">
-                <div class="ui black empty circular label"></div>
-                Color Black
-            </div>
-            <div class="divider"></div>
-            <div class="header">
-                Change language
-            </div>
-            <div class="p-3 theme--active">
-                <svg class="bi ui avatar image" width="24" height="24" role="img"><use xlink:href="#flag-england" /></svg>
-                English
-            </div>
-            <div class="p-3">
-                <svg class="bi ui avatar image" width="24" height="24" role="img"><use xlink:href="#flag-vietnam" /></svg>
-                Tiếng Việt
-            </div>
-        </div>
-    </div>
+        <li class="flex-fill"></li>
+        <ui-nav-item :code_="'user_panel'" :active_disbale_="true" :items_="__vdata.tags" @clicksub="navClick" :cla_="'p-4 align-self-end'" :cla_sub_="'start-0 bottom-0 ms-5 mb-5'">
+            <template slot="SVG_PATH">
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            </template>
+        </ui-nav-item>
+    </ul>
+    <!--<div class="dropdown border-top">
+        <a href="#" class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
+            <li><a class="dropdown-item" href="#">New project...</a></li>
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Sign out</a></li>
+        </ul>
+    </div>-->
 </div>

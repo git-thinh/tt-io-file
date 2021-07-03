@@ -9,14 +9,14 @@
     methods: {
         __init: function () {
             var self = this;
-            self.doc_getFilter(function (items) {
-                //console.log(items);
-                self.items = items;
-                Vue.nextTick(function () {
-                    self.uiSetup();
-                    //self.doc_editClick(items[0]);
-                });
-            });
+            //self.doc_getFilter(function (items) {
+            //    //console.log(items);
+            //    self.items = items;
+            //    Vue.nextTick(function () {
+            //        self.uiSetup();
+            //        //self.doc_editClick(items[0]);
+            //    });
+            //});
         },
         uiSetup: function() {
             var self = this, el = self.$el, id = el.getAttribute('id');

@@ -24,12 +24,12 @@
             return a;
         }
     },
-    mounted: function () {},
+    mounted: function () { },
     methods: {
         __init: function () {
             var self = this, el = self.$el, view_id = el.getAttribute('id');
 
-            //var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            //var tooltipTriggerList = [].slice.call(document.querySelectorAll('#' + view_id + ' [data-bs-toggle="tooltip"]'))
             //tooltipTriggerList.forEach(function (tooltipTriggerEl) {
             //    new bootstrap.Tooltip(tooltipTriggerEl)
             //})
@@ -47,12 +47,12 @@
             //    //}
             //})
 
-            $('#' + view_id + ' .ui.dropdown').dropdown();
+            //$('#' + view_id + ' .ui.dropdown').dropdown();
 
-            var v = _.find(__vdata.views, x => x.scope == __scope && x.active);
-            if (v) {
-                self.view_current$ = v.code;
-            }
+            //var v = _.find(__vdata.views, x => x.scope == __scope && x.active);
+            //if (v) {
+            //    self.view_current$ = v.code;
+            //}
         },
         __bindFunctionClick: function(v, e) {
             var self = this;
@@ -75,6 +75,13 @@
                 }
             });
             //return s;
+        },
+        navClick: function(v) {
+            var self = this, code = v.code, selected = v.selected;
+            console.log('item click = ', code, selected);
+
+            //do something...
+            v.active = true;
         }
     }
 };

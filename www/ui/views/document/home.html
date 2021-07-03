@@ -1,10 +1,16 @@
 ﻿<div class="d-inline-block w-100">
     <div class="position-absolute start-0 top-0 w-100 theme--bg-main d-flex flex-row" style="height:54px;z-index:1;">
-        <div v-on:click="nav_visible=!nav_visible" class="d-md-none d-inline-block p-4 pe-0 cursor-pointer" onclick="$('#main-left').toggleClass('d-none')">
-            <i v-show="!nav_visible" class="bars icon large theme--color-1"></i>
+        <div v-on:click="nav_visible=!nav_visible" class="d-md-none d-inline-block p-0 cursor-pointer" onclick="$('#main-left').toggleClass('d-none')">
+            <ui-button :cla_="['p-3']" :cla_sub_="'theme--color-1'">
+                <template slot="SVG_PATH">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                </template>
+            </ui-button>
+
+            <!--<i v-show="!nav_visible" class="bars icon large theme--color-1"></i>
             <svg v-show="nav_visible" class="bi theme--color-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414 1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z" />
-            </svg>
+            </svg>-->
         </div>
         <div>
             <div class="ui left icon input ms-4 mt-2 transparent border-1 border-bottom border-secondary">
