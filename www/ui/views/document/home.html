@@ -10,8 +10,8 @@
             </div>
         </div>
         <div class="flex-fill"></div>
-        <div class="d-inline-block p-4 cursor-pointer" v-on:click="filter_openPopup()">
-            <i class="filter icon large theme--color-2"></i>
+        <div class="d-inline-block p-2 pt-3 cursor-pointer" v-on:click="filter_openPopup()">
+            <i class="user circle outline icon large theme--color-2 fs-1"></i>
         </div>
     </div>
     <div class="ui cards ui-masonry-grid ms-3" style="opacity:0;">
@@ -24,7 +24,8 @@
             </div>
             <div class="content">
                 <a class="header" v-on:click="doc_editClick(m)">
-                    <i :class="['icon me-0 ps-0 opacity-25 theme--color-2',m.icon]"></i>
+                    <!--<i :class="['icon me-0 ps-0 opacity-25 theme--color-2',m.icon]"></i>-->
+                    <svg class="theme--color-2 opacity-50" width="24" height="20" role="img"><use :xlink:href="'#tag-'+m.type" /></svg>
                     <span class="theme--title-1">{{m.title}}</span>
                 </a>
                 <div class="meta d-inline-block pt-3 w-100 theme--color-2">

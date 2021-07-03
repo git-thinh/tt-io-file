@@ -36,7 +36,14 @@ html {
 div, p, label {
     text-align: left;
 }
-
+.hide, .hidden {
+    display:none !important;
+}
+.theme--active .icon,
+.theme--active {
+    background-color: #0d6efd !important;
+    color: #fff !important;
+}
 .theme--bg-main {
     background-color: #000 !important;
 }
@@ -53,6 +60,7 @@ div, p, label {
 .theme--hr {
     height: 1px;
     background-color: #333;
+    width: 100%;
 }
 .theme--title-1 {
     color: whitesmoke !important;

@@ -96,7 +96,6 @@
             return [];
         },
         filter_openPopup: function() {
-
             var self = this, el = self.$el, view_id = el.getAttribute('id');
 
             __vcp({

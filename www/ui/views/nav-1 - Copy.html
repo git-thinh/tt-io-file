@@ -1,0 +1,48 @@
+﻿<div class="d-flex flex-column flex-shrink-0 vh-100 theme--bg-nav" style="width: 4.5rem;">
+    <!--<a href="/" class="d-block p-3 theme--text text-decoration-none" title="Icon-only" data-bs-toggle="tooltip" data-bs-placement="right">
+        <svg class="bi" width="40" height="32" fill="currentColor"><use :xlink:href="'#icon-'+scope_current.icon" /></svg>
+        <span class="visually-hidden">{{scope_current.title}}</span>
+    </a>-->
+    <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+        <li class="position-relative">
+            <div class="theme--hr position-absolute start-0 top-0 w-100"></div>
+            <a href="#" class="nav-link py-3 theme--color-2" title="Dashboard">
+                <i class="toolbox icon large"></i>
+            </a>
+        </li>
+        <li class="position-relative ui-nav--setting">
+            <div class="theme--hr position-absolute start-0 top-0 w-100"></div>
+            <a href="#" class="nav-link py-3 theme--color-2">
+                <i class="tools icon large"></i>
+            </a>
+            <div class="ui popup">
+                <div class="header">
+                    <h1>1231</h1>
+                    <h1>1231</h1>
+                    <h1>1231</h1>
+                </div>
+            </div>
+        </li>
+        <li v-for="(v, i_) in scope_navs" v-if="v.code != 'hr'"
+            v-on:click="__bindFunctionClick(v, event)"
+            class="position-relative">
+            <div v-if="i_ != 0" class="theme--hr position-absolute start-0 top-0 w-100"></div>
+            <a href="#" :class="['nav-link py-3', (v.code == view_current$ && v.popup != true) ? 'active rounded-0 theme--color-1' : 'theme--color-2']" title="Dashboard">
+                <svg class="bi" width="24" height="24" role="img" aria-label="Dashboard"><use :xlink:href="'#icon-'+v.icon" /></svg>
+            </a>
+        </li>
+
+    </ul>
+    <div class="dropdown border-top">
+        <a href="#" class="d-flex align-items-center justify-content-center p-3 theme--text text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
+        </a>
+        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
+            <li><a class="dropdown-item" href="#">New project...</a></li>
+            <li><a class="dropdown-item" href="#">Settings</a></li>
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Sign out</a></li>
+        </ul>
+    </div>
+</div>

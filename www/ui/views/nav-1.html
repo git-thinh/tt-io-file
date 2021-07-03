@@ -1,29 +1,127 @@
-﻿<div class="d-flex flex-column flex-shrink-0 vh-100 theme--bg-nav" style="width: 4.5rem;">
-    <!--<a href="/" class="d-block p-3 theme--text text-decoration-none" title="Icon-only" data-bs-toggle="tooltip" data-bs-placement="right">
-        <svg class="bi" width="40" height="32" fill="currentColor"><use :xlink:href="'#icon-'+scope_current.icon" /></svg>
-        <span class="visually-hidden">{{scope_current.title}}</span>
-    </a>-->
-    <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-        <li v-for="(v, i_) in scope_navs" v-if="v.code != 'hr'"
-            v-on:click="__bindFunctionClick(v, event)"
-            class="position-relative">
-            <div v-if="i_ != 0" class="theme--hr position-absolute start-0 top-0 w-100"></div>
-            <a href="#" :class="['nav-link py-3', (v.code == view_current$ && v.popup != true) ? 'active rounded-0 theme--color-1' : 'theme--color-2']" title="Dashboard">
-                <svg class="bi" width="24" height="24" role="img" aria-label="Dashboard"><use :xlink:href="'#icon-'+v.icon" /></svg>
-            </a>
-        </li>
-
-    </ul>
-    <div class="dropdown border-top">
-        <a href="#" class="d-flex align-items-center justify-content-center p-3 theme--text text-decoration-none dropdown-toggle" id="dropdownUser3" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
-        </a>
-        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser3">
-            <li><a class="dropdown-item" href="#">New project...</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
-        </ul>
+﻿<div class="ui--menu ui vertical menu theme--bg-nav border-0 rounded-0 vh-100 w-auto">
+    <div class="ui left pointing dropdown link item d-inline-block p-0 m-0">
+        <div class="d-flex flex-row justify-content-center px-3 py-4 w-100 theme--active">
+            <i class="icon large tags theme--color-2"></i>
+            <i class="icon caret right theme--color-2 opacity-25" style="width:3px;"></i>
+        </div>
+        <div class="menu">
+            <div class="ui search icon input bg-transparent">
+                <i class="search icon"></i>
+                <input type="text" name="search" placeholder="Search issues...">
+            </div>
+            <div class="divider"></div>
+            <div class="header">
+                <i class="tags icon"></i>
+                Filter by tag
+            </div>
+            <div class="item">
+                <div class="ui red empty circular label"></div>
+                Important
+                <div class="ui teal left pointing label ms-2">1</div>
+            </div>
+            <div class="item">
+                <div class="ui blue empty circular label"></div>
+                Announcement
+                <div class="ui label">51</div>
+            </div>
+            <div class="item">
+                <div class="ui black empty circular label"></div>
+                Discussion
+            </div>
+            <div class="divider"></div>
+            <div class="header">
+                <i class="calendar icon"></i>
+                Filter by date
+            </div>
+            <div class="item">
+                <i class="olive circle icon"></i>
+                This Week
+            </div>
+            <div class="item">
+                <i class="violet circle icon"></i>
+                This Month
+            </div>
+            <div class="item">
+                <i class="orange circle icon"></i>
+                This Year
+            </div>
+        </div>
     </div>
+    <div class="theme--hr"></div>
+    <a class="d-inline-block px-3 py-4 w-100 text-center position-relative">
+        <i class="m-0 icon large chat theme--color-2"></i>
+        <div class="ui label position-absolute end-0 top-0 bg-danger p-1 pt-0 mt-2 me-1 fs-07 text-white">1+</div>
+    </a>
+    <div class="theme--hr"></div>
+    <a class="d-inline-block px-3 py-4 w-100 text-center position-relative">
+        <i class="m-0 icon large shopping cart theme--color-2"></i>
+        <div class="ui label position-absolute end-0 top-0 bg-danger p-1 pt-0 mt-2 me-1 fs-07 text-white">1+</div>
+    </a>
+    <div class="theme--hr"></div>
+    <div class="ui left pointing dropdown two column link item d-inline-block px-3 py-4 w-100">
+        <div class="d-flex flex-row justify-content-center">
+            <i class="icon large plus square outline theme--color-2"></i>
+            <i class="icon caret right theme--color-2 opacity-25" style="width:3px;"></i>
+        </div>
+        <div class="menu vertical">
+            <div class="item hide"></div>
+            <div class="header">
+                Create new
+            </div>
+            <div class="divider"></div>
+            <a v-for="tag in __vdata.tags" class="px-0 py-3 d-inline-block position-relative text-dark">
+                <svg class="bi ui image ms-3" width="24" height="24" role="img"><use :xlink:href="'#tag-'+tag" /></svg>
+                <span class="text-capitalize pe-3">{{tag}}</span>
+                <div class="theme--hr position-absolute bottom-0 opacity-25"></div>
+            </a>
+        </div>
+    </div>
+    <div class="theme--hr"></div>
+
+
+
+
+    <div class="theme--hr"></div>
+    <a class="d-inline-block px-3 py-4 w-100 text-center">
+        <i class="m-0 icon large users theme--color-2"></i>
+    </a>
+    <div class="theme--hr"></div>
+    <a class="d-inline-block px-3 py-4 w-100 text-center">
+        <i class="m-0 icon large filter theme--color-2"></i>
+    </a>
+    <div class="theme--hr"></div>
+    <div class="ui left pointing dropdown link item d-inline-block px-3 py-4 w-100">
+        <div class="d-flex flex-row justify-content-center">
+            <i class="icon large wrench theme--color-2"></i>
+            <i class="icon caret right theme--color-2 opacity-25" style="width:3px;"></i>
+        </div>
+        <div class="menu">
+            <div class="item hide"></div>
+            <div class="header">
+                Change Theme
+            </div>
+            <div class="divider"></div>
+            <div class="p-3">
+                <div class="ui red empty circular label"></div>
+                Color Red
+            </div>
+            <div class="p-3 theme--active">
+                <div class="ui black empty circular label"></div>
+                Color Black
+            </div>
+            <div class="divider"></div>
+            <div class="header">
+                Change language
+            </div>
+            <div class="p-3 theme--active">
+                <svg class="bi ui avatar image" width="24" height="24" role="img"><use xlink:href="#flag-england" /></svg>
+                English
+            </div>
+            <div class="p-3">
+                <svg class="bi ui avatar image" width="24" height="24" role="img"><use xlink:href="#flag-vietnam" /></svg>
+                Tiếng Việt
+            </div>
+        </div>
+    </div>
+    <div class="theme--hr"></div>
 </div>

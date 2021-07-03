@@ -6,6 +6,8 @@ var __vdata = new Vue({
     data: function () {
         return {
             login: true,
+            domains: ['iot.vn', 'thinh.iot.vn', 'baove.info', 'baovethienphong.com', 'baovektd.iot.vn', 'ketoankimthuy.com'],
+            tags: ['domain', 'layout', 'buddha', 'article', 'image', 'book', 'youtube', 'audio'],
             scope_setting: {
                 login: { code: 'login', base: true, template: 'login2', popup: true },
                 document: {

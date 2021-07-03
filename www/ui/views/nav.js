@@ -27,12 +27,27 @@
     mounted: function () {},
     methods: {
         __init: function () {
-            var self = this, el = self.$el;
+            var self = this, el = self.$el, view_id = el.getAttribute('id');
 
             //var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
             //tooltipTriggerList.forEach(function (tooltipTriggerEl) {
             //    new bootstrap.Tooltip(tooltipTriggerEl)
             //})
+
+            //var selPopup = '#' + view_id + ' .ui-nav--setting';
+            //$(selPopup).popup({
+            //    popup: $(selPopup + ' .ui.popup'),
+            //    on: __ismobi ? 'click' : 'hover',
+            //    inline: true,
+            //    hoverable: true,
+            //    position: 'right center',
+            //    //delay: {
+            //    //    show: 300,
+            //    //    hide: 800
+            //    //}
+            //})
+
+            $('#' + view_id + ' .ui.dropdown').dropdown();
 
             var v = _.find(__vdata.views, x => x.scope == __scope && x.active);
             if (v) {
