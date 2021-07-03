@@ -1,4 +1,4 @@
-﻿<div class="ui--menu ui vertical menu theme--bg-nav border-0 rounded-0 vh-100 w-auto">
+﻿<div class="ui--menu ui vertical menu theme--bg-nav border-0 rounded-0 vh-100 w-auto position-relative">
     <div class="ui left pointing dropdown link item d-inline-block p-0 m-0">
         <div class="d-flex flex-row justify-content-center px-3 py-4 w-100 theme--active">
             <i class="icon large tags theme--color-2"></i>
@@ -48,22 +48,13 @@
         </div>
     </div>
     <div class="theme--hr"></div>
-    <a class="d-inline-block px-3 py-4 w-100 text-center position-relative">
-        <i class="m-0 icon large chat theme--color-2"></i>
-        <div class="ui label position-absolute end-0 top-0 bg-danger p-1 pt-0 mt-2 me-1 fs-07 text-white">1+</div>
-    </a>
-    <div class="theme--hr"></div>
-    <a class="d-inline-block px-3 py-4 w-100 text-center position-relative">
-        <i class="m-0 icon large shopping cart theme--color-2"></i>
-        <div class="ui label position-absolute end-0 top-0 bg-danger p-1 pt-0 mt-2 me-1 fs-07 text-white">1+</div>
-    </a>
-    <div class="theme--hr"></div>
-    <div class="ui left pointing dropdown two column link item d-inline-block px-3 py-4 w-100">
+
+    <div class="ui left pointing dropdown column link item d-inline-block px-3 py-4 w-100">
         <div class="d-flex flex-row justify-content-center">
             <i class="icon large plus square outline theme--color-2"></i>
             <i class="icon caret right theme--color-2 opacity-25" style="width:3px;"></i>
         </div>
-        <div class="menu vertical">
+        <div class="menu vertical hidden">
             <div class="item hide"></div>
             <div class="header">
                 Create new
@@ -76,6 +67,16 @@
             </a>
         </div>
     </div>
+    <div class="theme--hr"></div>
+    <a class="d-inline-block px-3 py-4 w-100 text-center position-relative">
+        <i class="m-0 icon large chat theme--color-2"></i>
+        <div class="ui label position-absolute end-0 top-0 bg-danger p-1 pt-0 mt-2 me-1 fs-07 text-white">1+</div>
+    </a>
+    <div class="theme--hr"></div>
+    <a class="d-inline-block px-3 py-4 w-100 text-center position-relative">
+        <i class="m-0 icon large shopping cart theme--color-2"></i>
+        <div class="ui label position-absolute end-0 top-0 bg-danger p-1 pt-0 mt-2 me-1 fs-07 text-white">1+</div>
+    </a>
     <div class="theme--hr"></div>
 
 
@@ -90,12 +91,12 @@
         <i class="m-0 icon large filter theme--color-2"></i>
     </a>
     <div class="theme--hr"></div>
-    <div class="ui left pointing dropdown link item d-inline-block px-3 py-4 w-100">
+    <div class="ui left pointing dropdown link item d-inline-block px-3 py-4 w-100 position-absolute bottom-0">
         <div class="d-flex flex-row justify-content-center">
             <i class="icon large wrench theme--color-2"></i>
             <i class="icon caret right theme--color-2 opacity-25" style="width:3px;"></i>
         </div>
-        <div class="menu">
+        <div class="menu two column">
             <div class="item hide"></div>
             <div class="header">
                 Change Theme
@@ -123,5 +124,4 @@
             </div>
         </div>
     </div>
-    <div class="theme--hr"></div>
 </div>

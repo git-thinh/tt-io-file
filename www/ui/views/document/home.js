@@ -1,6 +1,7 @@
 ﻿{
     data: function() {
         return {
+            nav_visible: !__ismobi,
             items: []
         };
     },
