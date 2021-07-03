@@ -8,7 +8,9 @@
             </ui-button>
         </div>
         <div class="">
-            <ui-input :cla_="'p-0 m-0 mt-2 ms-3'" :cla_input_="'border-start-0 ps-0'">
+            <ui-input :cla_="'p-0 m-0 mt-2 ms-3 bg-transparent rounded-0'" 
+                      :cla_icon_="'bg-transparent rounded-0'" 
+                      :cla_input_="'border-start-0 ps-0 bg-transparent rounded-0'">
                 <template slot="SVG_PATH">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                 </template>
@@ -25,7 +27,7 @@
     </div>
     <div class="ui-masonry-grid ms-3" style="opacity:0;">
         <div v-for="(m,index) in items" class="ui-masonry-item card theme--bg-box mb-3" style="width: 18rem;">
-            <div class="card-header">
+            <!--<div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="true" href="#">Active</a>
@@ -37,20 +39,20 @@
                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                     </li>
                 </ul>
-            </div>
+            </div>-->
             <!--<img src="..." class="card-img-top" alt="...">-->
             <div class="card-body">
                 <h5 class="card-title theme--title-1">{{m.title}}</h5>
                 <p class="card-text theme--color-2">{{doc_getDescription(m.data)}}</p>
             </div>
 
-            <ul class="list-group list-group-flush border-top border-bottom border-secondary">
-                <li class="list-group-item bg-transparent theme--color-2 border-secondary">An item</li>
-                <li class="list-group-item bg-transparent theme--color-2 border-secondary">A second item</li>
-                <li class="list-group-item bg-transparent theme--color-2 border-secondary">A third item</li>
+            <ul class="list-group list-group-flush border-top border-bottom theme--border-color-2">
+                <li class="list-group-item bg-transparent theme--color-2 theme--border-color-2">An item</li>
+                <li class="list-group-item bg-transparent theme--color-2 theme--border-color-2">A second item</li>
+                <li class="list-group-item bg-transparent theme--color-2 theme--border-color-2">A third item</li>
             </ul>
             <div class="card-body">
-                <a href="#" class="btn btn-outline-info">Go somewhere</a>
+                <a href="#" class="btn btn-sm theme--color-2 theme--border-color-1">Go somewhere</a>
             </div>
 
         </div>

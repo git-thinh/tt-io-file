@@ -74,6 +74,13 @@ div, p, label {
 .theme--color-1 {
     color: #fff !important;
 }
+.theme--border-color-1 {
+    border-color: #6c757d !important;
+}
+.theme--border-color-2 {
+    border-color: #808080 !important;
+}
+
 
 .cursor-pointer {
     cursor: pointer !important;
