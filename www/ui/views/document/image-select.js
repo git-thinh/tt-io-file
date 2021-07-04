@@ -27,7 +27,6 @@
         },
         uiSetup: function() {
             var self = this, el = self.$el, id = el.getAttribute('id');
-
             setTimeout(function () {
                 var masonryContainer = '#' + id + ' .ui-masonry-grid';
                 $(masonryContainer).masonry();

@@ -1,4 +1,4 @@
-﻿var __site = 'thinh.iot.vn';
+﻿var __site = '';
 var __scope = 'document';
 var __path = '/ui/views/';
 var __ismobi = window.innerWidth < 700;
@@ -36,8 +36,8 @@ var __vdata = new Vue({
     data: function () {
         return {
             login: (localStorage['token'] == null || localStorage['token'] == ''),
-            domains: ['iot.vn', 'thinh.iot.vn', 'baove.info', 'baovethienphong.com', 'baovektd.iot.vn', 'ketoankimthuy.com'],
-            tags: ['domain', 'layout', 'kit', 'promotion', 'task', 'buddha', 'article', 'image', 'book', 'youtube', 'audio'],
+            domains: ['iot.vn', 'thinh.iot.vn', 'landing.iot.vn', 'baove.info', 'baovethienphong.com', 'baovektd.iot.vn', 'ketoankimthuy.com'],
+            tags: ['domain', 'layout', 'kit', 'promotion', 'task', 'buddha', 'article', 'image', 'book', 'english', 'job', 'youtube', 'audio'],
             views_def: [
                 { code: 'nav', template: 'nav-1', base: true, selector: '#main-left' },
                 { code: 'home' },
@@ -216,4 +216,4 @@ var __mx_coms = {
         }
     }
 };
-var __pop_current;
+var __pop_current, __upload_input_id;

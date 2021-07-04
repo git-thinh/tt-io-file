@@ -1,0 +1,17 @@
+﻿<div class="modal">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl w-100 mw-100 h-100 mh-100 m-0">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{image + ' - ' + width + ' x ' + height}}</h5>
+                <button type="button" class="btn-close" @click="command = 'close';__popupClose()"></button>
+            </div>
+            <div class="modal-body">
+                <center><img :src="image" :class="[mode_class]" /></center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" @click="mode_class = 'mh-100'">Actual Pixels</button>
+                <button type="button" class="btn btn-secondary" @click="mode_class = 'mw-100'">Fit Screen</button>
+            </div>
+        </div>
+    </div>
+</div>

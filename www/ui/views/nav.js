@@ -76,7 +76,7 @@
             });
             //return s;
         },
-        navClick: function(v) {
+        buttonClick: function(v) {
             var self = this, code = v.code, selected = v.selected, cmd = selected;
             if (selected && selected.code) cmd = selected.code;
 

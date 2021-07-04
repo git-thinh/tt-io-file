@@ -20,16 +20,27 @@
         },
         uiSetup: function() {
             var self = this, el = self.$el, id = el.getAttribute('id');
-            var elMasonry = document.querySelector('#' + id + ' .ui-masonry-grid');
-            if (elMasonry) {
-                setTimeout(function () {
-                    var msr = new Masonry(elMasonry, {
-                        itemSelector: '.ui-masonry-item',
-                        gutter: 15
-                    });
-                    elMasonry.style.opacity = 1;
-                }, 150);
-            }
+            setTimeout(function () {
+                var masonryContainer = '#' + id + ' .ui-masonry-grid';
+                $(masonryContainer).masonry();
+                $(masonryContainer).masonry('destroy');
+                $(masonryContainer).removeData('masonry');
+                $(masonryContainer).masonry({ gutter: 10 });
+
+                $(masonryContainer).css({ opacity: 1 });
+            }, 250);
+
+            //var self = this, el = self.$el, id = el.getAttribute('id');
+            //var elMasonry = document.querySelector('#' + id + ' .ui-masonry-grid');
+            //if (elMasonry) {
+            //    setTimeout(function () {
+            //        var msr = new Masonry(elMasonry, {
+            //            itemSelector: '.ui-masonry-item',
+            //            gutter: 15
+            //        });
+            //        elMasonry.style.opacity = 1;
+            //    }, 150);
+            //}
 
             //var sitem = _.map(['Arabic', 'Chinese', 'Danish', 'Dutch', 'English', 'French', 'German', 'Greek', 'Hungarian', 'Italian',
             //    'Japanese', 'Korean', 'Lithuanian', 'Persian', 'Polish', 'Portuguese', 'Russian', 'Spanish', 'Swedish', 'Turkish', 'Vietnamese']
@@ -42,6 +53,7 @@
             //    allowAdditions: true
             //});
         },
+
         doc_getDescription: function(text) {
             text = text || '';
             var s = '', a = _.filter(text.split('\n'), x => x.trim().length > 0);
@@ -54,16 +66,23 @@
 
             var apiImages = await __fetchAsync('api/image/get_filter?site=' + __site, 'json');
             if (apiImages && apiImages.ok && apiImages.items) {
-                apiImages.items.forEach(img => {
-                    img.image = '/static/images/' + __site + '/' + img.key;
-                    img.select = false;
+                apiImages.items.forEach(it => {
+                    it.image = '/static/images/' + it.site + '/' + it.key;
+                    it.select = false;
+                    it.loading = false;
                 });
                 arr.push(apiImages.items);
             }
 
             var apiDoc = await __fetchAsync('api/document/get_filter?site=' + __site, 'json');
             //console.log(apiDoc);
-            if (apiDoc && apiDoc.ok && apiDoc.items) arr.push(apiDoc.items);
+            if (apiDoc && apiDoc.ok && apiDoc.items) {
+                apiDoc.items.forEach(it => {
+                    it.select = false;
+                    it.loading = false;
+                });
+                arr.push(apiDoc.items);
+            }
 
             //var themes = self.theme_getCollection();
             //console.log(themes);
@@ -84,8 +103,30 @@
                     case 'theme':
                         x.icon = 'dice d6';
                         break;
+                    case 'image':
+                        if (x.width < 300) {
+                            x.width2 = x.width;
+                            x.height2 = Number(((x.width * x.height) / x.width).toString().split('.')[0]);
+                        } else {
+                            x.width2 = 300;
+                            x.height2 = Number(((300 * x.height) / x.width).toString().split('.')[0]);
+                        }
+                        //console.log(x.orientation, x.width, x.height, '-', x.width2, x.height2, x.key);
+                        break;
                 }
+
+                var lm = x.last_modified || '';
+                if (lm.length > 0) {
+                    lm = lm.split('T').join('').split('-').join('').split(':').join('').split('.')[0];
+                    lm = Number(lm);
+                    x.last_modified = lm;
+                } else x.last_modified = 0;
             });
+
+            result = _.sortBy(result, ['last_modified']);
+            result = result.reverse();
+
+            //console.log(result);
 
             if (callback) callback(result);
         },
@@ -108,111 +149,38 @@
             }
             return [];
         },
-        filter_openPopup: function() {
-            var self = this, el = self.$el, view_id = el.getAttribute('id');
 
-            __vcp({
-                code: 'form',
-                base: true,
-                fields: [
-                    {
-                        type: 'text',
-                        caption: 'Url',
-                        icon: 'linkify',
-                        placeholder: 'http://... or https://...',
-                        value: 'https://baovebinhtruongan.com/'
-                    },
-                    {
-                        type: 'checkbox',
-                        title: 'Checkbox field',
-                        value: true
-                    },
-                    {
-                        type: 'toggle',
-                        title: 'Toggle field',
-                        value: true
-                    },
-                    {
-                        type: 'slider',
-                        title: 'Slider field',
-                        value: true
-                    },
-                    {
-                        type: 'calendar',
-                        title: 'calendar field',
-                        value: ''
-                    },
-                    {
-                        type: 'textarea',
-                        title: 'textarea field',
-                        value: ''
-                    },
-                    {
-                        type: 'radio',
-                        title: 'Radio field',
-                        class: 'grouped', //inline
-                        value: 2,
-                        items: [
-                            { text: 'radio 1', value: 1 },
-                            { text: 'radio 2', value: 2 },
-                            { text: 'radio 3', value: 3 },
-                        ]
-                    },
-                    {
-                        type: 'dropdown',
-                        title: 'Dropdown field',
-                        class: 'selection', //inline
-                        value: 2,
-                        items: [
-                            { text: 'text 1', value: 1 },
-                            { text: 'text 2', value: 2 },
-                            { text: 'text 3', value: 3 },
-                        ]
-                    },
-                    {
-                        type: 'dropdown',
-                        disable: true,
-                        title: 'Dropdown field',
-                        class: 'selection', //inline
-                        value: 2,
-                        items: [
-                            { text: 'text 1', value: 1 },
-                            { text: 'text 2', value: 2 },
-                            { text: 'text 3', value: 3 },
-                        ]
-                    },
-                    {
-                        type: 'select',
-                        title: 'Select field',
-                        value: 2,
-                        items: [
-                            { text: 'text 1', value: 1 },
-                            { text: 'text 2', value: 2 },
-                            { text: 'text 3', value: 3 },
-                        ]
-                    }
-                ],
-                scope: __scope,
-                popup: true,
-                view_ref: view_id,
-                title: 'Site to crawle images',
-                class: 'bg-transparent position-absolute top-0 start-0 w-100 h-100 d-flex'
-            }, null, function (v) {
+        buttonClick: function(v) {
+            var self = this, code = v.code, selected = v.selected, cmd = selected;
+            if (selected && selected.code) cmd = selected.code;
 
-            });
+            console.log('item click = ' + code + ' > ' + cmd);
+            switch (cmd) {
+                case 'upload_image':
+                    self.image_uploadClick();
+                    break;
+            }
+
+
+            //__vopen(cmd, null, function (v) {
+
+            //}, function () {
+
+            //});
         },
+
         tag_getAll: function() {
             var a = _.map(__vdata.tags, (x, i) => {
                 return { code: 'filter_tag', name: x, text: x, counter: i, icon_svg_name: 'tag-' + x, cla_icon: '' };
             });
-            console.log(a);
+            //console.log(a);
             return a;
         },
         domain_getAll: function() {
             var a = _.map(__vdata.domains, (x, i) => {
                 return { code: 'filter_domain', name: x, text: x, counter: i, icon_svg_name: 'icon-link', cla_icon: '' };
             });
-            console.log(a);
+            //console.log(a);
             return a;
         },
         document_menuMore: function() {
@@ -225,13 +193,102 @@
                 { code: 'hr' },
             ];
             _.forEach(__vdata.tags, (x, i) => {
-                if (x != 'image' && x != 'domain' && x != 'kit' && x != 'task' && x != 'promotion') {
+                if (x != 'image'
+                    && x != 'domain'
+                    && x != 'kit'
+                    && x != 'task'
+                    && x != 'promotion'
+                    && x != 'job'
+                    && x != 'english') {
                     a.push({ code: 'create_new_tag', name: x, text: 'Create new ' + x, counter: i, icon_svg_name: 'tag-' + x, cla_icon: '' });
                 }
             });
             a.push({ code: 'hr' });
             a.push({ code: 'crawle_url', text: 'Crawle content from Url' });
             return a;
+        },
+
+        image_uploadClick: function() {
+            var self = this, el = self.$el, view_id = el.getAttribute('id');
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('onchange', view_id + '.image_uploadFileOnChange(this)');
+            input.style.display.opacity = 0;
+            document.body.appendChild(input);
+            $(input).trigger('click');
+        },
+        image_uploadFileOnChange: function(input) {
+            var self = this;
+            var files = input.files;
+            console.log(files);
+            if (files.length == 0) return;
+            var file = files[0], type = file.type;
+            if (type == "image/gif" || type == "image/png" || type == "image/jpeg" || type == "image/jpg") {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var img = {
+                        key: file.name,
+                        publish: false,
+                        site: __site,
+                        tag: '',
+                        title: file.name.split('.')[0],
+                        type: 'image',
+                        loading: true,
+                        select: false,
+                        image: e.target.result
+                    };
+                    //console.log(img);
+                    self.items.unshift(img);
+                    self.$forceUpdate();
+                    setTimeout(function () { self.uiSetup(); }, 150);
+
+                    self.image_uploadFileToServer(file);
+                }
+                reader.readAsDataURL(file);
+            }
+
+            document.body.removeChild(input);
+        },
+        image_uploadFileToServer: function(file) {
+            var self = this;
+            const f = new FormData();
+            f.append('file', file);
+            fetch('/images?site=' + __site, { method: 'POST', body: f }).then(r => r.json()).then(j => {
+                console.log(j);
+                self.__init();
+            });
+        },
+        image_openView: function(item) {
+            __vopen('image-view', '', function (v) {
+                v.image = item.image;
+                v.title = item.key;
+                v.width = item.width;
+                v.height = item.height;
+            }, function () {
+
+            });
+        },
+
+        doc_removeConfirm: function(item) {
+            var self = this, s = '';
+            switch (item.type) {
+                case 'image':
+                    s = 'Are you sure remove image: ' + item.key
+                        + '<br><br><center><img class="w-auto" src="' + item.image + '" style="max-height:250px;"></center>';
+                    __alert(s, 'Delete image',
+                        function (v) {
+                            //console.log('open = ', v);
+                        }, function (v) {
+                            console.log('close = ', v.command, item.key);
+                            if (v.command == 'ok') {
+                                fetch('/images?site=' + item.site + '&file=' + item.key, { method: 'DELETE' }).then(r => r.json()).then(j => {
+                                    console.log(j);
+                                    self.__init();
+                                });
+                            }
+                        });
+                    break;
+            }
         },
     }
 }

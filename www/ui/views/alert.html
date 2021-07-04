@@ -1,5 +1,5 @@
 ﻿<div class="modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">{{title}}</h5>
@@ -7,7 +7,7 @@
                         @click="command = 'close';__popupClose()"></button>
             </div>
             <div class="modal-body">
-                <p>{{text}}</p>
+                <p v-html="text"></p>
             </div>
             <div class="modal-footer" v-show="(btn_cancel && btn_cancel.length > 0)||(btn_ok && btn_ok.length > 0)">
                 <button v-show="btn_cancel && btn_cancel.length > 0" @click="command = 'close';__popupClose()"
