@@ -104,12 +104,13 @@
                         x.icon = 'dice d6';
                         break;
                     case 'image':
-                        if (x.width < 300) {
+                        var fix_width = 290;
+                        if (x.width < fix_width) {
                             x.width2 = x.width;
                             x.height2 = Number(((x.width * x.height) / x.width).toString().split('.')[0]);
                         } else {
-                            x.width2 = 300;
-                            x.height2 = Number(((300 * x.height) / x.width).toString().split('.')[0]);
+                            x.width2 = fix_width;
+                            x.height2 = Number(((fix_width * x.height) / x.width).toString().split('.')[0]);
                         }
                         //console.log(x.orientation, x.width, x.height, '-', x.width2, x.height2, x.key);
                         break;
