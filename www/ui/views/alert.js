@@ -1,11 +1,17 @@
 ﻿{
+    data: function() {
+        return {
+            title: 'Alert',
+            text: '',
+            btn_ok: 'OK',
+            btn_cancel: '',
+            command: '',
+        };
+    },
     mounted: function () { },
     methods: {
         __init: function () {
             var self = this, el = self.$el;
-            el.style.opacity = 1;
-
-            el.className = '';
         },
         __reOpen: function (self) {
             console.log('VIEW RE-OPEN ===== ', __vname);

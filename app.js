@@ -1,6 +1,8 @@
 ﻿const __ENV = process.env.__ENV || 'DEV';
 const __SETTING = require('./setting.json')[__ENV];
 console.log(__SETTING);
+global.__users = require('./data/user.json');
+global.__token = {};
 //------------------------------------------------------------------------
 global._ROOT = __dirname + '\\';
 console.log('_ROOT = ' + _ROOT);
@@ -36,6 +38,7 @@ __API.curl = require('./api/curl.js');
 __API.theme = require('./api/theme.js');
 __API.document = require('./api/document.js');
 __API.image = require('./api/image.js');
+__API.user = require('./api/user.js');
 //------------------------------------------------------------------------
 global.PATH_ROOT = __dirname + '\\';
 const PATH_WWW = _PATH.join(__dirname, 'www/');
@@ -48,6 +51,8 @@ const serverHttp = http.createServer(app);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+//app.use(express.urlencoded({ extended: true }));
+//app.use(express.json())
 
 app.use('/', express.static('www'));
 app.use('/static/theme', express.static('./raw/theme'));
@@ -123,6 +128,12 @@ app.get('/test/:page', (req, res) => {
     else res.status(404).send('Not found');
 });
 app.get('/api/:module/:command', (req, res) => {
+    const module = req.params.module;
+    const cmd = req.params.command;
+    if (__API[module] && __API[module][cmd]) __API[module][cmd](req, res);
+    else res.status(404).send('Not found');
+});
+app.post('/api/:module/:command', (req, res) => {
     const module = req.params.module;
     const cmd = req.params.command;
     if (__API[module] && __API[module][cmd]) __API[module][cmd](req, res);

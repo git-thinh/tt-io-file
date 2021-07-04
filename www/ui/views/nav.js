@@ -77,11 +77,35 @@
             //return s;
         },
         navClick: function(v) {
-            var self = this, code = v.code, selected = v.selected;
-            console.log('item click = ', code, selected);
+            var self = this, code = v.code, selected = v.selected, cmd = selected;
+            if (selected && selected.code) cmd = selected.code;
+
+            console.log('item click = ' + code + ' > ' + cmd);
+
+            switch (code) {
+                case 'user_panel':                    
+                    switch (cmd) {
+                        case 'logout':
+                            self.logout(v);
+                            break;
+                    }
+                    break;
+            }
 
             //do something...
             v.active = true;
+        },
+        logout: function(vueTarget) {
+            __vopen('alert', null, function (v) {
+                //console.log('event open = ', v.view_id);
+                v.title = 'Logout';
+                v.text = 'Are you sure logout?';
+            }, function (data) {
+                //console.log('event close = ', data);
+                if (data && data.command == 'ok') {
+                    __logout();
+                }
+            });
         }
     }
 };

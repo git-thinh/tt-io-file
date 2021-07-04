@@ -44,12 +44,22 @@
         },
         doc_getDescription: function(text) {
             text = text || '';
-            let s = text;
-            if (text.length > 100) s = text.substr(0, 99) + '...';
+            var s = '', a = _.filter(text.split('\n'), x => x.trim().length > 0);
+            //if (text.length > 100) s = text.substr(0, 99) + '...';
+            if (a.length > 1) s = a[1];
             return s;
         },
         doc_getFilter: async function(callback) {
             var self = this, arr = [], result = [];
+
+            var apiImages = await __fetchAsync('api/image/get_filter?site=' + __site, 'json');
+            if (apiImages && apiImages.ok && apiImages.items) {
+                apiImages.items.forEach(img => {
+                    img.image = '/static/images/' + __site + '/' + img.key;
+                    img.select = false;
+                });
+                arr.push(apiImages.items);
+            }
 
             var apiDoc = await __fetchAsync('api/document/get_filter?site=' + __site, 'json');
             //console.log(apiDoc);
@@ -58,6 +68,8 @@
             //var themes = self.theme_getCollection();
             //console.log(themes);
             //arr.push(themes);
+
+
 
             const fn = _.spread(_.union);
             result = fn(arr);

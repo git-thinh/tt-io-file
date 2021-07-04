@@ -1,38 +1,29 @@
-﻿<div class="ui p-4">
-    <div class="header h3 pt-3">
-        Login System
-    </div>
-    <div class="content">
-        <form class="ui form p-3">
-            <div class="field">
-                <label>First Name</label>
-                <input type="text" name="first-name" placeholder="First Name">
+﻿<div class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{title}}</h5>
             </div>
-            <div class="field">
-                <label>Last Name</label>
-                <input type="text" name="last-name" placeholder="Last Name">
-            </div>
-            <div class="field">
-                <div class="ui toggle checkbox">
-                    <input type="checkbox" name="gift" tabindex="0" class="hidden">
-                    <label>Do not include a receipt in the package</label>
+            <div class="modal-body">
+                <div v-if="is_fail()" class="alert alert-danger" role="alert">
+                    {{message}}
+                </div>
+                <div :class="['row g-3 needs-validation', is_fail() ? '':'']">
+                    <div class="mb-3">
+                        <label class="form-label">User name</label>
+                        <input type="text" :class="['form-control', is_fail() ? 'is-invalid':'']" placeholder="" v-model="user$.user_name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" :class="['form-control', is_fail() ? 'is-invalid':'']" placeholder="" v-model="user$.password">
+                    </div>
                 </div>
             </div>
-            <div class="field">
-                <div class="ui checkbox">
-                    <input type="checkbox" tabindex="0" class="hidden">
-                    <label>I agree to the Terms and Conditions</label>
-                </div>
+            <div class="modal-footer">
+                <button @click="loginSubmit()" type="button" class="btn btn-primary">
+                    {{btn_ok}}
+                </button>
             </div>
-        </form>
-    </div>
-    <div class="actions p-3">
-        <div class="ui black deny button">
-            Cancel
-        </div>
-        <div class="ui positive right labeled icon button">
-            Login
-            <i class="checkmark icon"></i>
         </div>
     </div>
 </div>
