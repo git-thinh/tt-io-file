@@ -225,7 +225,7 @@
                 { code: 'hr' },
             ];
             _.forEach(__vdata.tags, (x, i) => {
-                if (x != 'image' && x != 'domain' && x != 'kit' && x != 'task') {
+                if (x != 'image' && x != 'domain' && x != 'kit' && x != 'task' && x != 'promotion') {
                     a.push({ code: 'create_new_tag', name: x, text: 'Create new ' + x, counter: i, icon_svg_name: 'tag-' + x, cla_icon: '' });
                 }
             });
