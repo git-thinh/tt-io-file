@@ -37,7 +37,7 @@ var __vdata = new Vue({
         return {
             login: (localStorage['token'] == null || localStorage['token'] == ''),
             domains: ['iot.vn', 'thinh.iot.vn', 'baove.info', 'baovethienphong.com', 'baovektd.iot.vn', 'ketoankimthuy.com'],
-            tags: ['domain', 'layout', 'buddha', 'article', 'image', 'book', 'youtube', 'audio'],
+            tags: ['domain', 'layout', 'kit', 'task', 'buddha', 'article', 'image', 'book', 'youtube', 'audio'],
             views_def: [
                 { code: 'nav', template: 'nav-1', base: true, selector: '#main-left' },
                 { code: 'home' },
@@ -57,10 +57,6 @@ var __vdata = new Vue({
                 { code: 'hr' },
                 { code: 'change_language_vietnamese', text: 'Tiếng Việt', counter: 0, icon_svg_name: 'flag-vietnam' },
                 { code: 'change_language_english', active: true, text: 'English', counter: 0, icon_svg_name: 'flag-england' },
-            ],
-            document_menus: [
-                { code: 'logout', text: 'Logout' },
-                { code: 'change_pass', text: 'Change password' }
             ],
 
 
@@ -126,9 +122,11 @@ var __mx_coms = {
         code_: String,
 
         cla_: String,
-        cla_icon_: String,
         cla_input_: String,
+
+        cla_icon_: String,
         cla_image_: String,
+        icon_svg_name_: String,
 
         cla_sub_: String,
         header_sub_: String,
@@ -155,7 +153,7 @@ var __mx_coms = {
 
             cla_icon: self.cla_icon_ || '',
             cla_image: self.cla_image_ || '',
-            icon_svg_name: '',
+            icon_svg_name: self.icon_svg_name_ || '',
 
             cla_sub: self.cla_sub_ || '',
             header_sub: self.header_sub_ || '',

@@ -317,7 +317,8 @@ Vue.component('ui-button', {
 <div :id="view_id" @click="click(code,false,event)" :class="['__vicom cursor-pointer',cla, has_sub ? '__domclick_outside_close':'' , !active_disbale_ && active ? 'theme--active' : '']">
     <a :class="['nav-link p-0 rounded-0 text-center']"
         :title="title_">
-        <svg :class="[active ? 'theme--color-1' : 'theme--color-2', cla_icon]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+        <svg v-if="icon_svg_name != null && icon_svg_name.length > 0" role="img" :class="[active ? 'theme--color-1' : 'theme--color-2', cla_icon]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><use :xlink:href="'#'+icon_svg_name" /></svg>
+        <svg v-else :class="[active ? 'theme--color-1' : 'theme--color-2', cla_icon]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
             <slot name="SVG_PATH"></slot>
         </svg>
     </a>

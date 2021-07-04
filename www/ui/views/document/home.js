@@ -215,5 +215,23 @@
             console.log(a);
             return a;
         },
+        document_menuMore: function() {
+            var a = [
+                { code: 'upload_image', text: 'Upload image' },
+                { code: 'hr' },
+                { code: 'manage_domain', text: 'Manage domain' },
+                { code: 'manage_user', text: 'Manage user' },
+                { code: 'manage_language', text: 'Manage language' },
+                { code: 'hr' },
+            ];
+            _.forEach(__vdata.tags, (x, i) => {
+                if (x != 'image' && x != 'domain' && x != 'kit' && x != 'task') {
+                    a.push({ code: 'create_new_tag', name: x, text: 'Create new ' + x, counter: i, icon_svg_name: 'tag-' + x, cla_icon: '' });
+                }
+            });
+            a.push({ code: 'hr' });
+            a.push({ code: 'crawle_url', text: 'Crawle content from Url' });
+            return a;
+        },
     }
 }
