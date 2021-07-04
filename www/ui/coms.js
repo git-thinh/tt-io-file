@@ -203,14 +203,20 @@ var __domclick_outside_close = [];
 window.addEventListener('click', function (e) { __domclick_outside_close.forEach(f => f(e)); });
 async function __init() {
     await __reloadViewBase();
-
     __userLoginCheck(function (ok) {
         if (ok) {
-            __vdata.views_def.forEach(function (vi, index) {
-                __vopen(vi, vi.template, function (self) {
-                    if (index == 0) document.body.style.opacity = 1;
+            __fetchAsync('/ui/views/icon-svg.html', 'text').then(htmlSvg => {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(htmlSvg, "text/html");
+                var svgs = doc.body.firstElementChild;
+                document.body.appendChild(svgs);
+
+                __vdata.views_def.forEach(function (vi, index) {
+                    __vopen(vi, vi.template, function (self) {
+                        if (index == 0) document.body.style.opacity = 1;
+                    });
                 });
-            });
+            })
         } else {
             __vopen('login', '', function (v) {
                 document.body.style.opacity = 1;
@@ -316,7 +322,13 @@ Vue.component('ui-button', {
         </svg>
     </a>
     <ul :id="sub_id" v-if="has_sub" :class="['dropdown-menu text-small shadow',cla_sub]">
-        <li v-for="it in items"><a @click="click(it,true,event)" class="dropdown-item">{{ typeof it == 'string' ? it : it.text }}</a></li>
+        <li v-if="header_sub && header_sub.length > 0"><h6 class="dropdown-header">{{header_sub}}</h6></li>
+        <li v-for="it in items" @click="click(it,true,event)" :class="[it.active?'active':'', it.code == 'hr' ? '':'dropdown-item d-flex justify-content-between align-items-center']">
+            <svg v-if="it.code != 'hr' && it.icon_svg_name != null && it.icon_svg_name.length > 0" :class="[it.cla_icon]" width="16" height="16" role="img"><use :xlink:href="'#'+it.icon_svg_name" /></svg>
+            <div v-if="it.code != 'hr'" class="ms-2 me-auto">{{ typeof it == 'string' ? it : it.text }}</div>
+            <span v-if="it.code != 'hr' && it.counter != null && it.counter > 0" class="badge bg-primary rounded-pill ms-2">{{it.counter}}</span>
+            <hr v-if="it.code == 'hr'" class="dropdown-divider">
+        </li>
     </ul>
 </div>
 `});

@@ -83,7 +83,7 @@
             console.log('item click = ' + code + ' > ' + cmd);
 
             switch (code) {
-                case 'user_panel':                    
+                case 'user_menu':
                     switch (cmd) {
                         case 'logout':
                             self.menu_logoutClick(v);

@@ -201,5 +201,19 @@
 
             });
         },
+        tag_getAll: function() {
+            var a = _.map(__vdata.tags, (x, i) => {
+                return { code: 'filter_tag', name: x, text: x, counter: i, icon_svg_name: 'tag-' + x, cla_icon: '' };
+            });
+            console.log(a);
+            return a;
+        },
+        domain_getAll: function() {
+            var a = _.map(__vdata.domains, (x, i) => {
+                return { code: 'filter_domain', name: x, text: x, counter: i, icon_svg_name: 'icon-link', cla_icon: '' };
+            });
+            console.log(a);
+            return a;
+        },
     }
 }

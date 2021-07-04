@@ -45,6 +45,27 @@ var __vdata = new Vue({
             ],
             views_base: [],
 
+            user_menus: [
+                { code: 'hr' },
+                { code: 'logout', text: 'Logout' },
+                { code: 'change_pass', text: 'Change password' }
+            ],
+            user_settings: [
+                { code: 'hr' },
+                { code: 'change_theme_red', text: 'Theme Red', counter: 0, icon_svg_name: 'icon-circle-fill', cla_icon: 'text-danger' },
+                { code: 'change_theme_black', active: true, text: 'Theme Black', counter: 0, icon_svg_name: 'icon-circle-fill', cla_icon: 'text-dark' },
+                { code: 'hr' },
+                { code: 'change_language_vietnamese', text: 'Tiếng Việt', counter: 0, icon_svg_name: 'flag-vietnam' },
+                { code: 'change_language_english', active: true, text: 'English', counter: 0, icon_svg_name: 'flag-england' },
+            ],
+            document_menus: [
+                { code: 'logout', text: 'Logout' },
+                { code: 'change_pass', text: 'Change password' }
+            ],
+
+
+
+
 
             user: {
                 user_name: 'admin',
@@ -88,7 +109,6 @@ var __vdata = new Vue({
                 { code: 'database', title: 'Database', icon: 'database' },
             ],
             views: __views,
-
             theme: {
                 group: {
                     home: 4,
@@ -103,42 +123,59 @@ var __vdata = new Vue({
 });
 var __mx_coms = {
     props: {
+        code_: String,
+
         cla_: String,
-        cla_sub_: String,
         cla_icon_: String,
         cla_input_: String,
         cla_image_: String,
-        code_: String,
+
+        cla_sub_: String,
+        header_sub_: String,
+
         active_: Boolean,
         disable_: Boolean,
         active_disbale_: Boolean,
+
         title_: String,
+
         items_: Array,
         tooltip_: String,
         total_: Number,
+        counter_: Number,
         //author: Object
     },
     data: function () {
         var self = this;
         var dt = {
+            code: self.code_ || '',
+
             cla: self.cla_ || '',
-            cla_sub: self.cla_sub_ || '',
+            cla_input: self.cla_input_ || '',
+
             cla_icon: self.cla_icon_ || '',
             cla_image: self.cla_image_ || '',
-            cla_input: self.cla_input_ || '',
-            code: self.code_ || '',
-            active: self.active_ || false,
-            disable: self.disable_ || false,
-            title: self.title_ || '',
-            tooltip: self.tooltip_ || '',
-            items: self.items_ || [],
-            total: self.total_ || 0,
-            view_id: self.__getGuid(),
-            input_id: self.__getGuid(),
+            icon_svg_name: '',
+
+            cla_sub: self.cla_sub_ || '',
+            header_sub: self.header_sub_ || '',
+            has_sub: (self.items_ != null && self.items_.length > 0),
             sub_id: self.__getGuid(),
             sub_open: false,
-            has_sub: (self.items_ != null && self.items_.length > 0),
-            selected: null
+            selected: null,
+
+            active: self.active_ || false,
+            disable: self.disable_ || false,
+
+            title: self.title_ || '',
+            tooltip: self.tooltip_ || '',
+
+            items: self.items_ || [],
+            total: self.total_ || 0,
+            counter: self.counter_ || 0,
+
+            view_id: self.__getGuid(),
+            input_id: self.__getGuid()
         };
         return dt;
     },
@@ -149,7 +186,7 @@ var __mx_coms = {
                 return v.toString(16);
             });
         },
-        __alert: __alert,
+        //__alert: __alert,
         __popupClose: function () {
             var self = this,
                 el = self.$el,
