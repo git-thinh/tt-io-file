@@ -1,7 +1,2 @@
 ﻿.ui-view.document.home {
-    width: 100%;
-    margin-top: 45px;
-    height: calc(100vh - 46px);
-    overflow-x: hidden;
-    overflow-y: auto;
 }
