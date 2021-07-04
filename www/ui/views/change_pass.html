@@ -1,0 +1,35 @@
+﻿<div class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{title}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        @click="__popupClose()"></button>
+            </div>
+            <div class="modal-body">
+                <div v-if="is_fail()" class="alert alert-danger" role="alert">
+                    {{message}}
+                </div>
+                <div :class="['row g-3 needs-validation', is_fail() ? '':'']">
+                    <div class="mb-3">
+                        <label class="form-label">Current password</label>
+                        <input type="password" :class="['form-control', is_fail() ? 'is-invalid':'']" placeholder="" v-model="user$.password">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">New password</label>
+                        <input type="password" :class="['form-control', is_fail() ? 'is-invalid':'']" placeholder="" v-model="user$.new_password">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">New password again</label>
+                        <input type="password" :class="['form-control', is_fail() ? 'is-invalid':'']" placeholder="" v-model="user$.new_password_again">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button @click="submit()" type="button" class="btn btn-primary">
+                    {{btn_ok}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -39,6 +39,7 @@ __API.theme = require('./api/theme.js');
 __API.document = require('./api/document.js');
 __API.image = require('./api/image.js');
 __API.user = require('./api/user.js');
+__API.view = require('./api/view.js');
 //------------------------------------------------------------------------
 global.PATH_ROOT = __dirname + '\\';
 const PATH_WWW = _PATH.join(__dirname, 'www/');

@@ -31,15 +31,29 @@ function __fetchAsync(url, type, options) {
         });
     });
 }
+function __isViewBase(code) {
+    return _.findIndex(__vdata.views_base, x => x == code) != -1;
+}
+async function __reloadViewBase() {
+    var views_base = await __fetchAsync('/api/view/get_base');
+    if (views_base && views_base.ok && views_base.items) __vdata.views_base = views_base.items;
+    //console.log(views_base.items);
+}
 function __vopen(vcf, template, callbackOpen, callbackClose) {
+    var code = '';
     if (vcf == null) return;
     if (typeof vcf == 'string') {
-        var vitem = _.find(__vdata.views, x => x.code == vcf);
-        if (vitem == null) return console.error('ERROR: Cannot find setting at __vdata.views["' + vcf + '"]');
+        code = vcf.toLowerCase().trim();
+        var vitem = _.find(__vdata.views, x => x.code == code);
+        if (vitem == null) {
+            vitem = { code: vcf, popup: true, base: __isViewBase(code) };
+            console.log('!!!!!!ERROR: Cannot find setting at __vdata.views["' + code + '"]', vitem);
+            vcf = vitem;
+        }
         else vcf = vitem;
     }
 
-    var code = vcf.code || '';
+    code = vcf.code || '';
     if (template == null || template.length == 0) template = code;
     var no_css = vcf.no_css || false;
     var no_js = vcf.no_js || false;
@@ -86,7 +100,11 @@ function __vopen(vcf, template, callbackOpen, callbackClose) {
     __fetchAsync(urlTemp, 'text').then(function (htmlString) {
         //console.log('htmlString = ', htmlString);
         if (htmlString.length == 0 && is_popup)
-            htmlString = '<div class="p-5 bg-white"><h1>' + code + ' - ' + template + '</h1><hr><div v-on:click="__popupClose" class="ui black button">Close</div></div>';
+            htmlString = '<div class="modal"><div class="modal-dialog"><div class="modal-content">'
+                + '<div class="modal-header">' + code + ' - ' + template + '</div>'
+                + '<div class="modal-footer"><button type="button" class="btn btn-primary" @click="__popupClose">Exit</button></div>'
+                + '</div></div></div>';
+            //htmlString = '<div class="p-5 bg-white"><h1>' + code + ' - ' + template + '</h1><hr><div v-on:click="__popupClose" class="ui black button">Close</div></div>';
 
         var vop = window['___vc_' + code] || {};
         var vueComponent, self, elComponent;
@@ -183,7 +201,9 @@ function __vopen(vcf, template, callbackOpen, callbackClose) {
 }
 var __domclick_outside_close = [];
 window.addEventListener('click', function (e) { __domclick_outside_close.forEach(f => f(e)); });
-function __init() {
+async function __init() {
+    await __reloadViewBase();
+
     __userLoginCheck(function (ok) {
         if (ok) {
             __vdata.views_def.forEach(function (vi, index) {
@@ -223,7 +243,13 @@ function __logout() {
         location.reload();
     });    
 }
-
+function __alert(message, title, callbackOpen, callbackClose) {
+    __vopen({ code: 'alert', base: true, popup: true }, null, function (v) {
+        if (title && title.length > 0) v.title = title;
+        v.text = message;
+        if (callbackOpen) callbackOpen(v);
+    }, callbackClose);
+}
 
 Vue.component('ui-button', {
     mixins: [__mx_coms],

@@ -1,13 +1,13 @@
 ﻿{
     data: function() {
         return {
-            title: 'Login System',
-            btn_ok: 'Login',
+            title: 'Change password',
+            btn_ok: 'Update',
             message: '',
             user$: {
-                user_name: 'admin',
                 password: '12345',
-                has_remember: true,
+                new_password: '123',
+                new_password_again: '123'
             }
         };
     },
@@ -16,11 +16,17 @@
         is_fail: function () {
             return this.message.length > 0;
         },
-        loginSubmit: function() {
+        submit: function() {
             var self = this, user = self.user$;
             self.message = '';
-            console.log('login = ', user.user_name, user.password);
-            __fetchAsync('/api/user/login', 'json', {
+
+            if (user.password.length == 0 || user.new_password != user.new_password_again || user.new_password.length < 3) {
+                self.message = 'Please input correct password and new password';
+                return;
+            }
+
+            console.log('login = ', user.password, user.new_password);
+            __fetchAsync('/api/user/change_pass?token=' + localStorage['token'], 'json', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -31,10 +37,10 @@
                 if (val && val.ok && val.user && val.user.token) {
                     __userLoginSuccess(val.user.token, function () {
                         self.__popupClose();
-                        __init();
+                        __alert('Change password success!!!');
                     });
                 } else {
-                    self.message = 'Login fail. Please input correct account and try again!';
+                    self.message = 'Change password fail. Please input correct password and try again!';
                 }
             });
         },

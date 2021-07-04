@@ -86,7 +86,10 @@
                 case 'user_panel':                    
                     switch (cmd) {
                         case 'logout':
-                            self.logout(v);
+                            self.menu_logoutClick(v);
+                            break;
+                        case 'change_pass':
+                            self.menu_change_passClick(v);
                             break;
                     }
                     break;
@@ -95,7 +98,7 @@
             //do something...
             v.active = true;
         },
-        logout: function(vueTarget) {
+        menu_logoutClick: function(vueTarget) {
             __vopen('alert', null, function (v) {
                 //console.log('event open = ', v.view_id);
                 v.title = 'Logout';
@@ -105,6 +108,15 @@
                 if (data && data.command == 'ok') {
                     __logout();
                 }
+            });
+        },
+        menu_change_passClick: function(vueTarget) {
+            __vopen('change_pass', null, function (v) {
+                //console.log('event open = ', v.view_id);
+               
+            }, function (data) {
+                //console.log('event close = ', data);
+
             });
         }
     }

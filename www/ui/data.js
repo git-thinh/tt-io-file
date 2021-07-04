@@ -43,6 +43,8 @@ var __vdata = new Vue({
                 { code: 'home' },
                 //{ code: 'login', base: true, popup: true },
             ],
+            views_base: [],
+
 
             user: {
                 user_name: 'admin',
@@ -147,24 +149,7 @@ var __mx_coms = {
                 return v.toString(16);
             });
         },
-        __alert: function (title, message, callbackOpen, callbackClose) {
-            var self = this, el = self.$el, id = el.getAttribute('id');
-            __vcp({
-                code: 'form',
-                base: true,
-                fields: [
-                    {
-                        type: 'alert',
-                        value: message
-                    },
-                ],
-                scope: __scope,
-                popup: true,
-                view_ref: id,
-                title: title,
-                class: 'bg-transparent position-absolute top-0 start-0 w-100 h-100 d-flex'
-            }, null, callbackOpen, callbackClose);
-        },
+        __alert: __alert,
         __popupClose: function () {
             var self = this,
                 el = self.$el,
