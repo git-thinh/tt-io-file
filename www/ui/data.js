@@ -37,7 +37,7 @@ var __vdata = new Vue({
         return {
             login: (localStorage['token'] == null || localStorage['token'] == ''),
             domains: ['iot.vn', 'thinh.iot.vn', 'landing.iot.vn', 'baove.info', 'baovethienphong.com', 'baovektd.iot.vn', 'ketoankimthuy.com'],
-            tags: ['domain', 'tag', 'article', 'image', 'book', 'english', 'job', 'youtube', 'audio', 'layout', 'kit', 'promotion', 'task', 'buddha',],
+            tags: ['domain', 'tag', 'article', 'image', 'book', 'study', 'job', 'youtube', 'audio', 'layout', 'kit', 'promotion', 'task', 'buddha',],
             views_def: [
                 { code: 'nav', template: 'nav-1', base: true, selector: '#main-left' },
                 { code: 'home' },
@@ -127,6 +127,7 @@ var __mx_coms = {
         cla_icon_: String,
         cla_image_: String,
         icon_svg_name_: String,
+        icon_svg_width_: Number,
 
         cla_sub_: String,
         header_sub_: String,
@@ -155,6 +156,7 @@ var __mx_coms = {
             cla_icon: self.cla_icon_ || '',
             cla_image: self.cla_image_ || '',
             icon_svg_name: self.icon_svg_name_ || '',
+            icon_svg_width: self.icon_svg_width_ || 24,
 
             has_sub: (self.items_ != null && self.items_.length > 0),
             cla_sub: self.cla_sub_ || '',
