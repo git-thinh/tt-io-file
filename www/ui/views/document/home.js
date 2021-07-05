@@ -126,6 +126,7 @@
 
             result = _.sortBy(result, ['last_modified']);
             result = result.reverse();
+            result = _.filter(result, (x, i) => i < 20);
 
             //console.log(result);
 
@@ -170,10 +171,11 @@
             //});
         },
 
-        tag_getAll: function() {
+        type_getMenuFilter: function() {
             var a = _.map(__vdata.tags, (x, i) => {
-                return { code: 'filter_tag', name: x, text: x, counter: i, icon_svg_name: 'tag-' + x, cla_icon: '' };
+                return { code: 'filter_type', name: x, text: x, counter: i, icon_svg_name: 'tag-' + x, cla_icon: '' };
             });
+            a = _.filter(a, x => x.name != 'domain');
             //console.log(a);
             return a;
         },
@@ -189,6 +191,7 @@
                 { code: 'upload_image', text: 'Upload image' },
                 { code: 'hr' },
                 { code: 'manage_domain', text: 'Manage domain' },
+                { code: 'manage_tag', text: 'Manage tag' },
                 { code: 'manage_user', text: 'Manage user' },
                 { code: 'manage_language', text: 'Manage language' },
                 { code: 'hr' },

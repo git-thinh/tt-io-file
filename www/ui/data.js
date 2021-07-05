@@ -37,7 +37,7 @@ var __vdata = new Vue({
         return {
             login: (localStorage['token'] == null || localStorage['token'] == ''),
             domains: ['iot.vn', 'thinh.iot.vn', 'landing.iot.vn', 'baove.info', 'baovethienphong.com', 'baovektd.iot.vn', 'ketoankimthuy.com'],
-            tags: ['domain', 'layout', 'kit', 'promotion', 'task', 'buddha', 'article', 'image', 'book', 'english', 'job', 'youtube', 'audio'],
+            tags: ['domain', 'tag', 'article', 'image', 'book', 'english', 'job', 'youtube', 'audio', 'layout', 'kit', 'promotion', 'task', 'buddha',],
             views_def: [
                 { code: 'nav', template: 'nav-1', base: true, selector: '#main-left' },
                 { code: 'home' },
@@ -130,6 +130,7 @@ var __mx_coms = {
 
         cla_sub_: String,
         header_sub_: String,
+        icon_visible_sub_: Boolean,
 
         active_: Boolean,
         disable_: Boolean,
@@ -155,9 +156,10 @@ var __mx_coms = {
             cla_image: self.cla_image_ || '',
             icon_svg_name: self.icon_svg_name_ || '',
 
+            has_sub: (self.items_ != null && self.items_.length > 0),
             cla_sub: self.cla_sub_ || '',
             header_sub: self.header_sub_ || '',
-            has_sub: (self.items_ != null && self.items_.length > 0),
+            icon_visible_sub: self.icon_visible_sub_ || false,
             sub_id: self.__getGuid(),
             sub_open: false,
             selected: null,

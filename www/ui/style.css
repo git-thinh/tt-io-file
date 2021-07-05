@@ -88,7 +88,20 @@ div, p, label {
 .cursor-pointer {
     cursor: pointer !important;
 }
-
+.modal {
+    border: none !important;
+}
+.modal-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    background-color: #000;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    opacity: 0.8;
+}
 .opacity-0 {
     opacity: 0 !important;
 }
@@ -121,7 +134,15 @@ div, p, label {
     font-size: 0.9rem !important;
     line-height: 1rem !important;
 }
-
+.me-6 {
+    margin-right: 5rem !important;
+}
+.me-7 {
+    margin-right: 7rem !important;
+}
+.me-8 {
+    margin-right: 9rem !important;
+}
 .bd-1 {
     border: solid 1px #555 !important;
     border-radius: 5px !important;

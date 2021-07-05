@@ -157,6 +157,9 @@ function __vopen(vcf, template, callbackOpen, callbackClose) {
 
             if (is_popup) {
                 document.body.appendChild(elComponent);
+                var bg = document.createElement('div');
+                bg.className = 'modal-bg';
+                elComponent.appendChild(bg);
             } else {
                 if (selector.length > 0) {
                     el = document.querySelector(selector);
@@ -328,6 +331,7 @@ Vue.component('ui-button', {
             <svg v-if="it.code != 'hr' && it.icon_svg_name != null && it.icon_svg_name.length > 0" :class="[it.cla_icon]" width="16" height="16" role="img"><use :xlink:href="'#'+it.icon_svg_name" /></svg>
             <div v-if="it.code != 'hr'" class="ms-2 me-auto">{{ typeof it == 'string' ? it : it.text }}</div>
             <span v-if="it.code != 'hr' && it.counter != null && it.counter > 0" class="badge bg-primary rounded-pill ms-2">{{it.counter}}</span>
+            <svg v-if="icon_visible_sub == true" :class="['ms-2', it.visible == true?'active':'opacity-25']" width="16" height="16" role="img"><use xlink:href="#icon-eye" /></svg>
             <hr v-if="it.code == 'hr'" class="dropdown-divider">
         </li>
     </ul>
