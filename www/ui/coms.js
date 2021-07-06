@@ -34,11 +34,6 @@ function __fetchAsync(url, type, options) {
 function __isViewBase(code) {
     return _.findIndex(__vdata.views_base, x => x == code) != -1;
 }
-async function __reloadViewBase() {
-    var views_base = await __fetchAsync('/api/view/get_base');
-    if (views_base && views_base.ok && views_base.items) __vdata.views_base = views_base.items;
-    //console.log(views_base.items);
-}
 function __vopen(vcf, template, callbackOpen, callbackClose) {
     var code = '';
     if (vcf == null) return;
@@ -104,7 +99,7 @@ function __vopen(vcf, template, callbackOpen, callbackClose) {
                 + '<div class="modal-header">' + code + ' - ' + template + '</div>'
                 + '<div class="modal-footer"><button type="button" class="btn btn-primary" @click="__popupClose">Exit</button></div>'
                 + '</div></div></div>';
-            //htmlString = '<div class="p-5 bg-white"><h1>' + code + ' - ' + template + '</h1><hr><div v-on:click="__popupClose" class="ui black button">Close</div></div>';
+        //htmlString = '<div class="p-5 bg-white"><h1>' + code + ' - ' + template + '</h1><hr><div v-on:click="__popupClose" class="ui black button">Close</div></div>';
 
         var vop = window['___vc_' + code] || {};
         var vueComponent, self, elComponent;
@@ -205,10 +200,18 @@ function __vopen(vcf, template, callbackOpen, callbackClose) {
 var __domclick_outside_close = [];
 window.addEventListener('click', function (e) { __domclick_outside_close.forEach(f => f(e)); });
 async function __init() {
-    await __reloadViewBase();
     __userLoginCheck(function (ok) {
         if (ok) {
-            __fetchAsync('/ui/views/icon-svg.html', 'text').then(htmlSvg => {
+            var r1 = __fetchAsync('/api/view/get_base');
+            var r2 = __fetchAsync('/ui/views/icon-svg.html', 'text');
+            var r3 = __fetchAsync('/ui/views/_shared/ui-button.html', 'text');
+            Promise.all([r1, r2, r3]).then(arr => {
+                //console.log(arr);
+                if (arr[0].ok && arr[0].items) __vdata.views_base = arr[0].items;
+                var htmlSvg = arr[1];
+                __shared['ui-button'] = arr[2];
+                __coms();
+
                 var parser = new DOMParser();
                 var doc = parser.parseFromString(htmlSvg, "text/html");
                 var svgs = doc.body.firstElementChild;
@@ -221,7 +224,7 @@ async function __init() {
                 });
             })
         } else {
-            __vopen('login', '', function (v) {
+            __vopen({ code: 'login', base: true, popup: true }, '', function (v) {
                 document.body.style.opacity = 1;
             });
         }
@@ -242,7 +245,7 @@ function __userLoginCheck(callback) {
     //if (callback) callback(ok);
 }
 function __userLoginSuccess(token, callback) {
-    localStorage['token'] = token;    
+    localStorage['token'] = token;
     if (callback) callback();
 }
 function __logout() {
@@ -250,7 +253,7 @@ function __logout() {
         console.log('logout = ', val);
         localStorage['token'] = '';
         location.reload();
-    });    
+    });
 }
 function __alert(message, title, callbackOpen, callbackClose) {
     __vopen({ code: 'alert', base: true, popup: true }, null, function (v) {
@@ -259,115 +262,93 @@ function __alert(message, title, callbackOpen, callbackClose) {
         if (callbackOpen) callbackOpen(v);
     }, callbackClose);
 }
+function __coms() {
+    Vue.component('ui-button', {
+        mixins: [__mx_coms],
+        watch: {
+            active: function (val) {
+                var self = this, childs = self.$parent.$children;
+                if (val) {
+                    if (self.active_disbale_ == false) {
+                        childs.forEach(v => { if (v.view_id != self.view_id && v.active) v.active = false; });
+                    }
+                }
+            }
+        },
+        mounted: function () {
+            var self = this;
+            if (self.has_sub) __domclick_outside_close.push(this.__domclick_outside_close);
+        },
+        methods: {
+            __domclick_outside_close: function (e) {
+                var self = this;
+                var el = e.target.closest('.__vicom');
+                if (el == null || (el.__vue__ && el.__vue__.view_id != self.view_id)) {
+                    self.subHide();
+                }
+            },
+            click: function (value, isSub, e) {
+                var self = this;
+                if (isSub) {
+                    if (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    self.updateChange(value, isSub);
+                } else {
+                    if (self.has_sub) {
+                        var state = !self.sub_open;
+                        self.sub_open = state;
+                        $('#' + self.sub_id).toggleClass('show');
+                        //self.$forceUpdate();
+                    }
+                    else self.updateChange(value, isSub);
+                }
+            },
+            updateChange: function (value, isSub) {
+                var self = this;
+                self.selected = value;
+                self.$emit(isSub ? 'clicksub' : 'click', self);
+                if (isSub) self.subHide();
+            },
+            subHide: function (e) {
+                var self = this;
+                Vue.nextTick(function () {
+                    self.sub_open = false;
+                    $('#' + self.sub_id).removeClass('show');
+                });
+            }
+        },
+        template: __shared['ui-button']
+    });
 
-Vue.component('ui-button', {
-    mixins: [__mx_coms],
-    watch: {
-        active: function (val) {
-            var self = this, childs = self.$parent.$children;
-            if (val) {
-                if (self.active_disbale_ == false) {
-                    childs.forEach(v => { if (v.view_id != self.view_id && v.active) v.active = false; });
+    Vue.component('ui-input', {
+        mixins: [__mx_coms],
+        watch: {
+            active: function (val) {
+                var self = this, childs = self.$parent.$children;
+                if (val) {
+                    if (self.active_disbale_ == false) {
+                        childs.forEach(v => { if (v.view_id != self.view_id && v.active) v.active = false; });
+                    }
                 }
             }
-        }
-    },
-    mounted: function () {
-        var self = this;
-        if (self.has_sub) __domclick_outside_close.push(this.__domclick_outside_close);
-    },
-    methods: {
-        __domclick_outside_close: function (e) {
+        },
+        mounted: function () {
             var self = this;
-            var el = e.target.closest('.__vicom');
-            if (el == null || (el.__vue__ && el.__vue__.view_id != self.view_id)) {
-                self.subHide();
+            if (self.has_sub) __domclick_outside_close.push(this.__domclick_outside_close);
+        },
+        methods: {
+            __domclick_outside_close: function (e) {
+            },
+            click: function (value, isSub, e) {
+            },
+            updateChange: function (value, isSub) {
+            },
+            subHide: function (e) {
             }
         },
-        click: function (value, isSub, e) {
-            var self = this;
-            if (isSub) {
-                if (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                }
-                self.updateChange(value, isSub);
-            } else {
-                if (self.has_sub) {
-                    var state = !self.sub_open;
-                    self.sub_open = state;
-                    $('#' + self.sub_id).toggleClass('show');
-                    //self.$forceUpdate();
-                }
-                else self.updateChange(value, isSub);
-            }
-        },
-        updateChange: function (value, isSub) {
-            var self = this;
-            self.selected = value;
-            self.$emit(isSub ? 'clicksub' : 'click', self);
-            if (isSub) self.subHide();
-        },
-        subHide: function (e) {
-            var self = this;
-            Vue.nextTick(function () {
-                self.sub_open = false;
-                $('#' + self.sub_id).removeClass('show');
-            });
-        }
-    },
-    template: `
-<div :id="view_id" @click="click(code,false,event)" :class="['__vicom cursor-pointer',cla, has_sub ? '__domclick_outside_close':'' , !active_disbale_ && active ? 'theme--active' : '']">
-    <a :class="['nav-link p-0 rounded-0 text-center']"
-        :title="title_">
-        <svg v-if="icon_svg_name != null && icon_svg_name.length > 0" role="img"
-            :class="[active ? 'theme--color-1' : 'theme--color-2', cla_icon]" xmlns="http://www.w3.org/2000/svg"
-            :width="icon_svg_width" fill="currentColor" viewBox="0 0 16 16"><use :xlink:href="'#'+icon_svg_name" /></svg>
-        <svg v-else :class="[active ? 'theme--color-1' : 'theme--color-2', cla_icon]" xmlns="http://www.w3.org/2000/svg"
-            :width="icon_svg_width" fill="currentColor" viewBox="0 0 16 16">
-            <slot name="SVG_PATH"></slot>
-        </svg>
-    </a>
-    <ul :id="sub_id" v-if="has_sub" :class="['dropdown-menu text-small shadow',cla_sub]">
-        <li v-if="header_sub && header_sub.length > 0"><h6 class="dropdown-header">{{header_sub}}</h6></li>
-        <li v-for="it in items" @click="click(it,true,event)" :class="[it.active?'active':'', it.code == 'hr' ? '':'dropdown-item d-flex justify-content-between align-items-center']">
-            <svg v-if="it.code != 'hr' && it.icon_svg_name != null && it.icon_svg_name.length > 0" :class="[it.cla_icon]" width="16" height="16" role="img"><use :xlink:href="'#'+it.icon_svg_name" /></svg>
-            <div v-if="it.code != 'hr'" class="ms-2 me-auto">{{ typeof it == 'string' ? it : it.text }}</div>
-            <span v-if="it.code != 'hr' && it.counter != null && it.counter > 0" class="badge bg-primary rounded-pill ms-2">{{it.counter}}</span>
-            <svg v-if="icon_visible_sub == true" :class="['ms-2', it.visible == true?'active':'opacity-25']" width="16" height="16" role="img"><use xlink:href="#icon-eye" /></svg>
-            <hr v-if="it.code == 'hr'" class="dropdown-divider">
-        </li>
-    </ul>
-</div>
-`});
-
-Vue.component('ui-input', {
-    mixins: [__mx_coms],
-    watch: {
-        active: function (val) {
-            var self = this, childs = self.$parent.$children;
-            if (val) {
-                if (self.active_disbale_ == false) {
-                    childs.forEach(v => { if (v.view_id != self.view_id && v.active) v.active = false; });
-                }
-            }
-        }
-    },
-    mounted: function () {
-        var self = this;
-        if (self.has_sub) __domclick_outside_close.push(this.__domclick_outside_close);
-    },
-    methods: {
-        __domclick_outside_close: function (e) {
-        },
-        click: function (value, isSub, e) {
-        },
-        updateChange: function (value, isSub) {
-        },
-        subHide: function (e) {
-        }
-    },
-    template: `
+        template: `
 <div :id="view_id" @click="click(code,false,event)" :class="['__vicom ui-input cursor-pointer',cla, has_sub ? '__domclick_outside_close':'']">
     <div>
         <label v-if="title.length > 0" :for="input_id" class="form-label">{{title}}</label>
@@ -385,3 +366,4 @@ Vue.component('ui-input', {
     </ul>
 </div>
 `});
+}

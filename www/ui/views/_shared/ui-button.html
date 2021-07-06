@@ -1,0 +1,23 @@
+﻿<div :id="view_id" @click="click(code,false,event)" :class="['__vicom cursor-pointer',cla, has_sub ? '__domclick_outside_close':'' , !active_disbale_ && active ? 'theme--active' : '']">
+    <a :class="['nav-link p-0 rounded-0 text-center']"
+       :title="title_">
+        <svg v-if="icon_svg_name != null && icon_svg_name.length > 0" role="img"
+             :class="[active ? 'theme--color-1' : 'theme--color-2', cla_icon]" xmlns="http://www.w3.org/2000/svg"
+             :width="icon_svg_width" fill="currentColor" viewBox="0 0 16 16">
+        <use :xlink:href="'#'+icon_svg_name" /></svg>
+        <svg v-else :class="[active ? 'theme--color-1' : 'theme--color-2', cla_icon]" xmlns="http://www.w3.org/2000/svg"
+             :width="icon_svg_width" fill="currentColor" viewBox="0 0 16 16">
+            <slot name="SVG_PATH"></slot>
+        </svg>
+    </a>
+    <ul :id="sub_id" v-if="has_sub" :class="['dropdown-menu text-small shadow',cla_sub]">
+        <li v-if="header_sub && header_sub.length > 0"><h6 class="dropdown-header">{{header_sub}}</h6></li>
+        <li v-for="it in items" @click="click(it,true,event)" :class="[it.active?'active':'', it.code == 'hr' ? '':'dropdown-item d-flex justify-content-between align-items-center']">
+            <svg v-if="it.code != 'hr' && it.icon_svg_name != null && it.icon_svg_name.length > 0" :class="[it.cla_icon]" width="16" height="16" role="img"><use :xlink:href="'#'+it.icon_svg_name" /></svg>
+            <div v-if="it.code != 'hr'" class="ms-2 me-auto">{{ typeof it == 'string' ? it : it.text }}</div>
+            <span v-if="it.code != 'hr' && it.counter != null && it.counter > 0" class="badge bg-primary rounded-pill ms-2">{{it.counter}}</span>
+            <svg v-if="icon_visible_sub == true" :class="['ms-2', it.visible == true?'active':'opacity-25']" width="16" height="16" role="img"><use xlink:href="#icon-eye" /></svg>
+            <hr v-if="it.code == 'hr'" class="dropdown-divider">
+        </li>
+    </ul>
+</div>

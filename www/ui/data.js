@@ -1,6 +1,4 @@
-﻿var __site = '';
-var __scope = 'document';
-var __path = '/ui/views/';
+﻿var __site = '', __scope = 'document', __path = '/ui/views/', __shared = {};
 var __ismobi = window.innerWidth < 700;
 var __views = [
     { scope: '', type: '', code: 'icon-svg', base: true, title: "Icon SVG", selector: 'body', no_css: true, no_js: true },
