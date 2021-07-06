@@ -122,6 +122,8 @@
                     lm = Number(lm);
                     x.last_modified = lm;
                 } else x.last_modified = 0;
+
+                x.selected = false;
             });
 
             result = _.sortBy(result, ['last_modified']);
