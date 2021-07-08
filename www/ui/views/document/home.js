@@ -296,5 +296,38 @@
                     break;
             }
         },
+        doc_changeSelected: function(m, el) {
+            if (el && el.getVue()) {
+                var v = el.getVue();
+                //console.log(v);
+                m.selected = !m.selected;
+                if (m.selected) {
+                    v.cla_icon = 'text-danger';
+                } else {
+                    v.cla_icon = 'opacity-25';
+                }
+                v.selected = m.selected;
+            }
+        },
+
+        filter_Click: function(v) {
+            var self = this, code = v.code, selected = v.selected, cmd = selected;
+            if (selected && selected.code) cmd = selected.code;
+
+            console.log('item click = ' + code + ' > ' + cmd, v);
+            switch (cmd) {
+                case 'upload_image':
+                    self.image_uploadClick();
+                    break;
+            }
+
+
+            //__vopen(cmd, null, function (v) {
+
+            //}, function () {
+
+            //});
+        },
+
     }
 }

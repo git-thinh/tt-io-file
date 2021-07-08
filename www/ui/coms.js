@@ -1,4 +1,12 @@
-﻿function __jsi(id, url, callback) {
+﻿Element.prototype.getVue = function () {
+    if (this.__vue__) return this.__vue__;
+    else {
+        var el = this.closest('.__vicom');
+        if (el) return el.__vue__;
+    }
+    return null;
+};
+function __jsi(id, url, callback) {
     if (id != null && id.length > 0) {
         var el = document.getElementById(id);
         if (el) return callback(true);
@@ -287,9 +295,10 @@ function __coms() {
                     self.subHide();
                 }
             },
-            click: function (value, isSub, e) {
-                var self = this;
+            click: function (sub_index, value, e) {
+                var self = this, isSub = sub_index != -1;
                 if (isSub) {
+                    self.select_sub_index = sub_index;
                     if (e) {
                         e.preventDefault();
                         e.stopPropagation();

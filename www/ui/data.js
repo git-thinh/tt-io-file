@@ -118,6 +118,7 @@ var __vdata = new Vue({
 var __mx_coms = {
     props: {
         code_: String,
+        ui_type_: String,
 
         cla_: String,
         cla_input_: String,
@@ -130,6 +131,8 @@ var __mx_coms = {
         cla_sub_: String,
         header_sub_: String,
         icon_visible_sub_: Boolean,
+        select_sub_id_: Number,
+        select_sub_index_: Number,
 
         active_: Boolean,
         disable_: Boolean,
@@ -147,6 +150,7 @@ var __mx_coms = {
         var self = this;
         var dt = {
             code: self.code_ || '',
+            ui_type: self.ui_type_ || 'button',
 
             cla: self.cla_ || '',
             cla_input: self.cla_input_ || '',
@@ -162,6 +166,9 @@ var __mx_coms = {
             icon_visible_sub: self.icon_visible_sub_ || false,
             sub_id: self.__getGuid(),
             sub_open: false,
+            select_sub_id: self.select_sub_id_ || -1,
+            select_sub_index: self.select_sub_index_ || -1,
+
             selected: null,
 
             active: self.active_ || false,

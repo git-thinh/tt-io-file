@@ -74,6 +74,16 @@ div, p, label {
 .theme--color-1 {
     color: #fff !important;
 }
+.theme--color-active {
+    color: #fff !important;
+}
+.theme--color-selected {
+    color: #ffc107 !important;
+}
+.theme--outline-selected {
+    outline: solid 1px #ffc107 !important;
+}
+
 .theme--border-color-1 {
     border-color: #6c757d !important;
 }
@@ -84,7 +94,9 @@ div, p, label {
     border-color: #353535 !important;
 }
 
-
+.theme--outline-active {
+    outline: solid 1px #fff !important;
+}
 .cursor-pointer {
     cursor: pointer !important;
 }
