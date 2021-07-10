@@ -57,7 +57,7 @@ app.use(bodyParser.json());
 
 app.use('/', express.static('www'));
 app.use('/static/theme', express.static('./raw/theme'));
-app.use('/static/images', express.static('./raw/images'));
+app.use('/images', express.static('./raw/images'));
 app.get('/login', (req, res) => res.sendFile(PATH_WWW + 'ui/login.html'));
 app.get('/admin', (req, res) => res.sendFile(PATH_WWW + 'ui/admin.html'));
 

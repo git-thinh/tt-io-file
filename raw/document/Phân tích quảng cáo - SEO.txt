@@ -1,3 +1,8 @@
+Phân tích quảng cáo - SEO
+#article
+#Quảng cáo
+#thinh.iot.vn
+
 - Đọc và Phân tích thông tin dự án => Các điểm nhấn
 - Cài đặt Jira, Team Work Tool
 - Liệt kê bảng từ khóa BĐS, Chứng khoán, Ngân hàng, Vàng, Tỉ giá => chiến lược

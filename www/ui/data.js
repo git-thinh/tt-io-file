@@ -35,6 +35,7 @@ var __vdata = new Vue({
         return {
             login: (localStorage['token'] == null || localStorage['token'] == ''),
             domains: ['iot.vn', 'thinh.iot.vn', 'landing.iot.vn', 'baove.info', 'baovethienphong.com', 'baovektd.iot.vn', 'ketoankimthuy.com'],
+            documents: ['buddha', 'article', 'book', 'study', 'job'],
             tags: ['domain', 'tag', 'article', 'image', 'book', 'study', 'job', 'youtube', 'audio', 'layout', 'kit', 'promotion', 'task', 'buddha',],
             views_def: [
                 { code: 'nav', template: 'nav-1', base: true, selector: '#main-left' },

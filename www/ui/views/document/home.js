@@ -7,6 +7,77 @@
     },
     mounted: function () { },
     methods: {
+        doc_getFilter: async function(callback) {
+            var self = this, arr = [], result = [];
+
+            //var apiImages = await __fetchAsync('api/image/get_filter?site=' + __site, 'json');
+            //if (apiImages && apiImages.ok && apiImages.items) {
+            //    apiImages.items.forEach(it => {
+            //        it.image = '/static/images/' + it.site + '/' + it.key;
+            //        it.select = false;
+            //        it.loading = false;
+            //    });
+            //    arr.push(apiImages.items);
+            //}
+
+            var apiDoc = await __fetchAsync('api/document/get_filter?site=' + __site, 'json');
+            //console.log(apiDoc);
+            if (apiDoc && apiDoc.ok && apiDoc.items) {
+                apiDoc.items.forEach(it => {
+                    it.select = false;
+                    it.loading = false;
+                });
+                arr.push(apiDoc.items);
+            }
+
+            //var themes = self.theme_getCollection();
+            //console.log(themes);
+            //arr.push(themes);
+
+            const fn = _.spread(_.union);
+            result = fn(arr);
+            result.forEach(x => {
+                switch (x.type) {
+                    case 'book':
+                        x.icon = 'book';
+                        break;
+                    case 'article':
+                        x.icon = 'file alternate outline';
+                        break;
+                    case 'theme':
+                        x.icon = 'dice d6';
+                        break;
+                    case 'image':
+                        var fix_width = 290;
+                        if (x.width < fix_width) {
+                            x.width2 = x.width;
+                            x.height2 = Number(((x.width * x.height) / x.width).toString().split('.')[0]);
+                        } else {
+                            x.width2 = fix_width;
+                            x.height2 = Number(((fix_width * x.height) / x.width).toString().split('.')[0]);
+                        }
+                        //console.log(x.orientation, x.width, x.height, '-', x.width2, x.height2, x.key);
+                        break;
+                }
+
+                var lm = x.last_modified || '';
+                if (lm.length > 0) {
+                    lm = lm.split('T').join('').split('-').join('').split(':').join('').split('.')[0];
+                    lm = Number(lm);
+                    x.last_modified = lm;
+                } else x.last_modified = 0;
+
+                x.selected = false;
+            });
+
+            result = _.sortBy(result, ['last_modified']);
+            result = result.reverse();
+            result = _.filter(result, (x, i) => i < 20);
+
+            console.log(result);
+
+            if (callback) callback(result);
+        },
         __init: function () {
             var self = this;
             self.doc_getFilter(function (items) {
@@ -61,79 +132,6 @@
             if (a.length > 1) s = a[1];
             return s;
         },
-        doc_getFilter: async function(callback) {
-            var self = this, arr = [], result = [];
-
-            var apiImages = await __fetchAsync('api/image/get_filter?site=' + __site, 'json');
-            if (apiImages && apiImages.ok && apiImages.items) {
-                apiImages.items.forEach(it => {
-                    it.image = '/static/images/' + it.site + '/' + it.key;
-                    it.select = false;
-                    it.loading = false;
-                });
-                arr.push(apiImages.items);
-            }
-
-            var apiDoc = await __fetchAsync('api/document/get_filter?site=' + __site, 'json');
-            //console.log(apiDoc);
-            if (apiDoc && apiDoc.ok && apiDoc.items) {
-                apiDoc.items.forEach(it => {
-                    it.select = false;
-                    it.loading = false;
-                });
-                arr.push(apiDoc.items);
-            }
-
-            //var themes = self.theme_getCollection();
-            //console.log(themes);
-            //arr.push(themes);
-
-
-
-            const fn = _.spread(_.union);
-            result = fn(arr);
-            result.forEach(x => {
-                switch (x.type) {
-                    case 'book':
-                        x.icon = 'book';
-                        break;
-                    case 'article':
-                        x.icon = 'file alternate outline';
-                        break;
-                    case 'theme':
-                        x.icon = 'dice d6';
-                        break;
-                    case 'image':
-                        var fix_width = 290;
-                        if (x.width < fix_width) {
-                            x.width2 = x.width;
-                            x.height2 = Number(((x.width * x.height) / x.width).toString().split('.')[0]);
-                        } else {
-                            x.width2 = fix_width;
-                            x.height2 = Number(((fix_width * x.height) / x.width).toString().split('.')[0]);
-                        }
-                        //console.log(x.orientation, x.width, x.height, '-', x.width2, x.height2, x.key);
-                        break;
-                }
-
-                var lm = x.last_modified || '';
-                if (lm.length > 0) {
-                    lm = lm.split('T').join('').split('-').join('').split(':').join('').split('.')[0];
-                    lm = Number(lm);
-                    x.last_modified = lm;
-                } else x.last_modified = 0;
-
-                x.selected = false;
-            });
-
-            result = _.sortBy(result, ['last_modified']);
-            result = result.reverse();
-            result = _.filter(result, (x, i) => i < 20);
-
-            //console.log(result);
-
-            if (callback) callback(result);
-        },
         doc_editClick: function(article) {
             __vcp({
                 code: 'edit',
@@ -173,11 +171,14 @@
             //});
         },
 
-        type_getMenuFilter: function() {
-            var a = _.map(__vdata.tags, (x, i) => {
-                return { code: 'filter_type', name: x, text: x, counter: i, icon_svg_name: 'tag-' + x, cla_icon: '' };
+        doc_getMenuFilter: function() {
+            var a = _.map(__vdata.documents, (x, i) => {
+                return { code: 'filter_document', name: x, text: x, counter: i, icon_svg_name: 'tag-' + x, cla_icon: '' };
             });
-            a = _.filter(a, x => x.name != 'domain');
+            //var a = _.map(__vdata.tags, (x, i) => {
+            //    return { code: 'filter_type', name: x, text: x, counter: i, icon_svg_name: 'tag-' + x, cla_icon: '' };
+            //});
+            //a = _.filter(a, x => x.name != 'domain');
             //console.log(a);
             return a;
         },
@@ -191,26 +192,18 @@
         document_menuMore: function() {
             var a = [
                 { code: 'upload_image', text: 'Upload image' },
+                { code: 'create_new_document', text: 'Create new document' },
+                { code: 'crawle_url', text: 'Crawle content from Url' },
                 { code: 'hr' },
-                { code: 'manage_domain', text: 'Manage domain' },
-                { code: 'manage_tag', text: 'Manage tag' },
                 { code: 'manage_user', text: 'Manage user' },
                 { code: 'manage_language', text: 'Manage language' },
                 { code: 'hr' },
             ];
-            _.forEach(__vdata.tags, (x, i) => {
-                if (x != 'image'
-                    && x != 'domain'
-                    && x != 'kit'
-                    && x != 'task'
-                    && x != 'promotion'
-                    && x != 'job'
-                    && x != 'english') {
-                    a.push({ code: 'create_new_tag', name: x, text: 'Create new ' + x, counter: i, icon_svg_name: 'tag-' + x, cla_icon: '' });
-                }
+            var a2 = _.differenceBy(__vdata.tags, __vdata.documents);
+            //console.log(a2);
+            _.forEach(a2, (x, i) => {
+                a.push({ code: 'manage_' + x, name: x, text: 'Manage ' + x, counter: i, icon_svg_name: 'tag-' + x, cla_icon: '' });
             });
-            a.push({ code: 'hr' });
-            a.push({ code: 'crawle_url', text: 'Crawle content from Url' });
             return a;
         },
 

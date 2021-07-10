@@ -30,7 +30,7 @@
             <div v-if="it.code != 'hr'" class="ms-2 me-auto">
                 {{ typeof it == 'string' ? it : it.text }}
             </div>
-            <span v-if="it.code != 'hr' && it.counter != null && it.counter > 0" class="badge bg-primary rounded-pill ms-2">
+            <span v-if="it.code != 'hr' && it.counter != null && it.counter > 0" class="badge bg-secondary rounded-pill ms-2">
                 {{it.counter}}
             </span>
             <svg v-if="icon_visible_sub == true" 
