@@ -141,6 +141,7 @@ var __mx_coms = {
 
         title_: String,
         tooltip_: String,
+        tooltip_position_: String,
 
         items_: Array,
         total_: Number,
@@ -180,6 +181,7 @@ var __mx_coms = {
 
             title: self.title_ || '',
             tooltip: self.tooltip_ || '',
+            tooltip_position: self.tooltip_position_ || 'bottom',
 
             items: self.items_ || [],
             total: self.total_ || 0,
