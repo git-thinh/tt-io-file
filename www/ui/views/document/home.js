@@ -85,7 +85,7 @@
                 self.items = items;
                 Vue.nextTick(function () {
                     self.uiSetup();
-                    self.doc_editClick(items[0]);
+                    self.doc_editClick(items[13]);
                 });
             });
         },
@@ -140,7 +140,7 @@
                 title: 'Update: ' + doc.title,
                 class: 'ui overlay fullscreen modal'
             }, null, function (v) {
-                //console.log(v);
+                console.log(doc);
                 v.$data.item = JSON.parse(JSON.stringify(doc));
             });
         },

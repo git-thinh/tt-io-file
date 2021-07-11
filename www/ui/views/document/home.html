@@ -80,6 +80,7 @@
     <div class="flex-fill pb-5 ps-2 ps-md-3 overflow-auto">
         <div class="ui-masonry-grid " style="opacity:0;">
             <div v-for="(m,index) in items"
+                 :tabindex="index"
                  :class="['ui-masonry-item card theme--bg-box mt-3', m.selected == true ? 'theme--outline-selected':'']"
                  style="width: 290px;">
 

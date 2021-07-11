@@ -70,11 +70,11 @@
         },
 
         formatArticleByCode: function() {
-            var self = this, view_id = self.view.id, article = self.article;
+            var self = this, view_id = self.view.id, item = self.item;
             var html = '';
             console.log('formatArticle = ' + self.mode);
 
-            var s = article.data || '';
+            var s = item.content || '';
             var a = s.trim().split('\n'), ta = [];
             a = _.filter(a, x => x.trim().length > 0);
             var id = new Date().getTime(), cid = Number((id / 99).toString().split('.')[0]);
