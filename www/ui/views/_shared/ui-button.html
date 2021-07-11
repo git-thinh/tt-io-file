@@ -19,7 +19,7 @@
                 ui_type != 'button' && selected ? 'theme--color-selected' : '',
                 cla_icon]">{{title}}</label>
     </a>
-    <ul :id="sub_id" v-if="has_sub" :class="['dropdown-menu text-small shadow',cla_sub]">
+    <ul :id="sub_id" v-if="has_sub" :class="['dropdown-menu text-small shadow',cla_sub]" style="overflow-x: hidden; max-height: 350px; overflow-y: auto;">
         <li v-if="header_sub && header_sub.length > 0">
             <h6 class="dropdown-header">{{header_sub}}</h6>
         </li>
