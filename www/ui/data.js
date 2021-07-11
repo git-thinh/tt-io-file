@@ -140,15 +140,18 @@ var __mx_coms = {
         active_disbale_: Boolean,
 
         title_: String,
+        tooltip_: String,
 
         items_: Array,
-        tooltip_: String,
         total_: Number,
         counter_: Number,
         //author: Object
     },
     data: function () {
         var self = this;
+        //var guid_id = self.__getGuid();
+        var guid_id = 'vuid-' + self._uid;
+        
         var dt = {
             code: self.code_ || '',
             ui_type: self.ui_type_ || 'button',
@@ -182,8 +185,10 @@ var __mx_coms = {
             total: self.total_ || 0,
             counter: self.counter_ || 0,
 
-            view_id: self.__getGuid(),
-            input_id: self.__getGuid()
+            view_id: 'view-' + guid_id,
+            input_id: 'input-' + guid_id,
+            button_id: 'button-' + guid_id,
+            tooltip_id: 'tooltip-' + guid_id,
         };
         return dt;
     },

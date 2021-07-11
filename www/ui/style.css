@@ -36,20 +36,36 @@ html {
 div, p, label {
     text-align: left;
 }
-.hide, .hidden {
-    display:none !important;
+
+.theme--tooltip {
+    display: none;
+    background-color: #ccc;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    position: fixed;
+    z-index: 999;
 }
+
+.hide, .hidden {
+    display: none !important;
+}
+
 .theme--active .icon,
 .theme--active {
     background-color: #0d6efd !important;
     color: #fff !important;
 }
+
 .theme--bg-main {
     background-color: #000 !important;
 }
+
 .theme--bg-nav {
     background-color: #212529 !important;
 }
+
 .theme--bg-box {
     background-color: #212529 !important;
     border: none !important;
@@ -57,29 +73,36 @@ div, p, label {
     box-shadow: none !important;
     outline: 1px solid #333;
 }
+
 .theme--hr {
     height: 1px;
     background-color: #333;
     width: 100%;
 }
+
 .theme--title-1 {
     color: whitesmoke !important;
     font-weight: normal !important;
     line-height: 1.8rem !important;
     word-spacing: 1px !important;
 }
+
 .theme--color-2 {
     color: #cac2c2 !important;
 }
+
 .theme--color-1 {
     color: #fff !important;
 }
+
 .theme--color-active {
     color: #fff !important;
 }
+
 .theme--color-selected {
     color: #ffc107 !important;
 }
+
 .theme--outline-selected {
     outline: solid 1px #ffc107 !important;
 }
@@ -87,9 +110,11 @@ div, p, label {
 .theme--border-color-1 {
     border-color: #6c757d !important;
 }
+
 .theme--border-color-2 {
     border-color: #454545 !important;
 }
+
 .theme--border-color-3 {
     border-color: #353535 !important;
 }
@@ -97,12 +122,15 @@ div, p, label {
 .theme--outline-active {
     outline: solid 1px #fff !important;
 }
+
 .cursor-pointer {
     cursor: pointer !important;
 }
+
 .modal {
     border: none !important;
 }
+
 .modal-bg {
     position: absolute;
     width: 100%;
@@ -114,6 +142,7 @@ div, p, label {
     z-index: -1;
     opacity: 0.8;
 }
+
 .opacity-0 {
     opacity: 0 !important;
 }
@@ -138,23 +167,29 @@ div, p, label {
     font-size: 0.7rem !important;
     line-height: 0.8rem !important;
 }
+
 .fs-08 {
     font-size: 0.8rem !important;
     line-height: 0.9rem !important;
 }
+
 .fs-09 {
     font-size: 0.9rem !important;
     line-height: 1rem !important;
 }
+
 .me-6 {
     margin-right: 5rem !important;
 }
+
 .me-7 {
     margin-right: 7rem !important;
 }
+
 .me-8 {
     margin-right: 9rem !important;
 }
+
 .bd-1 {
     border: solid 1px #555 !important;
     border-radius: 5px !important;
@@ -221,4 +256,3 @@ div[ui-view] {
     /*overflow-x: hidden;
     overflow-y: auto;*/
 }
-

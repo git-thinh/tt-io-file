@@ -286,6 +286,32 @@ function __coms() {
         mounted: function () {
             var self = this;
             if (self.has_sub) __domclick_outside_close.push(this.__domclick_outside_close);
+
+            // Init tooltip on PC
+            if (!__ismobi && self.tooltip.length > 0) {
+                var t = document.createElement('div');
+                t.setAttribute('id', self.tooltip_id);
+                t.setAttribute('class', 'theme--tooltip');
+                t.innerHTML = self.tooltip;
+                document.body.appendChild(t);
+
+                var button = document.getElementById(self.button_id);
+                button.addEventListener('mouseover', function (e) {
+                    var r = button.getBoundingClientRect();
+                    t.style.top = (r.top + r.height + 7) + 'px';
+                    if (r.left > window.innerWidth - 100) {
+                        t.style.left = 'auto';
+                        t.style.right = (window.innerWidth - r.right) + 'px';
+                    } else {
+                        t.style.left = r.left + 'px';
+                        t.style.right = 'auto';
+                    }
+                    t.style.display = 'inline-block';
+                });
+                button.addEventListener('mouseout', function (e) {
+                    t.style.display = 'none';
+                });
+            }
         },
         methods: {
             __domclick_outside_close: function (e) {
