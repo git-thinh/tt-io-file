@@ -1,0 +1,98 @@
+﻿<div class="ui form bg-white p-0 m-0 w-100 vh-100 overflow-hidden">
+    <div class="ui dividing w-100 border-bottom px-3 mx-md-0 pt-1">
+        <div class="ui icon top left pointing dropdown button bg-transparent p-1 ps-0">
+            <i class="bars icon"></i>
+            <div class="menu">
+                <div class="item"
+                     v-show="mode=='code'"
+                     v-on:click="cmdCall('INSERT_VIDEO')">
+                    <i class="youtube icon large"></i>
+                    Insert Videos
+                </div>
+                <div class="item"
+                     v-show="mode=='code'"
+                     v-on:click="formatAutoAllLines()">
+                    <i class="list ol icon large"></i>
+                    Format All Lines
+                </div>
+                <div class="ui divider"></div>
+                <div class="item">Cozy</div>
+                <div class="item">Compact</div>
+                <div class="item">Settings</div>
+                <div class="item">
+                    <i class="dropdown icon"></i>
+                    <span class="text">Export</span>
+                    <div class="menu right">
+                        <div class="item">
+                            <i class="check icon"></i>
+                            To PDF
+                        </div>
+                        <div class="item">
+                            <i class="check icon"></i>
+                            To Zip
+                        </div>
+                    </div>
+                </div>
+                <div class="item">Manage Apps</div>
+                <div class="item">Keyboard Shortcuts</div>
+                <div class="item">Help</div>
+            </div>
+        </div>
+
+        <div class="ui icon button p-1 bg-transparent"
+             data-content="View Source" data-position="bottom left"
+             :style="{color: mode == 'code' ? '#2185d0':''}"
+             v-on:click="cmdCall('CODE')">
+            <i class="code icon large"></i>
+        </div>
+        <div class="ui icon button p-1 bg-transparent"
+             data-content="View Publish" data-position="bottom left"
+             :style="{color: mode == 'view' ? '#2185d0':''}"
+             v-on:click="cmdCall('VIEW')">
+            <i class="eye icon large"></i>
+        </div>
+
+        <div class="ui icon button p-1 bg-transparent"
+             data-content="Insert Image" data-position="bottom left"
+             v-show="mode=='code'"
+             v-on:click="cmdCall('INSERT_IMAGE')">
+            <i class="image outline icon large"></i>
+        </div>
+        <div class="ui icon button p-1 bg-transparent"
+             data-content="Heading line" data-position="bottom right"
+             v-show="mode=='code'"
+             v-on:click="cmdCall('HEADING')">
+            <i class="heading icon large"></i>
+        </div>
+        <div class="ui icon button p-1 m-0 bg-transparent"
+             data-content="Publish Online" data-position="bottom right"
+             v-show="mode=='code'"
+             v-on:click="cmdCall('HEADING')">
+            <i class="checkmark icon large"></i>
+        </div>
+        <div class="ui icon button p-1 m-0 bg-transparent"
+             data-content="Save" data-position="bottom right"
+             v-show="mode=='code'"
+             v-on:click="cmdCall('HEADING')">
+            <i class="save outline icon large"></i>
+        </div>
+        <div class="ui icon button p-1 bg-transparent"
+             data-content="Bold line" data-position="bottom left"
+             v-show="mode=='code'"
+             v-on:click="cmdCall('BOLD')">
+            <i class="bold icon large"></i>
+        </div>
+
+        <div class="ui icon button mt-1 me-1 p-1 bg-transparent position-absolute end-0 top-0"
+             data-content="Close" data-position="bottom right"
+             v-on:click="__popupClose">
+            <i class="times icon large fw-normal"></i>
+        </div>
+    </div>
+    <div class="position-relative w-100 m-0 p-0 pb-5 pb-md-2 text-center" style="height: calc(100vh - 35px); overflow-x: hidden; overflow-y: auto;">
+        <div id="edit-box" class="d-inline-block m-0 p-0" style="max-width: 800px;">
+            <div v-if="mode == 'code'" id="edit-html" :contentEditable="true" v-html="formatArticleByCode()"></div>
+            <div v-else id="view-html" class="article-view" v-html="formatArticleByView()"></div>
+        </div>
+    </div>
+</div>

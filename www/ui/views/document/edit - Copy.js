@@ -2,7 +2,7 @@
     data: function() {
         return {
             view: { title: '' },
-            item: {
+            article: {
                 title: '',
                 path: '',
                 data: '',
@@ -31,44 +31,28 @@
         __init: function () {
             var self = this, el = self.$el, view_id = el.getAttribute('id');
 
-            ////$('#edit-html').keydown(function (e) {
-            ////    // trap the return key being pressed                
-            ////    if (e.keyCode === 13) {
-            ////        //document.execCommand('insertHTML', false, '<br/>');
-            ////        var id = new Date().getTime();
-            ////        document.execCommand('insertHTML', false, '<p id="' + id + '" onclick="' + view_id + '.lineSelectChanged(' + id + ')" />');
-            ////        self.lineSelectChanged(id);
-            ////        // prevent the default behaviour of return key pressed
-            ////        return false;
-            ////    }
-            ////});
+            $('#edit-html').keydown(function (e) {
+                // trap the return key being pressed                
+                if (e.keyCode === 13) {
+                    //document.execCommand('insertHTML', false, '<br/>');
+                    var id = new Date().getTime();
+                    document.execCommand('insertHTML', false, '<p id="' + id + '" onclick="' + view_id + '.lineSelectChanged(' + id + ')" />');
+                    self.lineSelectChanged(id);
+                    // prevent the default behaviour of return key pressed
+                    return false;
+                }
+            });
 
-            ////$('#' + view_id + ' .ui.dropdown').dropdown({
-            ////    on: __ismobi ? 'click' : 'hover',
-            ////    //forceSelection: false,
-            ////    //autoFocus: false,
-            ////    showOnFocus: false
-            ////});
+            $('#' + view_id + ' .ui.dropdown').dropdown({
+                on: __ismobi ? 'click' : 'hover',
+                //forceSelection: false,
+                //autoFocus: false,
+                showOnFocus: false
+            });
 
-            ////$('*[data-content]').popup();
-
-
-
+            $('*[data-content]').popup();
+             
         },
-        editor_toolbarCreateButton: function (title, eventClick) {
-            var btn = document.createElement('button');
-            btn.innerHTML = title;
-            btn.className = 'ck ck-button';
-            if (typeof eventClick == 'function') btn.addEventListener('click', eventClick);
-            return btn;
-        },
-        editor_toolbarBtnEditHTMLClick: function () {
-            var html = __editor.getData();
-            html = html.split('{{').join('\n{{').split('}}').join('}}\n');
-            $('#popupHTML textarea').html(html);
-            __modalShow('popupHTML');
-        },
-
         formatArticleByCode: function() {
             var self = this, view_id = self.view.id, article = self.article;
             var html = '';

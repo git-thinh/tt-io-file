@@ -85,7 +85,7 @@
                 self.items = items;
                 Vue.nextTick(function () {
                     self.uiSetup();
-                    //self.doc_editClick(items[0]);
+                    self.doc_editClick(items[0]);
                 });
             });
         },
@@ -132,15 +132,16 @@
             if (a.length > 1) s = a[1];
             return s;
         },
-        doc_editClick: function(article) {
-            __vcp({
+        doc_editClick: function(doc) {
+            __vopen({
                 code: 'edit',
                 scope: __scope,
                 popup: true,
-                title: 'Update: ' + article.title,
+                title: 'Update: ' + doc.title,
                 class: 'ui overlay fullscreen modal'
             }, null, function (v) {
-                v.$data.article = JSON.parse(JSON.stringify(article));
+                //console.log(v);
+                v.$data.item = JSON.parse(JSON.stringify(doc));
             });
         },
         doc_getTags: function(d) {

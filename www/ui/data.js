@@ -128,6 +128,7 @@ var __mx_coms = {
         cla_image_: String,
         icon_svg_name_: String,
         icon_svg_width_: Number,
+        icon_svg_height_: Number,
 
         cla_sub_: String,
         header_sub_: String,
@@ -164,6 +165,7 @@ var __mx_coms = {
             cla_image: self.cla_image_ || '',
             icon_svg_name: self.icon_svg_name_ || '',
             icon_svg_width: self.icon_svg_width_ || 24,
+            icon_svg_height: self.icon_svg_height_ || 24,
 
             has_sub: (self.items_ != null && self.items_.length > 0),
             cla_sub: self.cla_sub_ || '',

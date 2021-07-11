@@ -6,13 +6,13 @@
              :class="[active ? 'theme--color-active' : 'theme--color-2',
                 ui_type != 'button' && selected ? 'theme--color-selected' : '',
                 cla_icon]"
-             :width="icon_svg_width" fill="currentColor" viewBox="0 0 16 16" role="img" xmlns="http://www.w3.org/2000/svg">
+             :width="icon_svg_width" :height="icon_svg_height" fill="currentColor" viewBox="0 0 16 16" role="img" xmlns="http://www.w3.org/2000/svg">
             <use :xlink:href="'#'+icon_svg_name" />
         </svg>
         <svg v-else :class="[active ? 'theme--color-active' : 'theme--color-2',
                 ui_type != 'button' && selected ? 'theme--color-selected' : '',
                 cla_icon]"
-             :width="icon_svg_width" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+             :width="icon_svg_width" :height="icon_svg_height" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
             <slot name="SVG_PATH"></slot>
         </svg>
         <label :class="['text-capitalize cursor-pointer', active ? 'theme--color-active' : 'theme--color-2',

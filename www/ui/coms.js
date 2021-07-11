@@ -76,6 +76,7 @@ function __vopen(vcf, template, callbackOpen, callbackClose) {
                 const blobURL = URL.createObjectURL(blob);
                 //console.log(code, blobURL);
                 __jsi('___vc_' + code, blobURL, function (ok) {
+                    //console.log(code, ok, vcf);
                     if (ok) __vopen(vcf, template, callbackOpen, callbackClose);
                     else callbackOpen(null);
                 });
@@ -99,6 +100,8 @@ function __vopen(vcf, template, callbackOpen, callbackClose) {
     var urlTemp = root_ + template + '.html';
     var id = code.split('-').join('_') + '_' + (new Date().getTime());
     vcf.id = id;
+
+    //console.log(code, id, urlTemp);
 
     __fetchAsync(urlTemp, 'text').then(function (htmlString) {
         //console.log('htmlString = ', htmlString);
@@ -189,7 +192,7 @@ function __vopen(vcf, template, callbackOpen, callbackClose) {
         if (!elComponent.hasAttribute('id')) elComponent.setAttribute('id', id);
 
         self.$data.view = vcf;
-        console.log('__vopen: code = ' + code);
+        //console.log('__vopen: code = ' + code, is_popup, self);
 
         window[id] = self;
         if (is_popup) {
@@ -198,11 +201,13 @@ function __vopen(vcf, template, callbackOpen, callbackClose) {
             //elComponent.parentElement.childNodes.forEach((el, i_) => { el.style.zIndex = i_; });
         }
         //debugger;
-        if (typeof self.__init == 'function') self.__init();
+        if (typeof self.__init == 'function') setTimeout(function () { self.__init(); }, 1);
         if (callbackClose) window[id + '.close'] = callbackClose;
+        //console.log('COMPLETE = ', code, self);
         if (callbackOpen) callbackOpen(self);
     }).catch(function () {
-        if (callbackOpen) callbackOpen(null);
+        //console.log('ERROR ' + code);
+        //if (callbackOpen) callbackOpen(null);
     });
 }
 var __domclick_outside_close = [];
@@ -309,6 +314,7 @@ function __coms() {
                     var button = document.getElementById(self.button_id);
                     button.addEventListener('mouseover', function (e) {
                         var r = button.getBoundingClientRect();
+                        t.style.zIndex = 9999999999;
                         t.style.top = (r.top + r.height + 7) + 'px';
                         switch (self.tooltip_position) {
                             case 'bottom':
