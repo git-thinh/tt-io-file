@@ -1,4 +1,4 @@
-﻿var __site = '', __scope = 'document', __path = '/ui/views/', __shared = {};
+﻿var __site = '', __scope = 'kit', __path = '/ui/views/', __shared = {};
 var __ismobi = window.innerWidth < 700;
 var __views = [
     { scope: '', type: '', code: 'icon-svg', base: true, title: "Icon SVG", selector: 'body', no_css: true, no_js: true },
@@ -144,15 +144,15 @@ var __mx_coms = {
         tooltip_: String,
         tooltip_position_: String,
 
+        item_: Object,
         items_: Array,
         total_: Number,
         counter_: Number,
-        //author: Object
     },
     data: function () {
         var self = this;
         //var guid_id = self.__getGuid();
-        var guid_id = 'vuid-' + self._uid;
+        var guid_id = 'ix-' + self._uid;
         
         var dt = {
             code: self.code_ || '',
@@ -185,11 +185,12 @@ var __mx_coms = {
             tooltip: self.tooltip_ || '',
             tooltip_position: self.tooltip_position_ || 'bottom',
 
+            item: self.item_ || {},
             items: self.items_ || [],
             total: self.total_ || 0,
             counter: self.counter_ || 0,
 
-            view_id: 'view-' + guid_id,
+            view_id: 'vc-' + guid_id,
             input_id: 'input-' + guid_id,
             button_id: 'button-' + guid_id,
             tooltip_id: 'tooltip-' + guid_id,

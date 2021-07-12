@@ -215,14 +215,16 @@ window.addEventListener('click', function (e) { __domclick_outside_close.forEach
 async function __init() {
     __userLoginCheck(function (ok) {
         if (ok) {
-            var r1 = __fetchAsync('/api/view/get_base');
-            var r2 = __fetchAsync('/ui/views/icon-svg.html', 'text');
-            var r3 = __fetchAsync('/ui/views/_shared/ui-button.html', 'text');
-            Promise.all([r1, r2, r3]).then(arr => {
+            var r0 = __fetchAsync('/api/view/get_base');
+            var r1 = __fetchAsync('/ui/views/icon-svg.html', 'text');
+            var r2 = __fetchAsync('/ui/views/_shared/ui-button.html', 'text');
+            var r3 = __fetchAsync('/ui/views/_shared/ui-card.html', 'text');
+            Promise.all([r0, r1, r2, r3]).then(arr => {
                 //console.log(arr);
                 if (arr[0].ok && arr[0].items) __vdata.views_base = arr[0].items;
                 var htmlSvg = arr[1];
                 __shared['ui-button'] = arr[2];
+                __shared['ui-card'] = arr[3];
                 __coms();
 
                 var parser = new DOMParser();
@@ -276,6 +278,21 @@ function __alert(message, title, callbackOpen, callbackClose) {
     }, callbackClose);
 }
 function __coms() {
+
+    Vue.component('ui-card', {
+        mixins: [__mx_coms],
+        watch: {
+            active: function (val) {
+            }
+        },
+        mounted: function () {
+            var self = this;
+        },
+        methods: {
+        },
+        template: __shared['ui-card']
+    });
+
     Vue.component('ui-button', {
         mixins: [__mx_coms],
         watch: {

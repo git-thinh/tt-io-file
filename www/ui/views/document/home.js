@@ -85,7 +85,7 @@
                 self.items = items;
                 Vue.nextTick(function () {
                     self.uiSetup();
-                    self.doc_editClick(items[13]);
+                    //self.doc_editClick(items[13]);
                 });
             });
         },
