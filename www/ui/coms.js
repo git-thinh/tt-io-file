@@ -278,6 +278,17 @@ function __alert(message, title, callbackOpen, callbackClose) {
     }, callbackClose);
 }
 function __coms() {
+    Vue.directive('data', {
+        bind: function (el, binding, vnode) {
+            var s = console.log;
+            s('name: ', binding.name);
+            s('value: ', binding.value);
+            s('expression: ', binding.expression);
+            s('argument: ', binding.arg);
+            s('modifiers: ', binding.modifiers);
+            s('vnode keys: ', vnode);
+        }
+    })
 
     Vue.component('ui-card', {
         mixins: [__mx_coms],
